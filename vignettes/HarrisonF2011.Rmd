@@ -44,13 +44,13 @@ Here is the raw data for the Conne River. Notice that very small number of relea
 
 ```{r loaddata}
 harrison.2011.chinook.F.csv <- textConnection("
-9   ,    21   ,     0   ,   0    ,    0   ,   0   ,   171
-0   ,   101   ,    22   ,    1   ,    0   ,   0   ,   763
-0   ,     0   ,   128   ,   49   ,    0   ,   0   ,   934
-0   ,     0   ,     0   ,   48   ,   12   ,   0   ,   434
-0   ,     0   ,     0   ,    0   ,    7   ,   0   ,    49
-0   ,     0   ,     0   ,    0   ,    0   ,   0   ,     4
-351 ,  2736   ,  3847   , 1818   , 543   ,  191   ,     0")
+  4   ,      2   ,      1   ,     1   ,     0   ,     0   ,   130
+ 12   ,      7   ,     14   ,     1   ,     3   ,     0   ,   330
+  7   ,     11   ,     41   ,     9   ,     1   ,     1   ,   790
+  1   ,     13   ,     40   ,    12   ,     9   ,     1   ,   667
+  0   ,      1   ,      8   ,     8   ,     3   ,     0   ,   309
+  0   ,      0   ,      0   ,     0   ,     0   ,     1   ,    65
+744   ,   1187   ,   2136   ,   951   ,   608   ,   127   ,     0")
 
 har.data <- as.matrix(read.csv(harrison.2011.chinook.F.csv, header=FALSE))
 har.data
