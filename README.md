@@ -8,7 +8,7 @@ Stratified Petersen Analysis System in R
   * **Github** To install the latest development version from Github, 
     install the newest version of the **devtools** package; then run
 ```
-devtools::install_github("cschwarz-stat-sfuca/SPAS", dependencies = TRUE,
+devtools::install_github("cschwarz-stat-sfu-ca/SPAS", dependencies = TRUE,
                         build_vignettes = TRUE)
 ```
 
