@@ -2,7 +2,7 @@
 % Please edit documentation in R/SPAS.misc.functions.r
 \name{logit}
 \alias{logit}
-\title{Helper functions for this package (logit, expit, LS)}
+\title{Helper functions for this package (logit, expit)}
 \usage{
 logit(p)
 }
@@ -10,8 +10,6 @@ logit(p)
 \item{p}{A proportion.}
 
 \item{theta}{A logit}
-
-\item{A, b}{A matrix and right hand side for least squares}
 }
 \description{
 These functions are helper functions for the SPAS package and not normally accessed by the user
@@ -19,6 +17,5 @@ These functions are helper functions for the SPAS package and not normally acces
 \details{
 \code{logit} - compute the logit of a proporton
 \code{expit} - compute a proportion from a logit
-\code{LS}    - least squares used in finding initial estimates for the SPAS models
 }
 \keyword{internal}

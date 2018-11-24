@@ -19,11 +19,12 @@ conne.data.csv <- textConnection("
 conne.data <- as.matrix(read.csv(conne.data.csv, header=FALSE))
 
 ## ----fit1,results="hide"-------------------------------------------------
-mod1 <- SPAS::SPAS.fit.model(conne.data,
+mod1 <- SPAS.fit.model(conne.data,
                        model.id="No restrictions",
-                       row.pool.in=1:6, col.pool.in=1:6,
-                       theta.pool=FALSE, CJSpool=FALSE)
+                       row.pool.in=1:6, col.pool.in=1:6)
 
+nrow(conne.data)
+length(1:7)
 ## ----mod1p---------------------------------------------------------------
 SPAS.print.model(mod1)
 

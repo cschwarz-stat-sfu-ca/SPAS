@@ -65,8 +65,7 @@ The Stratified-Petersen model is fit to the above data object using:
 ```{r fit1,results="hide"}
 mod1 <- SPAS::SPAS.fit.model(conne.data,
                        model.id="No restrictions",
-                       row.pool.in=1:6, col.pool.in=1:6,
-                       theta.pool=FALSE, CJSpool=FALSE)
+                       row.pool.in=1:6, col.pool.in=1:6)
 ```
 The `row.pool.in` and `col.pool.in` inform the function on which rows or columns to pool before the analysis proceeds. 
 Both parameters use a vector of codes (length $s$ for row pooing and length $t$ for column pooling) where rows/columns
@@ -120,8 +119,7 @@ The code is
 ```{r fit2,results="hide"}
 mod2 <- SPAS.fit.model(conne.data, model.id="Pooling some rows",
                        row.pool.in=c("12","12","3","4","56","56"),
-                       col.pool.in=c(1,2,3,4,56,56),
-                       theta.pool=FALSE, CJSpool=FALSE)
+                       col.pool.in=c(1,2,3,4,56,56))
 ```
 
 Notice how we specify the pooling for rows and columns and the choice of entries for the two corresponding vectors.
@@ -146,8 +144,7 @@ The code and output follow:
 ```{r mod3,results='hide'}
 mod3 <- SPAS.fit.model(conne.data, model.id="A single row",
                        row.pool.in=rep(1, nrow(conne.data)-1),
-                       col.pool.in=c(1,2,3,4,56,56),
-                       theta.pool=FALSE, CJSpool=FALSE)
+                       col.pool.in=c(1,2,3,4,56,56))
 ```
 ```{r mod3p}
 SPAS.print.model(mod3)
@@ -156,8 +153,7 @@ SPAS.print.model(mod3)
 ```{r mod4,results='hide'}
 mod4 <- SPAS.fit.model(conne.data, model.id="Pooled Peteren",
                        row.pool.in=rep(1, nrow(conne.data)-1),
-                       col.pool.in=rep(1, ncol(conne.data)-1),
-                       theta.pool=FALSE, CJSpool=FALSE)
+                       col.pool.in=rep(1, ncol(conne.data)-1))
 ```
 ```{r mod4p}
 SPAS.print.model(mod4)

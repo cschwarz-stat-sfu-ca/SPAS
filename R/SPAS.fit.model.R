@@ -39,7 +39,8 @@
 
 # The final matrix, after pooling must have s <= t.
 
-SPAS.fit.model<- function(model.id, rawdata,row.pool.in, col.pool.in, 
+SPAS.fit.model<- function(model.id='Stratified Petersen Estimator', 
+                          rawdata,row.pool.in, col.pool.in, 
                           theta.pool=FALSE, CJSpool=FALSE, 
                           sd.noise.init.est=0,
                           optMethod=c("BBoptim","optim"), 
@@ -56,6 +57,32 @@ SPAS.fit.model<- function(model.id, rawdata,row.pool.in, col.pool.in,
 # pooltheta   - logical indicator if want to pool for theta (movement) parameters - not yet implemented
 # CJSpool     - logical indicator if want to have equal movement parameters along diagonal - not yet implemented
 #
+  
+# Error checking of input values.
+   # is Input data ok?
+   if( !is.matrix(rawdata))stop("Input raw data must be a matrix")
+   if( nrow(rawdata) < 2)  stop("Input raw data needs at least 2 rows")
+   if( ncol(rawdata) < 2)  stop("Input raw data needs at least 2 columns")
+   if( !is.numeric(rawdata))stop("Input raw data must be numeric")
+   
+   if(length(row.pool.in) != (nrow(rawdata)-1))stop("Row pooling vector not right length - number of rows(rawdata) -1")
+   if(length(col.pool.in) != (ncol(rawdata)-1))stop("Column pooling vector not right length - number of columns(rawdata) -1")
+  
+   # Does final pooled matrix have s <= t?
+   if(length(unique(row.pool.in)) > length(unique(col.pool.in)))stop("S must be <= T after pooling")
+  
+   if(theta.pool)stop("Theta pooling not yet implemented")
+   if(CJSpool   )stop("CJSpooling not yet implemented")
+
+   # check input noise
+   if(!is.numeric(sd.noise.init.est))stop("sd.noise.input.est must be numeric")
+  
+   # check optimization method
+   if(!optMethod[1] %in% c("BBoptim","optim"))stop("Invalid optimization method specified")
+  
+   if(!is.numeric(svd.cutoff))stop("Svd.cutoff must be numeric")
+   if( svd.cutoff > .0001)stop("svd.cutoff is too large")   
+  
    RESULT <- NULL
    RESULT$version <- "SPAS-R 2018-11-22"
    RESULT$date    <- Sys.time()   # date run and start date
@@ -69,8 +96,6 @@ SPAS.fit.model<- function(model.id, rawdata,row.pool.in, col.pool.in,
    s = nrow(rawdata)-1 # The number of release   strata prior to pooling
    t = ncol(rawdata)-1 # The number of recapture strata prior to pooling
    
-#  pool the input data
-   if(length(unique(row.pool.in)) > length(unique(col.pool.in)))stop("S must be <= T after pooling")
    
 #  row pooling first
    pool.frame <- data.frame(pool=as.factor(row.pool.in))
@@ -310,4 +335,12 @@ SPAS.init.est <- function(rawdata,rowDM,colDM,thetaDM, conditional) {
    if(!conditional) res <- c(res, logN.hat)
    names(res) <- NULL
    return(res)
+}
+
+
+#Input : a Matrix A and Vector B (Design Matrix)
+#Output: Least Squares Solution
+LS <- function(A,b){
+   x = ginv(t(A) %*% A) %*% t(A) %*% b
+   return(x)
 }
