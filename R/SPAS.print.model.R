@@ -4,10 +4,7 @@
 #' .
 #' @param x A result from the model fitting. See \code{SPAS.fit.model}.
 
-#' @return A report to the console.
-#' 
-#' @examples
-#' Refer to the vignettes.
+#' @return A report to the console. Refer to the vignettes.
 #' 
 #' @export
 
