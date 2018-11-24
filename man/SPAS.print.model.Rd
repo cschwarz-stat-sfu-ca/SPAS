@@ -10,13 +10,9 @@ SPAS.print.model(x)
 \item{x}{A result from the model fitting. See \code{SPAS.fit.model}.}
 }
 \value{
-A report to the console.
+A report to the console. Refer to the vignettes.
 }
 \description{
 This function makes a report of the results of the model fitting
 .
-}
-\examples{
-Refer to the vignettes.
-
 }

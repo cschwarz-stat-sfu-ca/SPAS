@@ -6,7 +6,8 @@
 \usage{
 SPAS.fit.model(model.id, rawdata, row.pool.in, col.pool.in,
   theta.pool = FALSE, CJSpool = FALSE, sd.noise.init.est = 0,
-  optMethod = c("BBoptim", "optim", "SANN"), svd.cutoff = 1e-04)
+  optMethod = c("BBoptim", "optim"), optMethod.control = list(maxit =
+  50000), svd.cutoff = 1e-04)
 }
 \arguments{
 \item{model.id}{Character string identifying the name of the model including any pooling..}
@@ -32,7 +33,10 @@ row.pool.in=c(123,123,123,4), then the same pooling is done, but the matrix rows
 
 \item{sd.noise.init.est}{How much random noise should be added to the initial (least squares) estimates. Normally only used with severe convergence problems.}
 
-\item{optMethod}{What optimiation method is used. Defaults is the BBoptims function from the BB package.}
+\item{optMethod}{What optimiation method is used. Defaults is the BBoptim function from the BB package.}
+
+\item{optMethod.control}{Control parameters for optimization method. See relevant functions for details.
+For BBoptim, a suggest control parameter for debugging is optMethod.control=list(M=20, trace=TRUE , maxit = 50000, ftol=10^-5).}
 
 \item{svd.cutoff}{When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest singlular value to retain.}
 }

@@ -22,7 +22,9 @@
 #'   row.pool.in=c(123,123,123,4), then the same pooling is done, but the matrix rows are sorted rather strangely.
 #' @param theta.pool,CJSpool NOT YET IMPLEMENTED. DO NOT CHANGE.
 #' @param sd.noise.init.est How much random noise should be added to the initial (least squares) estimates. Normally only used with severe convergence problems.
-#' @param optMethod What optimiation method is used. Defaults is the BBoptims function from the BB package.
+#' @param optMethod What optimiation method is used. Defaults is the BBoptim function from the BB package.
+#' @param optMethod.control Control parameters for optimization method. See relevant functions for details.
+#'    For BBoptim, a suggest control parameter for debugging is optMethod.control=list(M=20, trace=TRUE , maxit = 50000, ftol=10^-5).
 #' @param svd.cutoff When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest singlular value to retain.
 #'  
 #' @return A list with many entries. Refer to the vignettes for more details.
@@ -39,7 +41,10 @@
 
 SPAS.fit.model<- function(model.id, rawdata,row.pool.in, col.pool.in, 
                           theta.pool=FALSE, CJSpool=FALSE, 
-                          sd.noise.init.est=0, optMethod=c("BBoptim","optim","SANN"), svd.cutoff=.0001){
+                          sd.noise.init.est=0,
+                          optMethod=c("BBoptim","optim"), 
+                          optMethod.control=list(maxit = 50000), 
+                          svd.cutoff=.0001){
 # Fit the Open SPAS model given the data and pooling information on the rows and columns
 #
 # The Open models have no constraints on the movement into the observed strata for each release group
@@ -124,22 +129,24 @@ SPAS.fit.model<- function(model.id, rawdata,row.pool.in, col.pool.in,
        res =BBoptim(par=init.est,
                 fn=SPAS.likelihood.star.DM,  gr=SPAS.score.DM,
                 method=1,lower=l.b,upper=u.b, 
-                control=list(M=20, trace=TRUE , maxit = 50000), # ftol=10^-5),
+                control=optMethod.control,
+                #control=list(M=20, trace=TRUE , maxit = 50000), # ftol=10^-5),
                 quiet=FALSE,
                 rowDM=rowDM,colDM=colDM,thetaDM=thetaDM,rawdata=pooldata, returnnegll=TRUE, conditional=TRUE)
    }
    if(optMethod[1] == 'optim'){
         res =optim(par=init.est,
                 fn=SPAS.likelihood.star.DM, gr=SPAS.score.DM,
-                method="L-BFGS-B",lower=l.b,upper=u.b, 
-                control=list(trace=6, maxit = 5000),
+                method="L-BFGS-B",lower=l.b,upper=u.b,
+                control=optMethod.control,
+                #control=list(trace=6, maxit = 5000),
                 rowDM=rowDM,colDM=colDM,thetaDM=thetaDM,rawdata=pooldata, returnnegll=TRUE, conditional=TRUE)
    }
-   if(optMethod[1] == 'SANN'){
-      res = GenSA(par=init.est, fn=SPAS.likelihood.star.DM, lower=l.b, upper=u.b, 
-               control=list(verbose=TRUE, max.time=600),
-               rowDM=rowDM,colDM=colDM,thetaDM=thetaDM,rawdata=pooldata, returnnegll=TRUE, conditional=TRUE)
-   }
+#   if(optMethod[1] == 'SANN'){
+#      res = GenSA(par=init.est, fn=SPAS.likelihood.star.DM, lower=l.b, upper=u.b, 
+#               control=list(verbose=TRUE, max.time=600),
+#               rowDM=rowDM,colDM=colDM,thetaDM=thetaDM,rawdata=pooldata, returnnegll=TRUE, conditional=TRUE)
+#   }
    
    RESULT$conditional$res$optim.info <- res # results from conditional maximization
    
