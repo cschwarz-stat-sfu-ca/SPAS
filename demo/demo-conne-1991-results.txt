@@ -1,0 +1,1466 @@
+
+
+
+ ***** Sample  SPAS Analysis using the Conne 1991 data run on  Fri Nov 23 21:20:06 2018  ***** 
+
+
+      V1   V2   V3   V4  V5  V6  V7
+[1,]   9   21    0    0   0   0 171
+[2,]   0  101   22    1   0   0 763
+[3,]   0    0  128   49   0   0 934
+[4,]   0    0    0   48  12   0 434
+[5,]   0    0    0    0   7   0  49
+[6,]   0    0    0    0   0   0   4
+[7,] 351 2736 3847 1818 543 191   0
+Using BBoptim() to find conditional MLE
+iter:  0  f-value:  -72852.23  pgrad:  14.30259 
+iter:  10  f-value:  -77742.5  pgrad:  16.78379 
+iter:  20  f-value:  -77891.83  pgrad:  16.82159 
+iter:  30  f-value:  -77240  pgrad:  14.2519 
+iter:  40  f-value:  -78049.74  pgrad:  15.84856 
+iter:  50  f-value:  -77985.81  pgrad:  16.64443 
+iter:  60  f-value:  -78105.86  pgrad:  12.75261 
+iter:  70  f-value:  -78108.64  pgrad:  16.89936 
+iter:  80  f-value:  -78110.77  pgrad:  3.256486 
+iter:  90  f-value:  -78111.09  pgrad:  1.874699 
+iter:  100  f-value:  -78111.27  pgrad:  4.52117 
+iter:  110  f-value:  -78111.4  pgrad:  8.72391 
+iter:  120  f-value:  -78111.5  pgrad:  1.117956 
+iter:  130  f-value:  -78111.75  pgrad:  5.183744 
+iter:  140  f-value:  -78111.78  pgrad:  1.465871 
+iter:  150  f-value:  -78111.79  pgrad:  0.6681661 
+iter:  160  f-value:  -78111.82  pgrad:  5.554205 
+iter:  170  f-value:  -78111.83  pgrad:  0.351873 
+iter:  180  f-value:  -78111.85  pgrad:  4.201579 
+iter:  190  f-value:  -78111.88  pgrad:  1.244596 
+iter:  200  f-value:  -78111.93  pgrad:  0.3369238 
+iter:  210  f-value:  -78111.95  pgrad:  2.673435 
+iter:  220  f-value:  -78111.96  pgrad:  0.3356417 
+iter:  230  f-value:  -78112.32  pgrad:  15.55549 
+iter:  240  f-value:  -78112.44  pgrad:  1.179322 
+iter:  250  f-value:  -78112.44  pgrad:  0.5304108 
+iter:  260  f-value:  -78112.67  pgrad:  1.242915 
+iter:  270  f-value:  -78112.68  pgrad:  11.52678 
+iter:  280  f-value:  -78112.71  pgrad:  0.4619649 
+iter:  290  f-value:  -78112.73  pgrad:  1.24996 
+iter:  300  f-value:  -78112.74  pgrad:  0.468547 
+iter:  310  f-value:  -78112.75  pgrad:  3.102084 
+iter:  320  f-value:  -78112.75  pgrad:  0.4624829 
+iter:  330  f-value:  -78112.89  pgrad:  3.118815 
+iter:  340  f-value:  -78112.83  pgrad:  9.089798 
+iter:  350  f-value:  -78112.9  pgrad:  2.050261 
+iter:  360  f-value:  -78112.91  pgrad:  2.712494 
+iter:  370  f-value:  -78112.93  pgrad:  15.30179 
+iter:  380  f-value:  -78112.99  pgrad:  0.442514 
+iter:  390  f-value:  -78113.01  pgrad:  1.914656 
+iter:  400  f-value:  -78113.01  pgrad:  8.088959 
+iter:  410  f-value:  -78113.06  pgrad:  2.061467 
+iter:  420  f-value:  -78113.06  pgrad:  6.082512 
+iter:  430  f-value:  -78113.09  pgrad:  0.630614 
+iter:  440  f-value:  -78113.1  pgrad:  1.504356 
+iter:  450  f-value:  -78113.23  pgrad:  16.62333 
+iter:  460  f-value:  -78113.43  pgrad:  0.315822 
+iter:  470  f-value:  -78113.44  pgrad:  1.044225 
+iter:  480  f-value:  -78113.42  pgrad:  6.766005 
+iter:  490  f-value:  -78113.45  pgrad:  1.410978 
+iter:  500  f-value:  -78113.45  pgrad:  4.485359 
+iter:  510  f-value:  -78113.46  pgrad:  0.3661641 
+iter:  520  f-value:  -78113.79  pgrad:  3.353898 
+iter:  530  f-value:  -78113.79  pgrad:  0.2262191 
+iter:  540  f-value:  -78113.78  pgrad:  8.702784 
+iter:  550  f-value:  -78113.8  pgrad:  0.2263973 
+iter:  560  f-value:  -78113.8  pgrad:  1.508907 
+iter:  570  f-value:  -78113.79  pgrad:  6.74184 
+iter:  580  f-value:  -78113.81  pgrad:  0.2276395 
+iter:  590  f-value:  -78113.82  pgrad:  1.619456 
+iter:  600  f-value:  -78114.2  pgrad:  1.478371 
+iter:  610  f-value:  -78114.2  pgrad:  8.458257 
+iter:  620  f-value:  -78114.21  pgrad:  0.4189727 
+iter:  630  f-value:  -78114.22  pgrad:  1.71914 
+iter:  640  f-value:  -78114.22  pgrad:  0.1447832 
+iter:  650  f-value:  -78114.23  pgrad:  2.193786 
+iter:  660  f-value:  -78114.3  pgrad:  0.416524 
+iter:  670  f-value:  -78114.22  pgrad:  16.84445 
+iter:  680  f-value:  -78114.31  pgrad:  0.1471119 
+iter:  690  f-value:  -78114.34  pgrad:  1.345605 
+iter:  700  f-value:  -78114.33  pgrad:  4.058546 
+iter:  710  f-value:  -78114.35  pgrad:  0.8621092 
+iter:  720  f-value:  -78114.28  pgrad:  10.79318 
+iter:  730  f-value:  -78114.36  pgrad:  0.1276383 
+iter:  740  f-value:  -78114.39  pgrad:  0.5514251 
+iter:  750  f-value:  -78114.39  pgrad:  0.2894495 
+iter:  760  f-value:  -78114.39  pgrad:  1.134651 
+iter:  770  f-value:  -78114.4  pgrad:  0.1577884 
+iter:  780  f-value:  -78114.4  pgrad:  0.1216176 
+iter:  790  f-value:  -78114.4  pgrad:  5.442844 
+iter:  800  f-value:  -78114.4  pgrad:  0.1207512 
+iter:  810  f-value:  -78114.42  pgrad:  1.412485 
+iter:  820  f-value:  -78114.42  pgrad:  1.758626 
+iter:  830  f-value:  -78114.42  pgrad:  1.119376 
+iter:  840  f-value:  -78114.43  pgrad:  0.1177303 
+iter:  850  f-value:  -78114.43  pgrad:  0.7913382 
+iter:  860  f-value:  -78114.43  pgrad:  0.1169472 
+iter:  870  f-value:  -78114.44  pgrad:  2.40164 
+iter:  880  f-value:  -78114.44  pgrad:  0.1158464 
+iter:  890  f-value:  -78114.44  pgrad:  3.878948 
+iter:  900  f-value:  -78114.46  pgrad:  1.43569 
+iter:  910  f-value:  -78114.46  pgrad:  0.1199475 
+iter:  920  f-value:  -78114.56  pgrad:  0.1260333 
+iter:  930  f-value:  -78114.56  pgrad:  0.1005876 
+iter:  940  f-value:  -78114.52  pgrad:  8.703683 
+iter:  950  f-value:  -78114.56  pgrad:  0.2912153 
+iter:  960  f-value:  -78114.57  pgrad:  0.1025309 
+iter:  970  f-value:  -78114.61  pgrad:  0.1491564 
+iter:  980  f-value:  -78114.61  pgrad:  0.09576516 
+iter:  990  f-value:  -78114.66  pgrad:  1.13155 
+iter:  1000  f-value:  -78114.66  pgrad:  0.08878919 
+iter:  1010  f-value:  -78114.66  pgrad:  2.511764 
+iter:  1020  f-value:  -78114.67  pgrad:  0.08889067 
+iter:  1030  f-value:  -78114.67  pgrad:  1.152202 
+iter:  1040  f-value:  -78114.67  pgrad:  0.08888541 
+iter:  1050  f-value:  -78115.39  pgrad:  8.542106 
+iter:  1060  f-value:  -78115.41  pgrad:  0.4622806 
+iter:  1070  f-value:  -78115.4  pgrad:  6.618129 
+iter:  1080  f-value:  -78115.42  pgrad:  0.2145378 
+iter:  1090  f-value:  -78115.42  pgrad:  1.496059 
+iter:  1100  f-value:  -78115.42  pgrad:  0.2706171 
+iter:  1110  f-value:  -78115.42  pgrad:  1.79116 
+iter:  1120  f-value:  -78115.42  pgrad:  0.05386655 
+iter:  1130  f-value:  -78115.42  pgrad:  2.642624 
+iter:  1140  f-value:  -78115.42  pgrad:  0.02344034 
+iter:  1150  f-value:  -78115.42  pgrad:  1.24217 
+iter:  1160  f-value:  -78115.42  pgrad:  0.7603177 
+iter:  1170  f-value:  -78115.43  pgrad:  0.2231754 
+iter:  1180  f-value:  -78115.42  pgrad:  6.562181 
+iter:  1190  f-value:  -78115.43  pgrad:  0.02313496 
+iter:  1200  f-value:  -78115.43  pgrad:  5.292516 
+iter:  1210  f-value:  -78115.43  pgrad:  0.02310729 
+iter:  1220  f-value:  -78115.43  pgrad:  1.903331 
+iter:  1230  f-value:  -78115.43  pgrad:  0.03557183 
+iter:  1240  f-value:  -78115.43  pgrad:  0.6327733 
+iter:  1250  f-value:  -78115.43  pgrad:  0.0229982 
+iter:  1260  f-value:  -78115.43  pgrad:  0.4847665 
+iter:  1270  f-value:  -78115.43  pgrad:  0.2597535 
+iter:  1280  f-value:  -78115.43  pgrad:  1.443607 
+iter:  1290  f-value:  -78115.43  pgrad:  1.482381 
+iter:  1300  f-value:  -78115.44  pgrad:  0.03173419 
+iter:  1310  f-value:  -78115.43  pgrad:  2.626676 
+iter:  1320  f-value:  -78115.63  pgrad:  2.05303 
+iter:  1330  f-value:  -78115.63  pgrad:  0.1926539 
+iter:  1340  f-value:  -78115.63  pgrad:  0.09829039 
+iter:  1350  f-value:  -78115.63  pgrad:  0.040941 
+iter:  1360  f-value:  -78115.63  pgrad:  0.02231954 
+iter:  1370  f-value:  -78115.63  pgrad:  0.1239649 
+iter:  1380  f-value:  -78115.63  pgrad:  0.8867076 
+iter:  1390  f-value:  -78115.63  pgrad:  0.0331724 
+iter:  1400  f-value:  -78115.63  pgrad:  0.1457669 
+iter:  1410  f-value:  -78115.64  pgrad:  1.720511 
+iter:  1420  f-value:  -78115.64  pgrad:  0.139972 
+iter:  1430  f-value:  -78115.64  pgrad:  0.3903386 
+iter:  1440  f-value:  -78115.64  pgrad:  2.138312 
+iter:  1450  f-value:  -78115.64  pgrad:  0.03705229 
+iter:  1460  f-value:  -78115.64  pgrad:  1.035181 
+iter:  1470  f-value:  -78115.64  pgrad:  0.01426023 
+iter:  1480  f-value:  -78115.65  pgrad:  0.582664 
+iter:  1490  f-value:  -78115.65  pgrad:  0.03052951 
+iter:  1500  f-value:  -78115.65  pgrad:  2.474982 
+iter:  1510  f-value:  -78115.65  pgrad:  2.091346 
+iter:  1520  f-value:  -78115.65  pgrad:  0.04783177 
+iter:  1530  f-value:  -78115.65  pgrad:  0.01639269 
+iter:  1540  f-value:  -78115.65  pgrad:  0.1475181 
+iter:  1550  f-value:  -78115.65  pgrad:  0.04490538 
+iter:  1560  f-value:  -78115.65  pgrad:  0.01389443 
+iter:  1570  f-value:  -78115.65  pgrad:  0.01882089 
+iter:  1580  f-value:  -78115.65  pgrad:  0.3488828 
+iter:  1590  f-value:  -78115.65  pgrad:  0.01384935 
+iter:  1600  f-value:  -78115.65  pgrad:  0.02905553 
+iter:  1610  f-value:  -78115.65  pgrad:  0.1323569 
+iter:  1620  f-value:  -78115.66  pgrad:  6.287882 
+iter:  1630  f-value:  -78115.66  pgrad:  1.449381 
+iter:  1640  f-value:  -78115.66  pgrad:  0.04494656 
+iter:  1650  f-value:  -78115.66  pgrad:  1.458995 
+iter:  1660  f-value:  -78115.66  pgrad:  0.03299266 
+iter:  1670  f-value:  -78115.66  pgrad:  0.9561678 
+iter:  1680  f-value:  -78115.66  pgrad:  0.01842496 
+iter:  1690  f-value:  -78115.66  pgrad:  0.02372831 
+iter:  1700  f-value:  -78115.66  pgrad:  0.01337554 
+iter:  1710  f-value:  -78115.66  pgrad:  0.5514102 
+iter:  1720  f-value:  -78115.66  pgrad:  0.4019718 
+iter:  1730  f-value:  -78115.66  pgrad:  0.3288133 
+iter:  1740  f-value:  -78115.66  pgrad:  0.01335355 
+iter:  1750  f-value:  -78115.66  pgrad:  0.03918813 
+iter:  1760  f-value:  -78115.68  pgrad:  1.036513 
+iter:  1770  f-value:  -78115.68  pgrad:  0.3948043 
+iter:  1780  f-value:  -78115.68  pgrad:  0.01248977 
+iter:  1790  f-value:  -78115.68  pgrad:  0.3671954 
+iter:  1800  f-value:  -78115.69  pgrad:  0.6924336 
+iter:  1810  f-value:  -78115.69  pgrad:  0.01245485 
+iter:  1820  f-value:  -78115.69  pgrad:  0.1244958 
+iter:  1830  f-value:  -78115.69  pgrad:  0.1828011 
+iter:  1840  f-value:  -78115.69  pgrad:  0.02179879 
+iter:  1850  f-value:  -78115.69  pgrad:  0.01243657 
+iter:  1860  f-value:  -78115.69  pgrad:  0.08341517 
+iter:  1870  f-value:  -78115.69  pgrad:  0.09329454 
+iter:  1880  f-value:  -78115.7  pgrad:  3.221316 
+iter:  1890  f-value:  -78115.71  pgrad:  0.2537721 
+iter:  1900  f-value:  -78115.71  pgrad:  2.467048 
+iter:  1910  f-value:  -78115.71  pgrad:  0.08270159 
+iter:  1920  f-value:  -78115.71  pgrad:  2.104766 
+iter:  1930  f-value:  -78115.71  pgrad:  0.1969475 
+iter:  1940  f-value:  -78115.72  pgrad:  0.6086122 
+iter:  1950  f-value:  -78115.72  pgrad:  0.3334908 
+iter:  1960  f-value:  -78115.72  pgrad:  0.04585306 
+iter:  1970  f-value:  -78115.72  pgrad:  0.3482806 
+iter:  1980  f-value:  -78115.72  pgrad:  0.02627853 
+iter:  1990  f-value:  -78115.72  pgrad:  0.1120923 
+iter:  2000  f-value:  -78115.72  pgrad:  0.06150456 
+iter:  2010  f-value:  -78115.72  pgrad:  0.0331581 
+iter:  2020  f-value:  -78115.72  pgrad:  0.08047319 
+iter:  2030  f-value:  -78115.72  pgrad:  0.01108883 
+iter:  2040  f-value:  -78115.72  pgrad:  1.080706 
+iter:  2050  f-value:  -78115.72  pgrad:  0.0303865 
+iter:  2060  f-value:  -78115.72  pgrad:  0.6956933 
+iter:  2070  f-value:  -78115.72  pgrad:  0.1147196 
+iter:  2080  f-value:  -78115.72  pgrad:  0.2244829 
+iter:  2090  f-value:  -78115.72  pgrad:  0.07520642 
+iter:  2100  f-value:  -78115.72  pgrad:  0.1211121 
+iter:  2110  f-value:  -78115.72  pgrad:  2.211625 
+iter:  2120  f-value:  -78115.72  pgrad:  0.07529837 
+iter:  2130  f-value:  -78115.75  pgrad:  15.30593 
+iter:  2140  f-value:  -78115.8  pgrad:  0.07969325 
+iter:  2150  f-value:  -78115.8  pgrad:  0.54208 
+iter:  2160  f-value:  -78115.81  pgrad:  0.06711051 
+iter:  2170  f-value:  -78115.81  pgrad:  0.6323454 
+iter:  2180  f-value:  -78115.81  pgrad:  0.05769931 
+iter:  2190  f-value:  -78115.81  pgrad:  0.05507019 
+iter:  2200  f-value:  -78115.81  pgrad:  0.04904557 
+iter:  2210  f-value:  -78115.81  pgrad:  0.1756557 
+iter:  2220  f-value:  -78115.81  pgrad:  2.80459 
+iter:  2230  f-value:  -78115.81  pgrad:  0.01523628 
+iter:  2240  f-value:  -78115.81  pgrad:  2.583041 
+iter:  2250  f-value:  -78115.81  pgrad:  0.05444241 
+iter:  2260  f-value:  -78115.81  pgrad:  2.598555 
+iter:  2270  f-value:  -78115.81  pgrad:  0.02165018 
+iter:  2280  f-value:  -78115.81  pgrad:  0.3069034 
+iter:  2290  f-value:  -78115.81  pgrad:  0.07772078 
+iter:  2300  f-value:  -78115.81  pgrad:  2.243846 
+iter:  2310  f-value:  -78115.81  pgrad:  1.374393 
+iter:  2320  f-value:  -78115.81  pgrad:  0.009515438 
+iter:  2330  f-value:  -78115.81  pgrad:  0.6773653 
+iter:  2340  f-value:  -78115.81  pgrad:  0.007395281 
+iter:  2350  f-value:  -78115.81  pgrad:  0.1967185 
+iter:  2360  f-value:  -78115.81  pgrad:  0.03595764 
+iter:  2370  f-value:  -78115.81  pgrad:  0.1387695 
+iter:  2380  f-value:  -78115.82  pgrad:  5.352984 
+iter:  2390  f-value:  -78115.83  pgrad:  0.2431651 
+iter:  2400  f-value:  -78115.83  pgrad:  1.520943 
+iter:  2410  f-value:  -78115.83  pgrad:  0.3012006 
+iter:  2420  f-value:  -78115.83  pgrad:  0.183963 
+iter:  2430  f-value:  -78115.84  pgrad:  0.8341302 
+iter:  2440  f-value:  -78115.84  pgrad:  0.223562 
+iter:  2450  f-value:  -78115.84  pgrad:  3.498354 
+iter:  2460  f-value:  -78115.84  pgrad:  0.7412758 
+iter:  2470  f-value:  -78115.84  pgrad:  1.64859 
+iter:  2480  f-value:  -78115.84  pgrad:  0.1511547 
+iter:  2490  f-value:  -78115.84  pgrad:  0.660325 
+iter:  2500  f-value:  -78115.84  pgrad:  0.06855287 
+iter:  2510  f-value:  -78115.84  pgrad:  2.307353 
+iter:  2520  f-value:  -78115.84  pgrad:  0.05705493 
+iter:  2530  f-value:  -78115.84  pgrad:  0.05264981 
+iter:  2540  f-value:  -78115.84  pgrad:  1.794972 
+iter:  2550  f-value:  -78115.84  pgrad:  0.03389808 
+iter:  2560  f-value:  -78115.84  pgrad:  0.07473097 
+iter:  2570  f-value:  -78115.84  pgrad:  0.04368606 
+iter:  2580  f-value:  -78115.84  pgrad:  0.03275109 
+iter:  2590  f-value:  -78115.84  pgrad:  0.03143637 
+iter:  2600  f-value:  -78115.84  pgrad:  0.2957064 
+iter:  2610  f-value:  -78115.84  pgrad:  0.02659415 
+iter:  2620  f-value:  -78115.84  pgrad:  0.02632731 
+iter:  2630  f-value:  -78115.84  pgrad:  0.139663 
+iter:  2640  f-value:  -78115.84  pgrad:  0.3503558 
+iter:  2650  f-value:  -78115.84  pgrad:  0.02123114 
+iter:  2660  f-value:  -78115.84  pgrad:  0.08994781 
+iter:  2670  f-value:  -78115.84  pgrad:  0.3748177 
+iter:  2680  f-value:  -78115.84  pgrad:  0.04401893 
+iter:  2690  f-value:  -78115.84  pgrad:  0.07669751 
+iter:  2700  f-value:  -78115.84  pgrad:  0.0567294 
+iter:  2710  f-value:  -78115.84  pgrad:  0.126313 
+iter:  2720  f-value:  -78115.84  pgrad:  0.07102541 
+iter:  2730  f-value:  -78115.84  pgrad:  0.1946528 
+iter:  2740  f-value:  -78115.84  pgrad:  1.04557 
+iter:  2750  f-value:  -78115.84  pgrad:  0.05092315 
+iter:  2760  f-value:  -78115.84  pgrad:  1.59372 
+iter:  2770  f-value:  -78115.84  pgrad:  0.04747659 
+iter:  2780  f-value:  -78115.84  pgrad:  0.04154279 
+iter:  2790  f-value:  -78115.84  pgrad:  0.8968171 
+iter:  2800  f-value:  -78115.85  pgrad:  0.04483455 
+iter:  2810  f-value:  -78115.85  pgrad:  0.07421578 
+iter:  2820  f-value:  -78115.85  pgrad:  0.2922629 
+iter:  2830  f-value:  -78115.85  pgrad:  0.02908309 
+iter:  2840  f-value:  -78115.85  pgrad:  0.0276992 
+iter:  2850  f-value:  -78115.85  pgrad:  0.04195902 
+iter:  2860  f-value:  -78115.85  pgrad:  0.3965304 
+iter:  2870  f-value:  -78115.85  pgrad:  0.3742347 
+iter:  2880  f-value:  -78115.85  pgrad:  0.9529076 
+iter:  2890  f-value:  -78115.85  pgrad:  0.01407431 
+iter:  2900  f-value:  -78115.85  pgrad:  0.01840641 
+iter:  2910  f-value:  -78115.85  pgrad:  0.02041673 
+iter:  2920  f-value:  -78115.85  pgrad:  0.01368122 
+iter:  2930  f-value:  -78115.85  pgrad:  0.005913813 
+iter:  2940  f-value:  -78115.85  pgrad:  0.1141622 
+iter:  2950  f-value:  -78115.85  pgrad:  0.6712617 
+iter:  2960  f-value:  -78115.85  pgrad:  0.005900248 
+iter:  2970  f-value:  -78115.85  pgrad:  0.03327342 
+iter:  2980  f-value:  -78115.85  pgrad:  0.0060628 
+iter:  2990  f-value:  -78115.85  pgrad:  0.005893094 
+iter:  3000  f-value:  -78115.85  pgrad:  0.06038468 
+iter:  3010  f-value:  -78115.85  pgrad:  0.07816561 
+iter:  3020  f-value:  -78115.85  pgrad:  0.4860777 
+iter:  3030  f-value:  -78115.85  pgrad:  0.005888763 
+iter:  3040  f-value:  -78115.85  pgrad:  0.03852481 
+iter:  3050  f-value:  -78115.85  pgrad:  0.06534242 
+iter:  3060  f-value:  -78115.85  pgrad:  0.1087029 
+iter:  3070  f-value:  -78115.85  pgrad:  0.4831885 
+iter:  3080  f-value:  -78115.85  pgrad:  0.07170609 
+iter:  3090  f-value:  -78115.85  pgrad:  0.02374162 
+iter:  3100  f-value:  -78115.85  pgrad:  0.09174018 
+iter:  3110  f-value:  -78115.85  pgrad:  0.1963435 
+iter:  3120  f-value:  -78115.85  pgrad:  0.005879551 
+iter:  3130  f-value:  -78115.85  pgrad:  0.04694213 
+iter:  3140  f-value:  -78115.85  pgrad:  0.005871791 
+iter:  3150  f-value:  -78115.85  pgrad:  0.005863284 
+iter:  3160  f-value:  -78115.85  pgrad:  0.0144927 
+iter:  3170  f-value:  -78115.85  pgrad:  0.005862282 
+iter:  3180  f-value:  -78115.85  pgrad:  0.03509718 
+iter:  3190  f-value:  -78115.85  pgrad:  0.1189778 
+iter:  3200  f-value:  -78115.85  pgrad:  0.009083773 
+iter:  3210  f-value:  -78115.85  pgrad:  0.6833401 
+iter:  3220  f-value:  -78115.85  pgrad:  0.7059621 
+iter:  3230  f-value:  -78115.85  pgrad:  0.03340072 
+iter:  3240  f-value:  -78115.88  pgrad:  7.207824 
+iter:  3250  f-value:  -78115.89  pgrad:  3.730865 
+iter:  3260  f-value:  -78115.9  pgrad:  0.3168465 
+iter:  3270  f-value:  -78115.9  pgrad:  0.02234884 
+iter:  3280  f-value:  -78115.9  pgrad:  0.008101791 
+iter:  3290  f-value:  -78115.9  pgrad:  0.3595405 
+iter:  3300  f-value:  -78115.9  pgrad:  0.003821191 
+iter:  3310  f-value:  -78115.9  pgrad:  0.9519806 
+iter:  3320  f-value:  -78115.9  pgrad:  0.06065148 
+iter:  3330  f-value:  -78115.9  pgrad:  0.007659954 
+iter:  3340  f-value:  -78115.9  pgrad:  0.2077154 
+iter:  3350  f-value:  -78115.9  pgrad:  0.0038124 
+iter:  3360  f-value:  -78115.9  pgrad:  0.04246155 
+iter:  3370  f-value:  -78115.9  pgrad:  0.08276453 
+iter:  3380  f-value:  -78115.9  pgrad:  0.168573 
+iter:  3390  f-value:  -78115.9  pgrad:  0.003811519 
+iter:  3400  f-value:  -78115.9  pgrad:  0.02993131 
+iter:  3410  f-value:  -78115.9  pgrad:  0.1893741 
+iter:  3420  f-value:  -78115.9  pgrad:  0.02603835 
+iter:  3430  f-value:  -78115.9  pgrad:  0.2019363 
+iter:  3440  f-value:  -78115.9  pgrad:  0.003810012 
+iter:  3450  f-value:  -78115.9  pgrad:  0.3271674 
+iter:  3460  f-value:  -78115.9  pgrad:  0.04880316 
+iter:  3470  f-value:  -78115.9  pgrad:  0.003804087 
+iter:  3480  f-value:  -78115.9  pgrad:  0.003803614 
+iter:  3490  f-value:  -78115.9  pgrad:  0.02259029 
+iter:  3500  f-value:  -78115.9  pgrad:  0.2400665 
+iter:  3510  f-value:  -78115.9  pgrad:  0.0038021 
+iter:  3520  f-value:  -78115.9  pgrad:  0.01016969 
+iter:  3530  f-value:  -78115.9  pgrad:  0.2230645 
+iter:  3540  f-value:  -78115.9  pgrad:  0.003801416 
+iter:  3550  f-value:  -78115.9  pgrad:  0.1348177 
+iter:  3560  f-value:  -78115.9  pgrad:  0.004485218 
+iter:  3570  f-value:  -78115.9  pgrad:  0.03073579 
+iter:  3580  f-value:  -78115.9  pgrad:  0.01191922 
+iter:  3590  f-value:  -78115.9  pgrad:  0.4420049 
+iter:  3600  f-value:  -78115.9  pgrad:  0.05544855 
+iter:  3610  f-value:  -78115.9  pgrad:  0.0161643 
+iter:  3620  f-value:  -78115.9  pgrad:  0.08475673 
+iter:  3630  f-value:  -78115.9  pgrad:  0.02052747 
+iter:  3640  f-value:  -78115.9  pgrad:  0.0778366 
+iter:  3650  f-value:  -78115.9  pgrad:  0.04367788 
+iter:  3660  f-value:  -78115.9  pgrad:  0.312661 
+iter:  3670  f-value:  -78115.9  pgrad:  0.006275678 
+iter:  3680  f-value:  -78115.9  pgrad:  0.04416283 
+iter:  3690  f-value:  -78115.9  pgrad:  0.003913262 
+iter:  3700  f-value:  -78115.9  pgrad:  0.2204147 
+iter:  3710  f-value:  -78115.9  pgrad:  0.009879395 
+iter:  3720  f-value:  -78115.9  pgrad:  0.01120599 
+iter:  3730  f-value:  -78115.9  pgrad:  0.008100476 
+iter:  3740  f-value:  -78115.9  pgrad:  0.026976 
+iter:  3750  f-value:  -78115.9  pgrad:  0.03546688 
+iter:  3760  f-value:  -78115.9  pgrad:  0.01227663 
+iter:  3770  f-value:  -78115.9  pgrad:  0.03601073 
+iter:  3780  f-value:  -78115.9  pgrad:  0.00377952 
+iter:  3790  f-value:  -78115.9  pgrad:  0.003778989 
+iter:  3800  f-value:  -78115.9  pgrad:  0.01653351 
+iter:  3810  f-value:  -78115.9  pgrad:  0.01300887 
+iter:  3820  f-value:  -78115.9  pgrad:  0.06354715 
+iter:  3830  f-value:  -78115.9  pgrad:  0.1326046 
+iter:  3840  f-value:  -78115.9  pgrad:  0.2934196 
+iter:  3850  f-value:  -78115.9  pgrad:  0.6339384 
+iter:  3860  f-value:  -78115.9  pgrad:  0.007311613 
+iter:  3870  f-value:  -78115.9  pgrad:  0.01709956 
+iter:  3880  f-value:  -78115.9  pgrad:  0.00377405 
+iter:  3890  f-value:  -78115.9  pgrad:  0.03130924 
+iter:  3900  f-value:  -78115.9  pgrad:  0.103205 
+iter:  3910  f-value:  -78115.9  pgrad:  0.003773044 
+iter:  3920  f-value:  -78115.9  pgrad:  0.0213069 
+iter:  3930  f-value:  -78115.9  pgrad:  0.1812222 
+iter:  3940  f-value:  -78115.9  pgrad:  0.1564725 
+iter:  3950  f-value:  -78115.9  pgrad:  0.2434701 
+iter:  3960  f-value:  -78115.9  pgrad:  0.04319885 
+iter:  3970  f-value:  -78115.9  pgrad:  0.6416322 
+iter:  3980  f-value:  -78115.9  pgrad:  0.03423236 
+iter:  3990  f-value:  -78115.9  pgrad:  0.04178478 
+iter:  4000  f-value:  -78115.9  pgrad:  0.07023683 
+iter:  4010  f-value:  -78115.9  pgrad:  0.2945429 
+iter:  4020  f-value:  -78115.9  pgrad:  0.02593506 
+iter:  4030  f-value:  -78115.9  pgrad:  0.0317686 
+iter:  4040  f-value:  -78115.9  pgrad:  0.07763413 
+iter:  4050  f-value:  -78115.9  pgrad:  0.003721709 
+iter:  4060  f-value:  -78115.9  pgrad:  0.08905186 
+iter:  4070  f-value:  -78115.9  pgrad:  0.5355084 
+iter:  4080  f-value:  -78115.9  pgrad:  0.004038904 
+iter:  4090  f-value:  -78115.9  pgrad:  0.02936741 
+iter:  4100  f-value:  -78115.9  pgrad:  0.01514152 
+iter:  4110  f-value:  -78115.9  pgrad:  0.1280029 
+iter:  4120  f-value:  -78115.9  pgrad:  0.00641596 
+iter:  4130  f-value:  -78115.9  pgrad:  0.003719907 
+iter:  4140  f-value:  -78115.9  pgrad:  0.03909575 
+iter:  4150  f-value:  -78115.9  pgrad:  0.7355183 
+iter:  4160  f-value:  -78115.9  pgrad:  0.01649358 
+iter:  4170  f-value:  -78115.9  pgrad:  0.06360647 
+iter:  4180  f-value:  -78115.9  pgrad:  0.1277612 
+iter:  4190  f-value:  -78115.9  pgrad:  0.01135554 
+iter:  4200  f-value:  -78115.9  pgrad:  0.2307288 
+iter:  4210  f-value:  -78115.9  pgrad:  0.005588023 
+iter:  4220  f-value:  -78115.9  pgrad:  0.003713404 
+iter:  4230  f-value:  -78115.9  pgrad:  0.003711361 
+iter:  4240  f-value:  -78115.9  pgrad:  0.3342412 
+iter:  4250  f-value:  -78115.9  pgrad:  0.008056477 
+iter:  4260  f-value:  -78115.9  pgrad:  0.003703074 
+iter:  4270  f-value:  -78115.9  pgrad:  0.1116853 
+iter:  4280  f-value:  -78115.9  pgrad:  0.003700709 
+iter:  4290  f-value:  -78115.9  pgrad:  0.02613238 
+iter:  4300  f-value:  -78115.9  pgrad:  0.04664547 
+iter:  4310  f-value:  -78115.9  pgrad:  0.02085215 
+iter:  4320  f-value:  -78115.9  pgrad:  0.01936369 
+iter:  4330  f-value:  -78115.9  pgrad:  0.3400269 
+iter:  4340  f-value:  -78115.9  pgrad:  0.02885093 
+iter:  4350  f-value:  -78115.9  pgrad:  0.1659808 
+iter:  4360  f-value:  -78115.9  pgrad:  0.003814091 
+iter:  4370  f-value:  -78115.9  pgrad:  0.2743468 
+iter:  4380  f-value:  -78115.9  pgrad:  0.08621571 
+iter:  4390  f-value:  -78115.9  pgrad:  0.02146033 
+iter:  4400  f-value:  -78115.9  pgrad:  0.02939217 
+iter:  4410  f-value:  -78115.9  pgrad:  0.04893671 
+iter:  4420  f-value:  -78115.9  pgrad:  0.07848596 
+iter:  4430  f-value:  -78115.9  pgrad:  0.003682279 
+iter:  4440  f-value:  -78115.9  pgrad:  0.01565775 
+iter:  4450  f-value:  -78115.9  pgrad:  0.07442519 
+iter:  4460  f-value:  -78115.9  pgrad:  0.01698692 
+iter:  4470  f-value:  -78115.9  pgrad:  0.03112952 
+iter:  4480  f-value:  -78115.9  pgrad:  0.003901421 
+iter:  4490  f-value:  -78115.9  pgrad:  0.07509331 
+iter:  4500  f-value:  -78115.9  pgrad:  0.01518437 
+iter:  4510  f-value:  -78115.9  pgrad:  0.003812501 
+iter:  4520  f-value:  -78115.9  pgrad:  0.4280191 
+iter:  4530  f-value:  -78115.9  pgrad:  0.05043464 
+iter:  4540  f-value:  -78115.9  pgrad:  0.6517037 
+iter:  4550  f-value:  -78115.9  pgrad:  0.03896925 
+iter:  4560  f-value:  -78115.9  pgrad:  0.003669025 
+iter:  4570  f-value:  -78115.9  pgrad:  0.250925 
+iter:  4580  f-value:  -78115.9  pgrad:  0.02353713 
+iter:  4590  f-value:  -78115.9  pgrad:  0.2221542 
+iter:  4600  f-value:  -78115.9  pgrad:  0.02635793 
+iter:  4610  f-value:  -78115.9  pgrad:  0.1284145 
+iter:  4620  f-value:  -78115.9  pgrad:  0.003664436 
+iter:  4630  f-value:  -78115.9  pgrad:  0.0930014 
+iter:  4640  f-value:  -78115.9  pgrad:  0.05255677 
+iter:  4650  f-value:  -78115.9  pgrad:  1.221714 
+iter:  4660  f-value:  -78115.9  pgrad:  0.6799755 
+iter:  4670  f-value:  -78115.9  pgrad:  0.07147094 
+iter:  4680  f-value:  -78115.9  pgrad:  0.326764 
+iter:  4690  f-value:  -78115.9  pgrad:  0.1760206 
+iter:  4700  f-value:  -78115.9  pgrad:  0.005529607 
+iter:  4710  f-value:  -78115.9  pgrad:  0.08481917 
+iter:  4720  f-value:  -78115.9  pgrad:  0.005131268 
+iter:  4730  f-value:  -78115.9  pgrad:  0.01506127 
+iter:  4740  f-value:  -78115.9  pgrad:  0.06799715 
+iter:  4750  f-value:  -78115.9  pgrad:  0.05547423 
+iter:  4760  f-value:  -78115.9  pgrad:  0.003636386 
+iter:  4770  f-value:  -78115.9  pgrad:  0.2328543 
+iter:  4780  f-value:  -78115.9  pgrad:  0.003636113 
+iter:  4790  f-value:  -78115.9  pgrad:  0.3308574 
+iter:  4800  f-value:  -78115.9  pgrad:  0.00363559 
+iter:  4810  f-value:  -78115.9  pgrad:  0.09727398 
+iter:  4820  f-value:  -78115.9  pgrad:  0.006618852 
+iter:  4830  f-value:  -78115.9  pgrad:  0.003634414 
+iter:  4840  f-value:  -78115.9  pgrad:  0.06928835 
+iter:  4850  f-value:  -78115.9  pgrad:  0.006319192 
+iter:  4860  f-value:  -78115.9  pgrad:  0.2246977 
+iter:  4870  f-value:  -78115.9  pgrad:  0.003633523 
+iter:  4880  f-value:  -78115.9  pgrad:  0.05543246 
+iter:  4890  f-value:  -78115.9  pgrad:  0.01860648 
+iter:  4900  f-value:  -78115.9  pgrad:  0.4470098 
+iter:  4910  f-value:  -78115.9  pgrad:  0.01254148 
+iter:  4920  f-value:  -78115.9  pgrad:  0.3793844 
+iter:  4930  f-value:  -78115.9  pgrad:  0.01254934 
+iter:  4940  f-value:  -78115.9  pgrad:  0.01779971 
+iter:  4950  f-value:  -78115.9  pgrad:  0.1409498 
+iter:  4960  f-value:  -78115.9  pgrad:  0.0623738 
+iter:  4970  f-value:  -78115.9  pgrad:  0.03348475 
+iter:  4980  f-value:  -78115.9  pgrad:  0.1252316 
+iter:  4990  f-value:  -78115.9  pgrad:  0.09937139 
+iter:  5000  f-value:  -78115.9  pgrad:  0.003622263 
+iter:  5010  f-value:  -78115.9  pgrad:  0.00846677 
+iter:  5020  f-value:  -78115.9  pgrad:  0.003621508 
+iter:  5030  f-value:  -78115.9  pgrad:  0.03321064 
+iter:  5040  f-value:  -78115.9  pgrad:  0.07482275 
+iter:  5050  f-value:  -78115.9  pgrad:  0.003611043 
+iter:  5060  f-value:  -78115.9  pgrad:  0.02599058 
+iter:  5070  f-value:  -78115.9  pgrad:  0.003610073 
+iter:  5080  f-value:  -78115.9  pgrad:  0.8436199 
+iter:  5090  f-value:  -78115.9  pgrad:  0.05930308 
+iter:  5100  f-value:  -78115.9  pgrad:  0.02029844 
+iter:  5110  f-value:  -78115.9  pgrad:  0.2048167 
+iter:  5120  f-value:  -78115.9  pgrad:  0.007922247 
+iter:  5130  f-value:  -78115.9  pgrad:  0.01795458 
+iter:  5140  f-value:  -78115.9  pgrad:  0.00359468 
+iter:  5150  f-value:  -78115.9  pgrad:  0.04754608 
+iter:  5160  f-value:  -78115.9  pgrad:  0.00990929 
+iter:  5170  f-value:  -78115.9  pgrad:  0.003591567 
+iter:  5180  f-value:  -78115.9  pgrad:  0.06880063 
+iter:  5190  f-value:  -78115.9  pgrad:  0.01646308 
+iter:  5200  f-value:  -78115.9  pgrad:  0.7254272 
+iter:  5210  f-value:  -78115.9  pgrad:  0.03815464 
+iter:  5220  f-value:  -78115.9  pgrad:  0.1003067 
+iter:  5230  f-value:  -78115.9  pgrad:  0.003578548 
+iter:  5240  f-value:  -78115.9  pgrad:  0.003578377 
+iter:  5250  f-value:  -78115.9  pgrad:  0.2500142 
+iter:  5260  f-value:  -78115.9  pgrad:  0.0346957 
+iter:  5270  f-value:  -78115.9  pgrad:  0.00357613 
+iter:  5280  f-value:  -78115.9  pgrad:  0.05292238 
+iter:  5290  f-value:  -78115.9  pgrad:  0.006164406 
+iter:  5300  f-value:  -78115.9  pgrad:  0.003571712 
+iter:  5310  f-value:  -78115.9  pgrad:  0.02430539 
+iter:  5320  f-value:  -78115.9  pgrad:  0.3495622 
+iter:  5330  f-value:  -78115.9  pgrad:  0.01271184 
+iter:  5340  f-value:  -78115.9  pgrad:  0.009513998 
+iter:  5350  f-value:  -78115.9  pgrad:  0.02114397 
+iter:  5360  f-value:  -78115.92  pgrad:  3.207901 
+iter:  5370  f-value:  -78115.92  pgrad:  0.04155057 
+iter:  5380  f-value:  -78115.92  pgrad:  0.04023848 
+iter:  5390  f-value:  -78115.92  pgrad:  0.006650782 
+iter:  5400  f-value:  -78115.92  pgrad:  0.08501839 
+iter:  5410  f-value:  -78115.92  pgrad:  0.009700936 
+iter:  5420  f-value:  -78115.92  pgrad:  0.002905857 
+iter:  5430  f-value:  -78115.92  pgrad:  0.01160462 
+iter:  5440  f-value:  -78115.92  pgrad:  0.01137564 
+iter:  5450  f-value:  -78115.92  pgrad:  0.0572201 
+iter:  5460  f-value:  -78115.92  pgrad:  0.1603224 
+iter:  5470  f-value:  -78115.92  pgrad:  0.01685573 
+iter:  5480  f-value:  -78115.92  pgrad:  0.003990373 
+iter:  5490  f-value:  -78115.92  pgrad:  0.00290474 
+iter:  5500  f-value:  -78115.92  pgrad:  0.02131811 
+iter:  5510  f-value:  -78115.92  pgrad:  0.8867184 
+iter:  5520  f-value:  -78115.92  pgrad:  0.7709526 
+iter:  5530  f-value:  -78115.92  pgrad:  1.131681 
+iter:  5540  f-value:  -78115.92  pgrad:  0.01899348 
+iter:  5550  f-value:  -78115.92  pgrad:  0.01534317 
+iter:  5560  f-value:  -78115.92  pgrad:  0.04743853 
+iter:  5570  f-value:  -78115.92  pgrad:  0.01742821 
+iter:  5580  f-value:  -78115.92  pgrad:  0.03484257 
+iter:  5590  f-value:  -78115.92  pgrad:  0.03227901 
+iter:  5600  f-value:  -78115.92  pgrad:  0.02488311 
+iter:  5610  f-value:  -78115.92  pgrad:  0.1847807 
+iter:  5620  f-value:  -78115.92  pgrad:  0.009356069 
+iter:  5630  f-value:  -78115.92  pgrad:  0.04313326 
+iter:  5640  f-value:  -78115.92  pgrad:  0.3599541 
+iter:  5650  f-value:  -78115.92  pgrad:  0.006437214 
+iter:  5660  f-value:  -78115.92  pgrad:  0.006119852 
+iter:  5670  f-value:  -78115.92  pgrad:  0.02468578 
+iter:  5680  f-value:  -78115.92  pgrad:  0.1617239 
+iter:  5690  f-value:  -78115.92  pgrad:  0.02756482 
+iter:  5700  f-value:  -78115.92  pgrad:  0.04439125 
+iter:  5710  f-value:  -78115.92  pgrad:  0.1494272 
+iter:  5720  f-value:  -78115.92  pgrad:  0.01975249 
+iter:  5730  f-value:  -78115.92  pgrad:  0.01764989 
+iter:  5740  f-value:  -78115.92  pgrad:  0.2883119 
+iter:  5750  f-value:  -78115.92  pgrad:  0.01517456 
+iter:  5760  f-value:  -78115.92  pgrad:  0.0743293 
+iter:  5770  f-value:  -78115.92  pgrad:  0.2369024 
+iter:  5780  f-value:  -78115.92  pgrad:  0.5950099 
+iter:  5790  f-value:  -78115.92  pgrad:  0.005850023 
+iter:  5800  f-value:  -78115.92  pgrad:  0.07160251 
+iter:  5810  f-value:  -78115.92  pgrad:  0.01119846 
+iter:  5820  f-value:  -78115.92  pgrad:  0.106357 
+iter:  5830  f-value:  -78115.92  pgrad:  0.03201287 
+iter:  5840  f-value:  -78115.92  pgrad:  0.06338861 
+iter:  5850  f-value:  -78115.92  pgrad:  0.003069026 
+iter:  5860  f-value:  -78115.92  pgrad:  0.1074072 
+iter:  5870  f-value:  -78115.92  pgrad:  0.00283915 
+iter:  5880  f-value:  -78115.92  pgrad:  0.05365943 
+iter:  5890  f-value:  -78115.92  pgrad:  0.002839587 
+iter:  5900  f-value:  -78115.92  pgrad:  0.118334 
+iter:  5910  f-value:  -78115.92  pgrad:  0.005240102 
+iter:  5920  f-value:  -78115.92  pgrad:  0.1742055 
+iter:  5930  f-value:  -78115.92  pgrad:  0.002839726 
+iter:  5940  f-value:  -78115.93  pgrad:  0.08028251 
+iter:  5950  f-value:  -78115.93  pgrad:  0.09672286 
+iter:  5960  f-value:  -78115.93  pgrad:  0.7295849 
+iter:  5970  f-value:  -78115.93  pgrad:  0.1397473 
+iter:  5980  f-value:  -78115.93  pgrad:  0.002848727 
+iter:  5990  f-value:  -78115.93  pgrad:  0.08342107 
+iter:  6000  f-value:  -78115.93  pgrad:  0.01145804 
+iter:  6010  f-value:  -78115.93  pgrad:  0.263672 
+iter:  6020  f-value:  -78115.93  pgrad:  0.004256697 
+iter:  6030  f-value:  -78115.93  pgrad:  0.08189648 
+iter:  6040  f-value:  -78115.93  pgrad:  0.05334969 
+iter:  6050  f-value:  -78115.93  pgrad:  0.002850433 
+iter:  6060  f-value:  -78115.93  pgrad:  0.05396281 
+iter:  6070  f-value:  -78115.93  pgrad:  0.04985294 
+iter:  6080  f-value:  -78115.93  pgrad:  0.2386198 
+iter:  6090  f-value:  -78115.93  pgrad:  0.003104699 
+iter:  6100  f-value:  -78115.93  pgrad:  0.03370371 
+iter:  6110  f-value:  -78115.93  pgrad:  0.007488357 
+iter:  6120  f-value:  -78115.93  pgrad:  0.02073491 
+iter:  6130  f-value:  -78115.93  pgrad:  0.02175294 
+iter:  6140  f-value:  -78115.93  pgrad:  0.2615276 
+iter:  6150  f-value:  -78115.93  pgrad:  0.008199003 
+iter:  6160  f-value:  -78115.93  pgrad:  0.002861128 
+iter:  6170  f-value:  -78115.93  pgrad:  0.02481045 
+iter:  6180  f-value:  -78115.93  pgrad:  0.01024957 
+iter:  6190  f-value:  -78115.93  pgrad:  0.009763952 
+iter:  6200  f-value:  -78115.93  pgrad:  0.01495942 
+iter:  6210  f-value:  -78115.93  pgrad:  0.5843322 
+iter:  6220  f-value:  -78115.93  pgrad:  0.2223038 
+iter:  6230  f-value:  -78115.93  pgrad:  0.0102916 
+iter:  6240  f-value:  -78115.93  pgrad:  0.009659607 
+iter:  6250  f-value:  -78115.93  pgrad:  0.01502554 
+iter:  6260  f-value:  -78115.93  pgrad:  0.003691531 
+iter:  6270  f-value:  -78115.93  pgrad:  0.00711085 
+iter:  6280  f-value:  -78115.93  pgrad:  0.01051416 
+iter:  6290  f-value:  -78115.93  pgrad:  0.2554243 
+iter:  6300  f-value:  -78115.93  pgrad:  0.007521896 
+iter:  6310  f-value:  -78115.93  pgrad:  0.1544846 
+iter:  6320  f-value:  -78115.93  pgrad:  0.004195071 
+iter:  6330  f-value:  -78115.93  pgrad:  0.002865558 
+iter:  6340  f-value:  -78115.93  pgrad:  0.2820117 
+iter:  6350  f-value:  -78115.93  pgrad:  0.005058604 
+iter:  6360  f-value:  -78115.93  pgrad:  0.08432412 
+iter:  6370  f-value:  -78115.93  pgrad:  0.002867456 
+iter:  6380  f-value:  -78115.93  pgrad:  0.44645 
+iter:  6390  f-value:  -78115.93  pgrad:  0.03790829 
+iter:  6400  f-value:  -78115.93  pgrad:  0.059648 
+iter:  6410  f-value:  -78115.93  pgrad:  0.127049 
+iter:  6420  f-value:  -78115.93  pgrad:  0.01468799 
+iter:  6430  f-value:  -78115.93  pgrad:  0.04264232 
+iter:  6440  f-value:  -78115.93  pgrad:  0.002876362 
+iter:  6450  f-value:  -78115.93  pgrad:  0.04163391 
+iter:  6460  f-value:  -78115.93  pgrad:  0.03972522 
+iter:  6470  f-value:  -78115.93  pgrad:  0.005377965 
+iter:  6480  f-value:  -78115.93  pgrad:  0.01349825 
+iter:  6490  f-value:  -78115.93  pgrad:  0.01819863 
+iter:  6500  f-value:  -78115.93  pgrad:  0.08311449 
+iter:  6510  f-value:  -78115.93  pgrad:  0.4173677 
+iter:  6520  f-value:  -78115.93  pgrad:  0.04585434 
+iter:  6530  f-value:  -78115.93  pgrad:  0.1976035 
+iter:  6540  f-value:  -78115.93  pgrad:  0.2678285 
+iter:  6550  f-value:  -78115.93  pgrad:  0.02745443 
+iter:  6560  f-value:  -78115.93  pgrad:  0.03032284 
+iter:  6570  f-value:  -78115.93  pgrad:  0.2824733 
+iter:  6580  f-value:  -78115.93  pgrad:  0.00288375 
+iter:  6590  f-value:  -78115.93  pgrad:  0.02928249 
+iter:  6600  f-value:  -78115.93  pgrad:  0.1283457 
+iter:  6610  f-value:  -78115.93  pgrad:  0.006270106 
+iter:  6620  f-value:  -78115.93  pgrad:  0.03671632 
+iter:  6630  f-value:  -78115.93  pgrad:  0.03816727 
+iter:  6640  f-value:  -78115.93  pgrad:  0.01879092 
+iter:  6650  f-value:  -78115.93  pgrad:  0.116659 
+iter:  6660  f-value:  -78115.93  pgrad:  0.004480591 
+iter:  6670  f-value:  -78115.93  pgrad:  0.2183546 
+iter:  6680  f-value:  -78115.93  pgrad:  0.002885682 
+  Unsuccessful convergence.
+Finding conditional estimate of N
+Model Name: No restrictions 
+   Date of Fit: 2018-11-23 21:20 
+   Version of OPEN SPAS used : SPAS-R 2018-11-22 
+ 
+Raw data 
+      V1   V2   V3   V4  V5  V6  V7
+[1,]   9   21    0    0   0   0 171
+[2,]   0  101   22    1   0   0 763
+[3,]   0    0  128   49   0   0 934
+[4,]   0    0    0   48  12   0 434
+[5,]   0    0    0    0   7   0  49
+[6,]   0    0    0    0   0   0   4
+[7,] 351 2736 3847 1818 543 191   0
+
+Row pooling setup : 1 2 3 4 5 6 
+Col pooling setup : 1 2 3 4 5 6 
+Theta pooling     : FALSE 
+CJS pooling       : FALSE 
+
+ 
+Raw data AFTER POOLING 
+      pool1 pool2 pool3 pool4 pool5 pool6  V7
+pool1     9    21     0     0     0     0 171
+pool2     0   101    22     1     0     0 763
+pool3     0     0   128    49     0     0 934
+pool4     0     0     0    48    12     0 434
+pool5     0     0     0     0     7     0  49
+pool6     0     0     0     0     0     0   4
+        351  2736  3847  1818   543   191   0
+
+  Conditional   Log-Likelihood: 78115.93    ;  np: 48 ;  AICc: 156328.2 
+
+  Code/Message from optimization is:  2 Maximum function evals exceeded 
+
+Estimates
+             pool1  pool2  pool3  pool4 pool5 pool6 psi cap.prob exp factor Pop Est
+pool1          8.9   21.1    0.0    0.0   0.0   0.0 171    0.025       39.3    8093
+pool2          0.0  101.2   21.8    1.0   0.0   0.0 763    0.050       18.9   17617
+pool3          0.0    0.0  126.5   50.5   0.0   0.0 934    0.035       27.2   31302
+pool4          0.0    0.0    0.0   48.5  11.5   0.0 434    0.103        8.7    4806
+pool5          0.0    0.0    0.0    0.0   4.9   2.1  49    0.011       90.4    5119
+pool6          0.0    0.0    0.0    0.0   0.0   0.0   4    0.014       69.0     280
+est unmarked 351.1 2735.8 3848.7 1816.0 545.6 188.9   0       NA         NA   67219
+
+SE of above estimates
+             pool1 pool2 pool3 pool4 pool5 pool6  psi cap.prob exp factor Pop Est
+pool1            3   4.6   0.0   0.1   0.0   0.1 13.1    0.008       13.4    2688
+pool2            0  10.0   4.6   1.0   0.0   0.1 27.6    0.010        3.8    3405
+pool3            0   0.0  11.2   7.1   0.0   0.1 30.6    0.003        2.6    2936
+pool4            0   0.0   0.0   6.9   3.3   0.1 20.8    0.053        5.0    2475
+pool5            0   0.0   0.0   0.1   1.9   0.8  7.0    0.004       35.5    1987
+pool6            0   0.0   0.0   0.1   0.0   0.1  2.0      NaN        NaN     NaN
+est unmarked    NA    NA    NA    NA    NA    NA  0.0       NA         NA    2714
+Using BBoptim() to find conditional MLE
+iter:  0  f-value:  -88209.86  pgrad:  16.20618 
+iter:  10  f-value:  -88251.2  pgrad:  8.807821 
+iter:  20  f-value:  -88252.31  pgrad:  1.525003 
+iter:  30  f-value:  -88252.3  pgrad:  17.64306 
+iter:  40  f-value:  -88252.34  pgrad:  0.6167622 
+iter:  50  f-value:  -88252.34  pgrad:  3.818039 
+iter:  60  f-value:  -88252.35  pgrad:  1.331783 
+iter:  70  f-value:  -88252.35  pgrad:  0.2334735 
+iter:  80  f-value:  -88252.35  pgrad:  0.097214 
+iter:  90  f-value:  -88252.35  pgrad:  1.611602 
+iter:  100  f-value:  -88252.35  pgrad:  0.4861756 
+iter:  110  f-value:  -88252.35  pgrad:  0.6593415 
+iter:  120  f-value:  -88252.35  pgrad:  2.554532 
+iter:  130  f-value:  -88252.35  pgrad:  4.469837 
+iter:  140  f-value:  -88252.36  pgrad:  1.875235 
+iter:  150  f-value:  -88252.36  pgrad:  0.09272511 
+iter:  160  f-value:  -88252.36  pgrad:  0.1123263 
+iter:  170  f-value:  -88252.36  pgrad:  0.3111064 
+iter:  180  f-value:  -88252.36  pgrad:  0.09531271 
+iter:  190  f-value:  -88252.36  pgrad:  0.09110111 
+iter:  200  f-value:  -88252.37  pgrad:  6.117009 
+iter:  210  f-value:  -88252.38  pgrad:  0.1586534 
+iter:  220  f-value:  -88252.38  pgrad:  0.8635791 
+iter:  230  f-value:  -88252.38  pgrad:  6.069717 
+iter:  240  f-value:  -88252.38  pgrad:  0.06903628 
+iter:  250  f-value:  -88252.38  pgrad:  0.3607055 
+iter:  260  f-value:  -88252.38  pgrad:  0.06872455 
+iter:  270  f-value:  -88252.38  pgrad:  0.115764 
+iter:  280  f-value:  -88252.38  pgrad:  4.81391 
+iter:  290  f-value:  -88252.38  pgrad:  0.06697348 
+iter:  300  f-value:  -88252.38  pgrad:  2.655126 
+iter:  310  f-value:  -88252.38  pgrad:  0.06635061 
+iter:  320  f-value:  -88252.38  pgrad:  0.06617086 
+iter:  330  f-value:  -88252.38  pgrad:  0.8061438 
+iter:  340  f-value:  -88252.38  pgrad:  0.06605253 
+iter:  350  f-value:  -88252.38  pgrad:  0.06563363 
+iter:  360  f-value:  -88252.39  pgrad:  0.5187555 
+iter:  370  f-value:  -88252.39  pgrad:  0.3032473 
+iter:  380  f-value:  -88252.39  pgrad:  0.2669048 
+iter:  390  f-value:  -88252.39  pgrad:  2.902868 
+iter:  400  f-value:  -88252.39  pgrad:  0.06350027 
+iter:  410  f-value:  -88252.39  pgrad:  0.1947702 
+iter:  420  f-value:  -88252.39  pgrad:  0.1864145 
+iter:  430  f-value:  -88252.39  pgrad:  0.1070086 
+iter:  440  f-value:  -88252.39  pgrad:  1.220921 
+iter:  450  f-value:  -88252.39  pgrad:  0.5862919 
+iter:  460  f-value:  -88252.39  pgrad:  6.053965 
+iter:  470  f-value:  -88252.39  pgrad:  0.1821631 
+iter:  480  f-value:  -88252.39  pgrad:  0.1873024 
+iter:  490  f-value:  -88252.39  pgrad:  2.210465 
+iter:  500  f-value:  -88252.39  pgrad:  0.05631872 
+iter:  510  f-value:  -88252.39  pgrad:  0.05620004 
+iter:  520  f-value:  -88252.39  pgrad:  0.05701184 
+iter:  530  f-value:  -88252.4  pgrad:  0.05351354 
+iter:  540  f-value:  -88252.39  pgrad:  1.886515 
+iter:  550  f-value:  -88252.4  pgrad:  0.118805 
+iter:  560  f-value:  -88252.4  pgrad:  0.09293031 
+iter:  570  f-value:  -88252.4  pgrad:  0.05310515 
+iter:  580  f-value:  -88252.4  pgrad:  0.1073096 
+iter:  590  f-value:  -88252.4  pgrad:  1.168692 
+iter:  600  f-value:  -88252.4  pgrad:  0.05273118 
+iter:  610  f-value:  -88252.4  pgrad:  0.9465513 
+iter:  620  f-value:  -88252.4  pgrad:  0.05214103 
+iter:  630  f-value:  -88252.4  pgrad:  1.171987 
+iter:  640  f-value:  -88252.4  pgrad:  0.05206251 
+iter:  650  f-value:  -88252.4  pgrad:  0.07309961 
+iter:  660  f-value:  -88252.4  pgrad:  0.06816421 
+iter:  670  f-value:  -88252.4  pgrad:  1.199748 
+iter:  680  f-value:  -88252.4  pgrad:  2.109584 
+iter:  690  f-value:  -88252.4  pgrad:  0.0483934 
+iter:  700  f-value:  -88252.4  pgrad:  0.519062 
+iter:  710  f-value:  -88252.4  pgrad:  0.1381648 
+iter:  720  f-value:  -88252.4  pgrad:  0.1891944 
+iter:  730  f-value:  -88252.4  pgrad:  0.06026276 
+iter:  740  f-value:  -88252.4  pgrad:  0.3502305 
+iter:  750  f-value:  -88252.4  pgrad:  0.04550751 
+iter:  760  f-value:  -88252.4  pgrad:  0.8647182 
+iter:  770  f-value:  -88252.41  pgrad:  0.1182897 
+iter:  780  f-value:  -88252.41  pgrad:  0.04430441 
+iter:  790  f-value:  -88252.41  pgrad:  0.7233876 
+iter:  800  f-value:  -88252.41  pgrad:  2.494846 
+iter:  810  f-value:  -88252.41  pgrad:  0.2709261 
+iter:  820  f-value:  -88252.41  pgrad:  0.1396645 
+iter:  830  f-value:  -88252.41  pgrad:  0.04379471 
+iter:  840  f-value:  -88252.41  pgrad:  0.2273852 
+iter:  850  f-value:  -88252.41  pgrad:  0.04345093 
+iter:  860  f-value:  -88252.41  pgrad:  0.04342698 
+iter:  870  f-value:  -88252.41  pgrad:  1.104894 
+iter:  880  f-value:  -88252.41  pgrad:  5.933638 
+iter:  890  f-value:  -88252.41  pgrad:  0.04341207 
+iter:  900  f-value:  -88252.41  pgrad:  2.309223 
+iter:  910  f-value:  -88252.41  pgrad:  1.577355 
+iter:  920  f-value:  -88252.41  pgrad:  0.05006412 
+iter:  930  f-value:  -88252.42  pgrad:  0.03349691 
+iter:  940  f-value:  -88252.42  pgrad:  0.3376845 
+iter:  950  f-value:  -88252.42  pgrad:  0.0330547 
+iter:  960  f-value:  -88252.42  pgrad:  0.03303773 
+iter:  970  f-value:  -88252.42  pgrad:  0.0329557 
+iter:  980  f-value:  -88252.42  pgrad:  0.1824743 
+iter:  990  f-value:  -88252.42  pgrad:  0.03276201 
+iter:  1000  f-value:  -88252.42  pgrad:  0.03275205 
+iter:  1010  f-value:  -88252.42  pgrad:  0.8109495 
+iter:  1020  f-value:  -88252.42  pgrad:  0.0325688 
+iter:  1030  f-value:  -88252.42  pgrad:  0.3759556 
+iter:  1040  f-value:  -88252.42  pgrad:  0.05603715 
+iter:  1050  f-value:  -88252.42  pgrad:  0.05363822 
+iter:  1060  f-value:  -88252.42  pgrad:  0.2037529 
+iter:  1070  f-value:  -88252.42  pgrad:  3.336164 
+iter:  1080  f-value:  -88252.42  pgrad:  1.250238 
+iter:  1090  f-value:  -88252.42  pgrad:  0.03039343 
+iter:  1100  f-value:  -88252.42  pgrad:  0.1583308 
+iter:  1110  f-value:  -88252.42  pgrad:  0.2524355 
+iter:  1120  f-value:  -88252.42  pgrad:  0.04256142 
+iter:  1130  f-value:  -88252.42  pgrad:  0.6837323 
+iter:  1140  f-value:  -88252.42  pgrad:  0.0302411 
+iter:  1150  f-value:  -88252.42  pgrad:  0.03019304 
+iter:  1160  f-value:  -88252.42  pgrad:  0.1055648 
+iter:  1170  f-value:  -88252.42  pgrad:  0.2447723 
+iter:  1180  f-value:  -88252.42  pgrad:  0.03014818 
+iter:  1190  f-value:  -88252.42  pgrad:  0.03013557 
+iter:  1200  f-value:  -88252.42  pgrad:  0.03338907 
+iter:  1210  f-value:  -88252.42  pgrad:  0.4856698 
+iter:  1220  f-value:  -88252.42  pgrad:  0.1328295 
+iter:  1230  f-value:  -88252.42  pgrad:  0.1463232 
+iter:  1240  f-value:  -88252.42  pgrad:  0.3278086 
+iter:  1250  f-value:  -88252.42  pgrad:  3.568086 
+iter:  1260  f-value:  -88252.42  pgrad:  0.07874468 
+iter:  1270  f-value:  -88252.42  pgrad:  0.02655393 
+iter:  1280  f-value:  -88252.42  pgrad:  2.805231 
+iter:  1290  f-value:  -88252.42  pgrad:  0.7076302 
+iter:  1300  f-value:  -88252.42  pgrad:  0.02651928 
+iter:  1310  f-value:  -88252.42  pgrad:  0.02651244 
+iter:  1320  f-value:  -88252.42  pgrad:  0.02641949 
+iter:  1330  f-value:  -88252.42  pgrad:  0.05211573 
+iter:  1340  f-value:  -88252.42  pgrad:  0.1120175 
+iter:  1350  f-value:  -88252.42  pgrad:  0.0262569 
+iter:  1360  f-value:  -88252.42  pgrad:  0.9156606 
+iter:  1370  f-value:  -88252.42  pgrad:  0.02564955 
+iter:  1380  f-value:  -88252.43  pgrad:  0.4485818 
+iter:  1390  f-value:  -88252.43  pgrad:  0.02426417 
+iter:  1400  f-value:  -88252.43  pgrad:  0.02422128 
+iter:  1410  f-value:  -88252.43  pgrad:  1.49371 
+iter:  1420  f-value:  -88252.43  pgrad:  0.02419682 
+iter:  1430  f-value:  -88252.43  pgrad:  0.02408431 
+iter:  1440  f-value:  -88252.43  pgrad:  0.1935968 
+iter:  1450  f-value:  -88252.43  pgrad:  0.5938493 
+iter:  1460  f-value:  -88252.43  pgrad:  0.02399487 
+iter:  1470  f-value:  -88252.43  pgrad:  0.8274481 
+iter:  1480  f-value:  -88252.43  pgrad:  0.07562448 
+iter:  1490  f-value:  -88252.43  pgrad:  0.04494406 
+iter:  1500  f-value:  -88252.43  pgrad:  0.02392263 
+iter:  1510  f-value:  -88252.43  pgrad:  0.02391665 
+iter:  1520  f-value:  -88252.43  pgrad:  0.4549063 
+iter:  1530  f-value:  -88252.43  pgrad:  0.02333554 
+iter:  1540  f-value:  -88252.43  pgrad:  0.3945531 
+iter:  1550  f-value:  -88252.43  pgrad:  0.1566468 
+iter:  1560  f-value:  -88252.43  pgrad:  0.03373875 
+iter:  1570  f-value:  -88252.43  pgrad:  0.1974397 
+iter:  1580  f-value:  -88252.43  pgrad:  0.04325196 
+iter:  1590  f-value:  -88252.43  pgrad:  0.04585405 
+iter:  1600  f-value:  -88252.43  pgrad:  0.4731421 
+iter:  1610  f-value:  -88252.43  pgrad:  0.022761 
+iter:  1620  f-value:  -88252.43  pgrad:  1.877349 
+iter:  1630  f-value:  -88252.43  pgrad:  1.615238 
+iter:  1640  f-value:  -88252.43  pgrad:  0.02227863 
+iter:  1650  f-value:  -88252.43  pgrad:  0.2998328 
+iter:  1660  f-value:  -88252.43  pgrad:  0.02217738 
+iter:  1670  f-value:  -88252.43  pgrad:  0.5645372 
+iter:  1680  f-value:  -88252.43  pgrad:  0.02215747 
+iter:  1690  f-value:  -88252.43  pgrad:  0.04203416 
+iter:  1700  f-value:  -88252.43  pgrad:  0.1387877 
+iter:  1710  f-value:  -88252.43  pgrad:  0.184038 
+iter:  1720  f-value:  -88252.43  pgrad:  0.02197945 
+iter:  1730  f-value:  -88252.43  pgrad:  0.1239732 
+iter:  1740  f-value:  -88252.43  pgrad:  0.1898328 
+iter:  1750  f-value:  -88252.43  pgrad:  0.02193866 
+iter:  1760  f-value:  -88252.43  pgrad:  0.02190454 
+iter:  1770  f-value:  -88252.43  pgrad:  0.98759 
+iter:  1780  f-value:  -88252.43  pgrad:  0.02160816 
+iter:  1790  f-value:  -88252.43  pgrad:  0.02159459 
+iter:  1800  f-value:  -88252.43  pgrad:  0.2857335 
+iter:  1810  f-value:  -88252.43  pgrad:  0.02156361 
+iter:  1820  f-value:  -88252.43  pgrad:  0.2245945 
+iter:  1830  f-value:  -88252.43  pgrad:  0.02150992 
+iter:  1840  f-value:  -88252.43  pgrad:  0.07006128 
+iter:  1850  f-value:  -88252.43  pgrad:  0.02136534 
+iter:  1860  f-value:  -88252.43  pgrad:  0.07515274 
+iter:  1870  f-value:  -88252.43  pgrad:  0.02500666 
+iter:  1880  f-value:  -88252.43  pgrad:  0.02131703 
+iter:  1890  f-value:  -88252.43  pgrad:  0.2886773 
+iter:  1900  f-value:  -88252.43  pgrad:  0.0212183 
+iter:  1910  f-value:  -88252.43  pgrad:  1.208074 
+iter:  1920  f-value:  -88252.43  pgrad:  0.02114627 
+iter:  1930  f-value:  -88252.43  pgrad:  1.178187 
+iter:  1940  f-value:  -88252.44  pgrad:  0.2528741 
+iter:  1950  f-value:  -88252.44  pgrad:  0.5364087 
+iter:  1960  f-value:  -88252.44  pgrad:  0.01354715 
+iter:  1970  f-value:  -88252.43  pgrad:  1.424669 
+iter:  1980  f-value:  -88252.44  pgrad:  0.02071374 
+iter:  1990  f-value:  -88252.44  pgrad:  0.1651758 
+iter:  2000  f-value:  -88252.44  pgrad:  0.01902507 
+iter:  2010  f-value:  -88252.44  pgrad:  0.05959124 
+iter:  2020  f-value:  -88252.44  pgrad:  0.1949873 
+iter:  2030  f-value:  -88252.44  pgrad:  0.05877455 
+iter:  2040  f-value:  -88252.44  pgrad:  0.0249961 
+iter:  2050  f-value:  -88252.44  pgrad:  0.0682618 
+iter:  2060  f-value:  -88252.44  pgrad:  0.1021548 
+iter:  2070  f-value:  -88252.44  pgrad:  0.0133998 
+iter:  2080  f-value:  -88252.44  pgrad:  0.01528371 
+iter:  2090  f-value:  -88252.44  pgrad:  0.0133889 
+iter:  2100  f-value:  -88252.44  pgrad:  0.09170662 
+iter:  2110  f-value:  -88252.44  pgrad:  0.01329391 
+iter:  2120  f-value:  -88252.44  pgrad:  0.125796 
+iter:  2130  f-value:  -88252.44  pgrad:  0.0124725 
+iter:  2140  f-value:  -88252.44  pgrad:  0.04424378 
+iter:  2150  f-value:  -88252.44  pgrad:  0.3043394 
+iter:  2160  f-value:  -88252.44  pgrad:  0.01246259 
+iter:  2170  f-value:  -88252.44  pgrad:  0.1084936 
+iter:  2180  f-value:  -88252.44  pgrad:  0.9578957 
+iter:  2190  f-value:  -88252.44  pgrad:  0.01244693 
+iter:  2200  f-value:  -88252.44  pgrad:  0.03812949 
+iter:  2210  f-value:  -88252.44  pgrad:  0.01112482 
+iter:  2220  f-value:  -88252.44  pgrad:  0.1496155 
+iter:  2230  f-value:  -88252.44  pgrad:  0.03122165 
+iter:  2240  f-value:  -88252.44  pgrad:  0.01110786 
+iter:  2250  f-value:  -88252.44  pgrad:  0.01655165 
+iter:  2260  f-value:  -88252.44  pgrad:  0.4961849 
+iter:  2270  f-value:  -88252.44  pgrad:  0.03157232 
+iter:  2280  f-value:  -88252.44  pgrad:  0.04408515 
+iter:  2290  f-value:  -88252.44  pgrad:  0.01101242 
+iter:  2300  f-value:  -88252.44  pgrad:  0.1241215 
+iter:  2310  f-value:  -88252.44  pgrad:  0.01100591 
+iter:  2320  f-value:  -88252.44  pgrad:  0.01192641 
+iter:  2330  f-value:  -88252.44  pgrad:  0.05252926 
+iter:  2340  f-value:  -88252.44  pgrad:  0.04973272 
+iter:  2350  f-value:  -88252.44  pgrad:  0.0108536 
+iter:  2360  f-value:  -88252.44  pgrad:  0.02360186 
+iter:  2370  f-value:  -88252.44  pgrad:  0.01080149 
+iter:  2380  f-value:  -88252.44  pgrad:  0.02725446 
+iter:  2390  f-value:  -88252.44  pgrad:  0.03882456 
+iter:  2400  f-value:  -88252.44  pgrad:  0.4326243 
+iter:  2410  f-value:  -88252.44  pgrad:  0.134369 
+iter:  2420  f-value:  -88252.44  pgrad:  0.03075037 
+iter:  2430  f-value:  -88252.44  pgrad:  0.02246104 
+iter:  2440  f-value:  -88252.44  pgrad:  0.1077631 
+iter:  2450  f-value:  -88252.44  pgrad:  0.173008 
+iter:  2460  f-value:  -88252.44  pgrad:  0.01041123 
+iter:  2470  f-value:  -88252.44  pgrad:  0.5810763 
+iter:  2480  f-value:  -88252.44  pgrad:  0.02741631 
+iter:  2490  f-value:  -88252.44  pgrad:  0.6834515 
+iter:  2500  f-value:  -88252.44  pgrad:  0.01036312 
+iter:  2510  f-value:  -88252.44  pgrad:  0.01162767 
+iter:  2520  f-value:  -88252.44  pgrad:  0.3397401 
+iter:  2530  f-value:  -88252.44  pgrad:  0.01033991 
+iter:  2540  f-value:  -88252.44  pgrad:  0.1077898 
+iter:  2550  f-value:  -88252.44  pgrad:  0.01033846 
+iter:  2560  f-value:  -88252.44  pgrad:  0.0175073 
+iter:  2570  f-value:  -88252.44  pgrad:  0.0656114 
+iter:  2580  f-value:  -88252.44  pgrad:  0.05169098 
+iter:  2590  f-value:  -88252.44  pgrad:  0.01026284 
+iter:  2600  f-value:  -88252.44  pgrad:  0.2982698 
+iter:  2610  f-value:  -88252.44  pgrad:  0.01011952 
+iter:  2620  f-value:  -88252.44  pgrad:  0.08550068 
+iter:  2630  f-value:  -88252.44  pgrad:  0.01010865 
+iter:  2640  f-value:  -88252.44  pgrad:  0.182517 
+iter:  2650  f-value:  -88252.44  pgrad:  0.01009575 
+iter:  2660  f-value:  -88252.44  pgrad:  0.01007799 
+iter:  2670  f-value:  -88252.44  pgrad:  0.01002905 
+iter:  2680  f-value:  -88252.44  pgrad:  0.0100255 
+iter:  2690  f-value:  -88252.44  pgrad:  0.01002044 
+iter:  2700  f-value:  -88252.44  pgrad:  0.3506854 
+iter:  2710  f-value:  -88252.44  pgrad:  0.01001526 
+iter:  2720  f-value:  -88252.44  pgrad:  0.1402931 
+iter:  2730  f-value:  -88252.44  pgrad:  0.04308566 
+iter:  2740  f-value:  -88252.44  pgrad:  0.01499259 
+iter:  2750  f-value:  -88252.44  pgrad:  0.009942431 
+iter:  2760  f-value:  -88252.44  pgrad:  0.009941535 
+iter:  2770  f-value:  -88252.44  pgrad:  0.01616825 
+iter:  2780  f-value:  -88252.44  pgrad:  0.01487111 
+iter:  2790  f-value:  -88252.44  pgrad:  0.08717015 
+iter:  2800  f-value:  -88252.44  pgrad:  0.0315112 
+iter:  2810  f-value:  -88252.44  pgrad:  0.00984062 
+iter:  2820  f-value:  -88252.44  pgrad:  0.009839199 
+iter:  2830  f-value:  -88252.44  pgrad:  0.009806871 
+iter:  2840  f-value:  -88252.44  pgrad:  0.009805919 
+iter:  2850  f-value:  -88252.44  pgrad:  0.009804632 
+iter:  2860  f-value:  -88252.44  pgrad:  0.3401712 
+iter:  2870  f-value:  -88252.44  pgrad:  0.009802345 
+iter:  2880  f-value:  -88252.44  pgrad:  0.01872795 
+iter:  2890  f-value:  -88252.44  pgrad:  0.009771021 
+iter:  2900  f-value:  -88252.44  pgrad:  0.5331077 
+iter:  2910  f-value:  -88252.44  pgrad:  0.02875543 
+iter:  2920  f-value:  -88252.44  pgrad:  0.8354727 
+iter:  2930  f-value:  -88252.44  pgrad:  0.009618617 
+iter:  2940  f-value:  -88252.44  pgrad:  0.03159881 
+iter:  2950  f-value:  -88252.44  pgrad:  0.009586472 
+iter:  2960  f-value:  -88252.44  pgrad:  0.01746091 
+iter:  2970  f-value:  -88252.44  pgrad:  0.02061931 
+iter:  2980  f-value:  -88252.44  pgrad:  0.3883229 
+iter:  2990  f-value:  -88252.44  pgrad:  0.009560795 
+iter:  3000  f-value:  -88252.44  pgrad:  0.1460989 
+iter:  3010  f-value:  -88252.44  pgrad:  0.1610398 
+iter:  3020  f-value:  -88252.44  pgrad:  0.009545194 
+iter:  3030  f-value:  -88252.44  pgrad:  0.03953439 
+iter:  3040  f-value:  -88252.44  pgrad:  0.07227507 
+iter:  3050  f-value:  -88252.44  pgrad:  0.02643997 
+iter:  3060  f-value:  -88252.44  pgrad:  0.7065174 
+iter:  3070  f-value:  -88252.44  pgrad:  0.0093705 
+iter:  3080  f-value:  -88252.44  pgrad:  0.1602538 
+iter:  3090  f-value:  -88252.44  pgrad:  0.05752076 
+iter:  3100  f-value:  -88252.44  pgrad:  0.009361202 
+iter:  3110  f-value:  -88252.44  pgrad:  0.01200457 
+iter:  3120  f-value:  -88252.44  pgrad:  0.02248131 
+iter:  3130  f-value:  -88252.44  pgrad:  0.3072951 
+iter:  3140  f-value:  -88252.44  pgrad:  0.009354595 
+iter:  3150  f-value:  -88252.44  pgrad:  0.07190023 
+iter:  3160  f-value:  -88252.44  pgrad:  0.01217781 
+iter:  3170  f-value:  -88252.44  pgrad:  0.04501582 
+iter:  3180  f-value:  -88252.44  pgrad:  0.009344468 
+iter:  3190  f-value:  -88252.44  pgrad:  0.0120378 
+iter:  3200  f-value:  -88252.44  pgrad:  0.009331262 
+iter:  3210  f-value:  -88252.44  pgrad:  0.300992 
+iter:  3220  f-value:  -88252.44  pgrad:  0.009324889 
+iter:  3230  f-value:  -88252.44  pgrad:  0.009324065 
+iter:  3240  f-value:  -88252.44  pgrad:  0.00932356 
+iter:  3250  f-value:  -88252.44  pgrad:  0.1050776 
+iter:  3260  f-value:  -88252.44  pgrad:  0.05849406 
+iter:  3270  f-value:  -88252.44  pgrad:  0.009297014 
+iter:  3280  f-value:  -88252.44  pgrad:  0.009291567 
+iter:  3290  f-value:  -88252.44  pgrad:  0.009290876 
+iter:  3300  f-value:  -88252.44  pgrad:  0.02067933 
+iter:  3310  f-value:  -88252.44  pgrad:  0.009212195 
+iter:  3320  f-value:  -88252.44  pgrad:  0.009210371 
+iter:  3330  f-value:  -88252.44  pgrad:  0.00920973 
+iter:  3340  f-value:  -88252.44  pgrad:  0.009191406 
+iter:  3350  f-value:  -88252.44  pgrad:  0.2246866 
+iter:  3360  f-value:  -88252.44  pgrad:  0.00918632 
+iter:  3370  f-value:  -88252.44  pgrad:  0.0510126 
+iter:  3380  f-value:  -88252.44  pgrad:  0.009183337 
+iter:  3390  f-value:  -88252.44  pgrad:  0.06907678 
+iter:  3400  f-value:  -88252.44  pgrad:  0.13805 
+iter:  3410  f-value:  -88252.44  pgrad:  0.009092852 
+iter:  3420  f-value:  -88252.44  pgrad:  0.009086178 
+iter:  3430  f-value:  -88252.44  pgrad:  0.2373491 
+iter:  3440  f-value:  -88252.44  pgrad:  0.02198916 
+iter:  3450  f-value:  -88252.44  pgrad:  0.01639549 
+iter:  3460  f-value:  -88252.44  pgrad:  0.01610623 
+iter:  3470  f-value:  -88252.44  pgrad:  0.478032 
+iter:  3480  f-value:  -88252.44  pgrad:  0.01053761 
+iter:  3490  f-value:  -88252.44  pgrad:  0.008907243 
+iter:  3500  f-value:  -88252.44  pgrad:  0.008905024 
+iter:  3510  f-value:  -88252.44  pgrad:  0.008901495 
+iter:  3520  f-value:  -88252.44  pgrad:  0.00889921 
+iter:  3530  f-value:  -88252.44  pgrad:  0.00889828 
+iter:  3540  f-value:  -88252.44  pgrad:  0.3002762 
+iter:  3550  f-value:  -88252.44  pgrad:  0.008894419 
+iter:  3560  f-value:  -88252.44  pgrad:  0.3497454 
+iter:  3570  f-value:  -88252.44  pgrad:  0.00884075 
+iter:  3580  f-value:  -88252.44  pgrad:  0.01667595 
+iter:  3590  f-value:  -88252.44  pgrad:  0.008837921 
+iter:  3600  f-value:  -88252.44  pgrad:  0.01929253 
+iter:  3610  f-value:  -88252.44  pgrad:  0.183229 
+iter:  3620  f-value:  -88252.44  pgrad:  2.498929 
+iter:  3630  f-value:  -88252.44  pgrad:  0.008282581 
+iter:  3640  f-value:  -88252.44  pgrad:  0.2413489 
+iter:  3650  f-value:  -88252.44  pgrad:  0.06176767 
+iter:  3660  f-value:  -88252.44  pgrad:  0.008230737 
+iter:  3670  f-value:  -88252.44  pgrad:  0.06239273 
+iter:  3680  f-value:  -88252.44  pgrad:  0.008213229 
+iter:  3690  f-value:  -88252.44  pgrad:  0.03289431 
+iter:  3700  f-value:  -88252.44  pgrad:  0.008197722 
+iter:  3710  f-value:  -88252.44  pgrad:  0.2139091 
+iter:  3720  f-value:  -88252.44  pgrad:  0.02591923 
+iter:  3730  f-value:  -88252.44  pgrad:  0.008131272 
+iter:  3740  f-value:  -88252.44  pgrad:  0.008123224 
+iter:  3750  f-value:  -88252.44  pgrad:  0.008479913 
+iter:  3760  f-value:  -88252.44  pgrad:  0.01972016 
+iter:  3770  f-value:  -88252.44  pgrad:  0.0212848 
+iter:  3780  f-value:  -88252.44  pgrad:  0.009609 
+iter:  3790  f-value:  -88252.44  pgrad:  0.00809786 
+iter:  3800  f-value:  -88252.44  pgrad:  0.1102097 
+iter:  3810  f-value:  -88252.44  pgrad:  0.008083765 
+iter:  3820  f-value:  -88252.44  pgrad:  0.008083226 
+iter:  3830  f-value:  -88252.44  pgrad:  0.01104967 
+iter:  3840  f-value:  -88252.44  pgrad:  0.01449555 
+iter:  3850  f-value:  -88252.44  pgrad:  0.01211697 
+iter:  3860  f-value:  -88252.44  pgrad:  0.07034322 
+iter:  3870  f-value:  -88252.44  pgrad:  0.008047843 
+iter:  3880  f-value:  -88252.44  pgrad:  0.0516093 
+iter:  3890  f-value:  -88252.44  pgrad:  0.2493284 
+iter:  3900  f-value:  -88252.44  pgrad:  0.09137406 
+iter:  3910  f-value:  -88252.44  pgrad:  0.08883128 
+iter:  3920  f-value:  -88252.44  pgrad:  0.07632818 
+iter:  3930  f-value:  -88252.44  pgrad:  0.1160463 
+iter:  3940  f-value:  -88252.44  pgrad:  0.008006056 
+iter:  3950  f-value:  -88252.44  pgrad:  0.07814286 
+iter:  3960  f-value:  -88252.44  pgrad:  0.02477259 
+iter:  3970  f-value:  -88252.44  pgrad:  0.01116108 
+iter:  3980  f-value:  -88252.44  pgrad:  0.6380496 
+iter:  3990  f-value:  -88252.44  pgrad:  0.421598 
+iter:  4000  f-value:  -88252.44  pgrad:  0.01212061 
+iter:  4010  f-value:  -88252.44  pgrad:  0.05569903 
+iter:  4020  f-value:  -88252.44  pgrad:  0.01641299 
+iter:  4030  f-value:  -88252.44  pgrad:  0.01412016 
+iter:  4040  f-value:  -88252.44  pgrad:  0.008853831 
+iter:  4050  f-value:  -88252.44  pgrad:  0.007956797 
+iter:  4060  f-value:  -88252.44  pgrad:  0.007925094 
+iter:  4070  f-value:  -88252.44  pgrad:  0.2920281 
+iter:  4080  f-value:  -88252.44  pgrad:  0.007921417 
+iter:  4090  f-value:  -88252.44  pgrad:  0.007911005 
+iter:  4100  f-value:  -88252.44  pgrad:  0.007908833 
+iter:  4110  f-value:  -88252.44  pgrad:  0.00790615 
+iter:  4120  f-value:  -88252.44  pgrad:  0.06820819 
+iter:  4130  f-value:  -88252.44  pgrad:  0.1114469 
+iter:  4140  f-value:  -88252.44  pgrad:  0.007880428 
+iter:  4150  f-value:  -88252.44  pgrad:  0.007875504 
+iter:  4160  f-value:  -88252.44  pgrad:  0.1359102 
+iter:  4170  f-value:  -88252.44  pgrad:  0.02352532 
+iter:  4180  f-value:  -88252.44  pgrad:  0.007847048 
+iter:  4190  f-value:  -88252.44  pgrad:  0.5756846 
+iter:  4200  f-value:  -88252.44  pgrad:  0.00784167 
+iter:  4210  f-value:  -88252.44  pgrad:  0.3948049 
+iter:  4220  f-value:  -88252.44  pgrad:  0.00783969 
+iter:  4230  f-value:  -88252.44  pgrad:  0.01091331 
+iter:  4240  f-value:  -88252.44  pgrad:  0.4619515 
+iter:  4250  f-value:  -88252.44  pgrad:  0.007827762 
+iter:  4260  f-value:  -88252.44  pgrad:  0.2099139 
+iter:  4270  f-value:  -88252.44  pgrad:  0.01315264 
+iter:  4280  f-value:  -88252.44  pgrad:  0.0453168 
+iter:  4290  f-value:  -88252.44  pgrad:  0.1144391 
+iter:  4300  f-value:  -88252.44  pgrad:  0.007744394 
+iter:  4310  f-value:  -88252.44  pgrad:  0.4932856 
+iter:  4320  f-value:  -88252.44  pgrad:  0.01619133 
+iter:  4330  f-value:  -88252.44  pgrad:  0.7318115 
+iter:  4340  f-value:  -88252.44  pgrad:  0.007725414 
+iter:  4350  f-value:  -88252.44  pgrad:  0.04714805 
+iter:  4360  f-value:  -88252.44  pgrad:  0.007721775 
+iter:  4370  f-value:  -88252.44  pgrad:  0.06994844 
+iter:  4380  f-value:  -88252.44  pgrad:  0.007680979 
+iter:  4390  f-value:  -88252.44  pgrad:  0.5489103 
+iter:  4400  f-value:  -88252.44  pgrad:  0.02383278 
+iter:  4410  f-value:  -88252.44  pgrad:  0.007642375 
+iter:  4420  f-value:  -88252.44  pgrad:  0.105017 
+iter:  4430  f-value:  -88252.44  pgrad:  1.854652 
+iter:  4440  f-value:  -88252.44  pgrad:  0.006159551 
+iter:  4450  f-value:  -88252.44  pgrad:  0.5425387 
+iter:  4460  f-value:  -88252.44  pgrad:  0.006157702 
+iter:  4470  f-value:  -88252.44  pgrad:  0.03349017 
+iter:  4480  f-value:  -88252.44  pgrad:  0.006129327 
+iter:  4490  f-value:  -88252.44  pgrad:  0.05764625 
+iter:  4500  f-value:  -88252.44  pgrad:  0.006127508 
+iter:  4510  f-value:  -88252.44  pgrad:  0.00727563 
+iter:  4520  f-value:  -88252.44  pgrad:  0.4542305 
+iter:  4530  f-value:  -88252.44  pgrad:  0.006121788 
+iter:  4540  f-value:  -88252.44  pgrad:  0.3585668 
+iter:  4550  f-value:  -88252.44  pgrad:  0.006116662 
+iter:  4560  f-value:  -88252.44  pgrad:  0.219131 
+iter:  4570  f-value:  -88252.44  pgrad:  0.006114249 
+iter:  4580  f-value:  -88252.44  pgrad:  0.006100551 
+iter:  4590  f-value:  -88252.44  pgrad:  0.07491249 
+iter:  4600  f-value:  -88252.44  pgrad:  0.1598433 
+iter:  4610  f-value:  -88252.44  pgrad:  0.006094428 
+iter:  4620  f-value:  -88252.44  pgrad:  0.142172 
+iter:  4630  f-value:  -88252.44  pgrad:  0.008736014 
+iter:  4640  f-value:  -88252.44  pgrad:  0.007043634 
+iter:  4650  f-value:  -88252.44  pgrad:  0.2979549 
+iter:  4660  f-value:  -88252.44  pgrad:  0.02472683 
+iter:  4670  f-value:  -88252.44  pgrad:  0.007146656 
+iter:  4680  f-value:  -88252.44  pgrad:  0.4504842 
+iter:  4690  f-value:  -88252.44  pgrad:  0.1816976 
+iter:  4700  f-value:  -88252.44  pgrad:  0.007365003 
+iter:  4710  f-value:  -88252.44  pgrad:  0.02214007 
+iter:  4720  f-value:  -88252.44  pgrad:  0.01380942 
+iter:  4730  f-value:  -88252.44  pgrad:  0.1369608 
+iter:  4740  f-value:  -88252.44  pgrad:  0.1387794 
+iter:  4750  f-value:  -88252.44  pgrad:  0.005928467 
+iter:  4760  f-value:  -88252.44  pgrad:  0.48986 
+iter:  4770  f-value:  -88252.44  pgrad:  0.005895688 
+iter:  4780  f-value:  -88252.44  pgrad:  0.02581881 
+iter:  4790  f-value:  -88252.44  pgrad:  0.005893146 
+iter:  4800  f-value:  -88252.44  pgrad:  0.005881683 
+iter:  4810  f-value:  -88252.44  pgrad:  0.01690408 
+iter:  4820  f-value:  -88252.44  pgrad:  0.1804667 
+iter:  4830  f-value:  -88252.44  pgrad:  0.01775803 
+iter:  4840  f-value:  -88252.44  pgrad:  0.006481645 
+iter:  4850  f-value:  -88252.44  pgrad:  0.008946195 
+iter:  4860  f-value:  -88252.44  pgrad:  0.005801523 
+iter:  4870  f-value:  -88252.44  pgrad:  0.0166765 
+iter:  4880  f-value:  -88252.44  pgrad:  0.02733545 
+iter:  4890  f-value:  -88252.44  pgrad:  0.02501598 
+iter:  4900  f-value:  -88252.44  pgrad:  0.1476985 
+iter:  4910  f-value:  -88252.44  pgrad:  0.2887392 
+iter:  4920  f-value:  -88252.44  pgrad:  0.009685761 
+iter:  4930  f-value:  -88252.44  pgrad:  0.01235611 
+iter:  4940  f-value:  -88252.44  pgrad:  0.009474432 
+iter:  4950  f-value:  -88252.44  pgrad:  0.03619021 
+iter:  4960  f-value:  -88252.44  pgrad:  0.1353162 
+iter:  4970  f-value:  -88252.44  pgrad:  0.005754395 
+iter:  4980  f-value:  -88252.44  pgrad:  0.02987637 
+iter:  4990  f-value:  -88252.44  pgrad:  0.005752288 
+iter:  5000  f-value:  -88252.44  pgrad:  0.1803604 
+iter:  5010  f-value:  -88252.44  pgrad:  0.1077159 
+iter:  5020  f-value:  -88252.44  pgrad:  0.01089806 
+iter:  5030  f-value:  -88252.44  pgrad:  0.005743565 
+iter:  5040  f-value:  -88252.44  pgrad:  0.0239149 
+iter:  5050  f-value:  -88252.44  pgrad:  0.0115793 
+iter:  5060  f-value:  -88252.44  pgrad:  0.05264177 
+iter:  5070  f-value:  -88252.44  pgrad:  0.005726988 
+iter:  5080  f-value:  -88252.44  pgrad:  0.02004532 
+iter:  5090  f-value:  -88252.44  pgrad:  0.005717624 
+iter:  5100  f-value:  -88252.44  pgrad:  0.1095181 
+iter:  5110  f-value:  -88252.44  pgrad:  0.005716354 
+iter:  5120  f-value:  -88252.44  pgrad:  0.005715002 
+iter:  5130  f-value:  -88252.44  pgrad:  0.06875472 
+iter:  5140  f-value:  -88252.44  pgrad:  0.008286029 
+iter:  5150  f-value:  -88252.44  pgrad:  0.02580691 
+iter:  5160  f-value:  -88252.44  pgrad:  0.0563284 
+iter:  5170  f-value:  -88252.44  pgrad:  0.0237875 
+iter:  5180  f-value:  -88252.44  pgrad:  0.2122123 
+iter:  5190  f-value:  -88252.44  pgrad:  0.5666511 
+iter:  5200  f-value:  -88252.44  pgrad:  0.005546337 
+iter:  5210  f-value:  -88252.44  pgrad:  0.4259719 
+iter:  5220  f-value:  -88252.44  pgrad:  0.04505442 
+iter:  5230  f-value:  -88252.44  pgrad:  0.02935959 
+iter:  5240  f-value:  -88252.44  pgrad:  0.06764578 
+iter:  5250  f-value:  -88252.44  pgrad:  0.005534882 
+iter:  5260  f-value:  -88252.44  pgrad:  0.03864392 
+iter:  5270  f-value:  -88252.44  pgrad:  0.005534174 
+iter:  5280  f-value:  -88252.44  pgrad:  0.005533353 
+iter:  5290  f-value:  -88252.44  pgrad:  0.5043842 
+iter:  5300  f-value:  -88252.44  pgrad:  0.009596698 
+iter:  5310  f-value:  -88252.44  pgrad:  0.06953458 
+iter:  5320  f-value:  -88252.44  pgrad:  0.005983773 
+iter:  5330  f-value:  -88252.44  pgrad:  0.005434569 
+iter:  5340  f-value:  -88252.44  pgrad:  0.02568712 
+iter:  5350  f-value:  -88252.44  pgrad:  0.6731855 
+iter:  5360  f-value:  -88252.44  pgrad:  0.2401083 
+iter:  5370  f-value:  -88252.44  pgrad:  0.03249755 
+iter:  5380  f-value:  -88252.44  pgrad:  0.1247712 
+iter:  5390  f-value:  -88252.44  pgrad:  0.007801503 
+iter:  5400  f-value:  -88252.44  pgrad:  0.005302603 
+iter:  5410  f-value:  -88252.44  pgrad:  0.007473815 
+iter:  5420  f-value:  -88252.44  pgrad:  0.005301745 
+iter:  5430  f-value:  -88252.44  pgrad:  0.2184382 
+iter:  5440  f-value:  -88252.44  pgrad:  0.005300363 
+iter:  5450  f-value:  -88252.44  pgrad:  0.02490219 
+iter:  5460  f-value:  -88252.44  pgrad:  0.007743489 
+iter:  5470  f-value:  -88252.44  pgrad:  0.01546704 
+iter:  5480  f-value:  -88252.44  pgrad:  0.02923915 
+iter:  5490  f-value:  -88252.44  pgrad:  0.02432736 
+iter:  5500  f-value:  -88252.44  pgrad:  0.01895966 
+iter:  5510  f-value:  -88252.44  pgrad:  0.03242421 
+iter:  5520  f-value:  -88252.44  pgrad:  0.009652041 
+iter:  5530  f-value:  -88252.44  pgrad:  0.007884467 
+iter:  5540  f-value:  -88252.44  pgrad:  0.02037869 
+iter:  5550  f-value:  -88252.44  pgrad:  0.05534026 
+iter:  5560  f-value:  -88252.44  pgrad:  0.01708699 
+iter:  5570  f-value:  -88252.44  pgrad:  0.05575093 
+iter:  5580  f-value:  -88252.44  pgrad:  0.05858835 
+iter:  5590  f-value:  -88252.44  pgrad:  0.1689912 
+iter:  5600  f-value:  -88252.44  pgrad:  0.005705672 
+iter:  5610  f-value:  -88252.44  pgrad:  0.09084875 
+iter:  5620  f-value:  -88252.44  pgrad:  0.004859698 
+iter:  5630  f-value:  -88252.44  pgrad:  0.05573119 
+iter:  5640  f-value:  -88252.44  pgrad:  0.006520917 
+iter:  5650  f-value:  -88252.44  pgrad:  0.03961224 
+iter:  5660  f-value:  -88252.44  pgrad:  0.005344635 
+iter:  5670  f-value:  -88252.44  pgrad:  0.1355257 
+iter:  5680  f-value:  -88252.44  pgrad:  0.1297877 
+iter:  5690  f-value:  -88252.44  pgrad:  0.0595141 
+iter:  5700  f-value:  -88252.44  pgrad:  0.02988506 
+iter:  5710  f-value:  -88252.44  pgrad:  0.004844798 
+iter:  5720  f-value:  -88252.44  pgrad:  0.1371067 
+iter:  5730  f-value:  -88252.44  pgrad:  0.004841696 
+iter:  5740  f-value:  -88252.44  pgrad:  0.02791106 
+iter:  5750  f-value:  -88252.44  pgrad:  0.01116007 
+iter:  5760  f-value:  -88252.44  pgrad:  0.004839004 
+iter:  5770  f-value:  -88252.44  pgrad:  0.02785767 
+iter:  5780  f-value:  -88252.44  pgrad:  0.04544873 
+iter:  5790  f-value:  -88252.44  pgrad:  0.0807697 
+iter:  5800  f-value:  -88252.44  pgrad:  0.005121471 
+iter:  5810  f-value:  -88252.44  pgrad:  0.004831323 
+iter:  5820  f-value:  -88252.44  pgrad:  0.2724933 
+iter:  5830  f-value:  -88252.44  pgrad:  0.009349443 
+iter:  5840  f-value:  -88252.44  pgrad:  0.009479025 
+iter:  5850  f-value:  -88252.44  pgrad:  0.004827024 
+iter:  5860  f-value:  -88252.44  pgrad:  0.004826623 
+iter:  5870  f-value:  -88252.44  pgrad:  0.4193719 
+iter:  5880  f-value:  -88252.44  pgrad:  0.01706456 
+iter:  5890  f-value:  -88252.44  pgrad:  0.01449945 
+iter:  5900  f-value:  -88252.44  pgrad:  0.004781718 
+iter:  5910  f-value:  -88252.44  pgrad:  0.7587601 
+iter:  5920  f-value:  -88252.44  pgrad:  0.007130925 
+iter:  5930  f-value:  -88252.44  pgrad:  0.01295266 
+iter:  5940  f-value:  -88252.44  pgrad:  0.0226555 
+iter:  5950  f-value:  -88252.44  pgrad:  0.007110616 
+iter:  5960  f-value:  -88252.44  pgrad:  0.01159709 
+iter:  5970  f-value:  -88252.44  pgrad:  0.0269755 
+iter:  5980  f-value:  -88252.44  pgrad:  0.1700577 
+iter:  5990  f-value:  -88252.44  pgrad:  0.004735555 
+iter:  6000  f-value:  -88252.44  pgrad:  0.01212721 
+iter:  6010  f-value:  -88252.44  pgrad:  0.00788041 
+iter:  6020  f-value:  -88252.44  pgrad:  0.2293777 
+iter:  6030  f-value:  -88252.44  pgrad:  0.4770517 
+iter:  6040  f-value:  -88252.44  pgrad:  0.00468864 
+iter:  6050  f-value:  -88252.44  pgrad:  0.4661743 
+iter:  6060  f-value:  -88252.44  pgrad:  0.004685303 
+iter:  6070  f-value:  -88252.44  pgrad:  0.01756955 
+iter:  6080  f-value:  -88252.44  pgrad:  0.004681613 
+iter:  6090  f-value:  -88252.44  pgrad:  0.004680996 
+iter:  6100  f-value:  -88252.44  pgrad:  0.004680821 
+iter:  6110  f-value:  -88252.44  pgrad:  0.1071363 
+iter:  6120  f-value:  -88252.44  pgrad:  0.08226741 
+iter:  6130  f-value:  -88252.44  pgrad:  0.009115102 
+iter:  6140  f-value:  -88252.44  pgrad:  0.01271078 
+iter:  6150  f-value:  -88252.44  pgrad:  0.004645254 
+iter:  6160  f-value:  -88252.44  pgrad:  0.2743437 
+iter:  6170  f-value:  -88252.44  pgrad:  0.01204226 
+iter:  6180  f-value:  -88252.44  pgrad:  0.02453925 
+iter:  6190  f-value:  -88252.44  pgrad:  0.004636615 
+iter:  6200  f-value:  -88252.44  pgrad:  0.2650811 
+iter:  6210  f-value:  -88252.44  pgrad:  0.004633194 
+iter:  6220  f-value:  -88252.44  pgrad:  0.01812097 
+iter:  6230  f-value:  -88252.44  pgrad:  0.004631785 
+iter:  6240  f-value:  -88252.44  pgrad:  0.0064998 
+iter:  6250  f-value:  -88252.44  pgrad:  0.005029677 
+iter:  6260  f-value:  -88252.44  pgrad:  0.005845563 
+iter:  6270  f-value:  -88252.44  pgrad:  0.02881164 
+iter:  6280  f-value:  -88252.44  pgrad:  0.004629818 
+iter:  6290  f-value:  -88252.44  pgrad:  0.02803188 
+iter:  6300  f-value:  -88252.44  pgrad:  0.004629324 
+iter:  6310  f-value:  -88252.44  pgrad:  0.004628912 
+iter:  6320  f-value:  -88252.44  pgrad:  0.04427521 
+iter:  6330  f-value:  -88252.44  pgrad:  0.07343949 
+iter:  6340  f-value:  -88252.44  pgrad:  0.0298268 
+iter:  6350  f-value:  -88252.44  pgrad:  0.005286781 
+iter:  6360  f-value:  -88252.44  pgrad:  0.06946949 
+iter:  6370  f-value:  -88252.44  pgrad:  0.01538438 
+iter:  6380  f-value:  -88252.44  pgrad:  0.006012313 
+iter:  6390  f-value:  -88252.44  pgrad:  0.004594792 
+iter:  6400  f-value:  -88252.44  pgrad:  0.006644792 
+  Unsuccessful convergence.
+Finding conditional estimate of N
+Model Name: Early vs Late 
+   Date of Fit: 2018-11-23 21:20 
+   Version of OPEN SPAS used : SPAS-R 2018-11-22 
+ 
+Raw data 
+      V1   V2   V3   V4  V5  V6  V7
+[1,]   9   21    0    0   0   0 171
+[2,]   0  101   22    1   0   0 763
+[3,]   0    0  128   49   0   0 934
+[4,]   0    0    0   48  12   0 434
+[5,]   0    0    0    0   7   0  49
+[6,]   0    0    0    0   0   0   4
+[7,] 351 2736 3847 1818 543 191   0
+
+Row pooling setup : 1 1 1 2 2 2 
+Col pooling setup : 1 1 1 2 2 2 
+Theta pooling     : FALSE 
+CJS pooling       : FALSE 
+
+ 
+Raw data AFTER POOLING 
+      pool1 pool2   V7
+pool1   281    50 1868
+pool2     0    67  487
+       6934  2552    0
+
+  Conditional   Log-Likelihood: 88252.44    ;  np: 8 ;  AICc: 176520.9 
+
+  Code/Message from optimization is:  2 Maximum function evals exceeded 
+
+Estimates
+             pool1 pool2  psi cap.prob exp factor Pop Est
+pool1          281    50 1868    0.039       24.7   56462
+pool2            0    67  487    0.048       19.7   11454
+est unmarked  6934  2552    0       NA         NA   67916
+
+SE of above estimates
+             pool1 pool2  psi cap.prob exp factor Pop Est
+pool1         16.8   7.1 43.2    0.002        1.5    3302
+pool2          0.1   8.2 22.1    0.009        3.8    2101
+est unmarked    NA    NA  0.0       NA         NA    3098
+Using BBoptim() to find conditional MLE
+iter:  0  f-value:  -95297.26  pgrad:  2.483417 
+  Successful convergence.
+Finding conditional estimate of N
+Model Name: Poole-Petersen 
+   Date of Fit: 2018-11-23 21:20 
+   Version of OPEN SPAS used : SPAS-R 2018-11-22 
+ 
+Raw data 
+      V1   V2   V3   V4  V5  V6  V7
+[1,]   9   21    0    0   0   0 171
+[2,]   0  101   22    1   0   0 763
+[3,]   0    0  128   49   0   0 934
+[4,]   0    0    0   48  12   0 434
+[5,]   0    0    0    0   7   0  49
+[6,]   0    0    0    0   0   0   4
+[7,] 351 2736 3847 1818 543 191   0
+
+Row pooling setup : 1 1 1 1 1 1 
+Col pooling setup : 1 1 1 1 1 1 
+Theta pooling     : FALSE 
+CJS pooling       : FALSE 
+
+ 
+Raw data AFTER POOLING 
+     1   V7
+1  398 2355
+  9486    0
+
+  Conditional   Log-Likelihood: 95297.26    ;  np: 3 ;  AICc: 190600.5 
+
+  Code/Message from optimization is:  0 Maximum function evals exceeded 
+
+Estimates
+                1  psi cap.prob exp factor Pop Est
+1             398 2355     0.04       23.8   68368
+est unmarked 9486    0       NA         NA   68368
+
+SE of above estimates
+                1  psi cap.prob exp factor Pop Est
+1            19.9 48.5    0.002        1.2    3105
+est unmarked   NA  0.0       NA         NA    3105
