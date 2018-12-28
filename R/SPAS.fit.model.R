@@ -29,7 +29,8 @@
 #'  
 #' @return A list with many entries. Refer to the vignettes for more details.
 #' @export
-#' @import BB numDeriv Matrix msm MASS stats plyr 
+#' @import BB numDeriv msm MASS stats plyr
+#' @importFrom Matrix bdiag 
 
 
 # Fit the OPEN SPAS model to the data.
@@ -84,7 +85,7 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
    if( svd.cutoff > .0001)stop("svd.cutoff is too large")   
   
    RESULT <- NULL
-   RESULT$version <- "SPAS-R 2018-11-22"
+   RESULT$version <- "SPAS-R 2019-01-01"
    RESULT$date    <- Sys.time()   # date run and start date
    
    RESULT$input <- list(rawdata     = rawdata,
@@ -312,7 +313,7 @@ SPAS.init.est <- function(rawdata,rowDM,colDM,thetaDM, conditional) {
    
    
    # The initial N hat estimate is found using the pooled petersen (a biased estimator). 
-   N.hat = sum(tagged)*sum(c(tagged,unmarked))/sum(m)   
+   N.hat = sum(tagged)*sum(c(m,unmarked))/sum(m)   
    # The N hat estimate is now transformed to the log scale. 
    logN.hat = log(N.hat)
    

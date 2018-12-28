@@ -1,8 +1,8 @@
 Package: SPAS
 Type: Package
 Title: Stratified-Petersen Analysis System
-Version: 2018.11.22
-Date: 2018-11-22
+Version: 2019.01.01
+Date: 2019-01-01
 Author: Carl James Schwarz
 Maintainer: Carl James Schwarz <cschwarz.stat.sfu.ca@gmail.com>
 Depends: 
@@ -13,7 +13,7 @@ Imports:
    msm, 
    numDeriv, 
    plyr
-Description: This is a R-version of the Stratified-Petersen Analysis System.
+Description: This is a R-version of the Stratified-Petersen Analysis System (SPAS).
 License: GPL (>=2)
 RoxygenNote: 6.1.1
 Suggests: knitr,
