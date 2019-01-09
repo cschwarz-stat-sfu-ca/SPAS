@@ -5,7 +5,11 @@
 #' @param x A result from the model fitting. See \code{SPAS.fit.model}.
 
 #' @return A report to the console. Refer to the vignettes.
-#' 
+#'
+#' @examples
+#' \dontrun{
+#' SPAS.print.model(result.from.model.fit)
+#' } 
 #' @export
 
 

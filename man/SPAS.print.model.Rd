@@ -16,3 +16,8 @@ A report to the console. Refer to the vignettes.
 This function makes a report of the results of the model fitting
 .
 }
+\examples{
+\dontrun{
+SPAS.print.model(result.from.model.fit)
+} 
+}

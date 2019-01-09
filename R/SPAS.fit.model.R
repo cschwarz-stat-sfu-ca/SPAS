@@ -31,7 +31,21 @@
 #' @export
 #' @import BB numDeriv msm MASS stats plyr
 #' @importFrom Matrix bdiag 
-
+#' @examples 
+#' conne.data.csv <- textConnection("
+#' 9  ,    21  ,     0  ,    0  ,    0  ,    0  ,   171
+#' 0  ,   101  ,    22  ,    1  ,    0  ,    0  ,   763
+#' 0  ,     0  ,   128  ,   49  ,    0  ,    0  ,   934
+#' 0  ,     0  ,     0  ,   48  ,   12  ,    0  ,   434
+#' 0  ,     0  ,     0  ,    0  ,    7  ,    0  ,    49
+#' 0  ,     0  ,     0  ,    0  ,    0  ,    0  ,     4
+#' 351,  2736  ,  3847  , 1818  ,  543  ,   191 ,     0")
+#' conne.data <- as.matrix(read.csv(conne.data.csv, header=FALSE))
+#' 
+#' mod1 <- SPAS::SPAS.fit.model(conne.data,
+#'                        model.id="No restrictions",
+#'                       row.pool.in=1:6, col.pool.in=1:6)
+#'
 
 # Fit the OPEN SPAS model to the data.
 # This does the physical pooling of the data prior to the fit
