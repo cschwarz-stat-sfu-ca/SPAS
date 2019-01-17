@@ -44,7 +44,8 @@
 #' 
 #' mod1 <- SPAS.fit.model(conne.data, model.id="Pooling rows 1/2, 5/6; pooling columns 5/6",
 #'                       row.pool.in=c("12","12","3","4","56","56"),
-#'                       col.pool.in=c(1,2,3,4,56,56))
+#'                       col.pool.in=c(1,2,3,4,56,56),
+#'                       optMethod.control=list(ftol=.0001))
 #'
 
 # Fit the OPEN SPAS model to the data.
