@@ -60,7 +60,8 @@ conne.data.csv <- textConnection("
 0  ,     0  ,     0  ,    0  ,    0  ,    0  ,     4
 351,  2736  ,  3847  , 1818  ,  543  ,   191 ,     0")
 conne.data <- as.matrix(read.csv(conne.data.csv, header=FALSE))
-
+close(conne.data.csv)
+ 
 mod1 <- SPAS.fit.model(conne.data, model.id="Pooling rows 1/2, 5/6; pooling columns 5/6",
                       row.pool.in=c("12","12","3","4","56","56"),
                       col.pool.in=c(1,2,3,4,56,56),
