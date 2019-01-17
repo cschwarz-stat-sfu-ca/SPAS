@@ -12,7 +12,7 @@
 
 <meta name="author" content="Carl James Schwarz" />
 
-<meta name="date" content="2019-01-03" />
+<meta name="date" content="2019-01-16" />
 
 <title>Harrison River Female Chinook 2011 Data</title>
 
@@ -92,7 +92,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Harrison River Female Chinook 2011 Data</h1>
 <h4 class="author"><em>Carl James Schwarz</em></h4>
-<h4 class="date"><em>2019-01-03</em></h4>
+<h4 class="date"><em>2019-01-16</em></h4>
 
 
 
@@ -134,10 +134,16 @@ har.data
 </div>
 <div id="fitting-the-stratified-petersen-model" class="section level2">
 <h2>Fitting the Stratified-Petersen model</h2>
-<p>The Stratified-Petersen model is fit to the above data object using:</p>
+<p>The Stratified-Petersen model is fit to the above data object. The very sparse last row will make fitting the model to the original data difficult with a very flat likelihood surface and so we relax the convergence criteria:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(har.data,
                        <span class="dt">model.id=</span><span class="st">&quot;No restrictions&quot;</span>,
-                       <span class="dt">row.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">col.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)</code></pre></div>
+                       <span class="dt">row.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">col.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span>,
+                       <span class="dt">optMethod.control=</span><span class="kw">list</span>(<span class="dt">ftol=</span>.<span class="dv">00001</span>))
+<span class="co">#&gt; Warning in sqrt(diag(hess$vcv)): NaNs produced</span>
+<span class="co">#&gt; Warning in sqrt(diag(RESULT$est.star$vcv)): NaNs produced</span>
+<span class="co">#&gt; Warning in sqrt(diag(RESULT$real$vcv)): NaNs produced</span>
+<span class="co">#&gt; Warning in sqrt(RESULT$real$est.indiv$N.stratum.vcv): NaNs produced</span>
+<span class="co">#&gt; Warning in sqrt(diag(RESULT$real$est.indiv$exp.factor.vcv)): NaNs produced</span></code></pre></div>
 <p>The <code>row.pool.in</code> and <code>col.pool.in</code> inform the function on which rows or columns to pool before the analysis proceeds. Both parameters use a vector of codes (length <span class="math inline">\(s\)</span> for row pooing and length <span class="math inline">\(t\)</span> for column pooling) where rows/columns are pooled that share the same value.</p>
 <p>For example. <code>row.pool.in=c(1,2,3,4,5,6)</code> would imply that no rows are pooled, while <code>row.pool.in=c('a','a','a','b','b','b')</code> would imply that the first three rows and last three rows are pooled. The entries in the vector can be numeric or character; however, using character entries implies that the final pooled matrix is displayed in the order of the character entries. I find that using entries such as <code>'123'</code> to represent pooling rows 1, 2, and 3 to be easiest to use.</p>
 <p><strong>The SPAS system only fits models were the number of rows after pooling is less than or equal to the number of columns after pooling.</strong></p>
@@ -147,7 +153,7 @@ har.data
 <p>The results of the model fit is a LARGE list. But the function <code>SPAS.print.model</code> produces a nice report</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SPAS.print.model</span>(mod1)
 <span class="co">#&gt; Model Name: No restrictions </span>
-<span class="co">#&gt;    Date of Fit: 2019-01-03 21:19 </span>
+<span class="co">#&gt;    Date of Fit: 2019-01-16 17:49 </span>
 <span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2019-01-01 </span>
 <span class="co">#&gt;  </span>
 <span class="co">#&gt; Raw data </span>
@@ -176,46 +182,46 @@ har.data
 <span class="co">#&gt; pool6     0     0     0     0     0     1  65</span>
 <span class="co">#&gt;         744  1187  2136   951   608   127   0</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;   Conditional   Log-Likelihood: 47243.41    ;  np: 48 ;  AICc: 94583.4 </span>
+<span class="co">#&gt;   Conditional   Log-Likelihood: 47240.58    ;  np: 48 ;  AICc: 94577.73 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;   Code/Message from optimization is:  2 Maximum function evals exceeded </span>
+<span class="co">#&gt;   Code/Message from optimization is:  0 Successful convergence </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Estimates</span>
 <span class="co">#&gt;              pool1  pool2  pool3 pool4 pool5 pool6 psi cap.prob exp factor</span>
-<span class="co">#&gt; pool1          3.6    2.6    0.8   0.9   0.0     0 130    0.005      190.5</span>
-<span class="co">#&gt; pool2         12.0    7.0   14.0   1.0   3.0     0 330    0.709        0.4</span>
-<span class="co">#&gt; pool3          7.0   11.0   41.0   9.0   1.0     1 790    0.942        0.1</span>
-<span class="co">#&gt; pool4          1.0   13.8   37.5  11.8  10.9     1 667    0.021       47.3</span>
-<span class="co">#&gt; pool5          0.0    1.0    7.7   7.9   3.3     0 309    0.036       26.8</span>
-<span class="co">#&gt; pool6          0.0    0.0    0.0   0.0   0.0     1  65    0.012       79.1</span>
-<span class="co">#&gt; est unmarked 744.4 1185.5 2139.0 951.3 605.8   127   0       NA         NA</span>
+<span class="co">#&gt; pool1          4.0    2.4    0.9   1.1   0.1   0.1 130    0.028       34.9</span>
+<span class="co">#&gt; pool2         12.0    9.2   11.4   1.1   3.0   0.1 330    0.021       46.2</span>
+<span class="co">#&gt; pool3          7.0   11.1   40.7   9.0   1.0   1.0 790    0.430        1.3</span>
+<span class="co">#&gt; pool4          1.0   16.1   33.7  13.2   9.1   2.8 667    0.026       37.8</span>
+<span class="co">#&gt; pool5          0.1    1.3    6.7   8.9   3.0   0.1 309    0.025       39.0</span>
+<span class="co">#&gt; pool6          0.1    0.1    0.1   0.1   0.1   1.1  65    0.199        4.0</span>
+<span class="co">#&gt; est unmarked 744.0 1181.1 2147.0 948.8 607.8 124.9   0       NA         NA</span>
 <span class="co">#&gt;              Pop Est</span>
-<span class="co">#&gt; pool1          26432</span>
-<span class="co">#&gt; pool2            518</span>
-<span class="co">#&gt; pool3            912</span>
-<span class="co">#&gt; pool4          35866</span>
-<span class="co">#&gt; pool5           9132</span>
-<span class="co">#&gt; pool6           5288</span>
-<span class="co">#&gt; est unmarked   78150</span>
+<span class="co">#&gt; pool1           4950</span>
+<span class="co">#&gt; pool2          17308</span>
+<span class="co">#&gt; pool3           2002</span>
+<span class="co">#&gt; pool4          28810</span>
+<span class="co">#&gt; pool5          13168</span>
+<span class="co">#&gt; pool6            332</span>
+<span class="co">#&gt; est unmarked   66587</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SE of above estimates</span>
 <span class="co">#&gt;              pool1 pool2 pool3 pool4 pool5 pool6  psi cap.prob exp factor</span>
-<span class="co">#&gt; pool1          1.6   1.3   0.8   1.0   0.2   0.1 11.4    0.002       85.0</span>
-<span class="co">#&gt; pool2          3.5   2.6   3.7   0.7   1.7   0.1 18.2    3.936        7.8</span>
-<span class="co">#&gt; pool3          2.6   3.3   6.4   3.0   0.6   1.1 28.1    1.014        1.1</span>
-<span class="co">#&gt; pool4          1.0   3.6   5.9   3.5   2.1   1.0 25.8    0.007       17.0</span>
-<span class="co">#&gt; pool5          0.1   1.0   2.7   2.9   2.0   0.1 17.6    0.069       53.4</span>
-<span class="co">#&gt; pool6          0.1   0.1   0.0   0.1   0.1   1.1  8.1    0.015       95.1</span>
+<span class="co">#&gt; pool1          2.0   1.6   0.8   1.1   0.2   0.4 11.4      NaN        NaN</span>
+<span class="co">#&gt; pool2          3.6   2.9   2.7   1.1   1.5   0.7 18.2      NaN        NaN</span>
+<span class="co">#&gt; pool3          2.6   3.3   6.4   3.0   0.5   1.0 28.1    0.609        3.3</span>
+<span class="co">#&gt; pool4          1.0   3.7   5.8   4.1   2.2   1.1 25.8    0.009       13.4</span>
+<span class="co">#&gt; pool5          0.2   1.3   2.4   2.8   1.6   0.6 17.6    0.021       33.6</span>
+<span class="co">#&gt; pool6          0.2   0.2   0.2   0.2   0.2   1.0  8.1      NaN        NaN</span>
 <span class="co">#&gt; est unmarked    NA    NA    NA    NA    NA    NA  0.0       NA         NA</span>
 <span class="co">#&gt;              Pop Est</span>
-<span class="co">#&gt; pool1          11726</span>
-<span class="co">#&gt; pool2           2878</span>
-<span class="co">#&gt; pool3            981</span>
-<span class="co">#&gt; pool4          12651</span>
-<span class="co">#&gt; pool5          17564</span>
-<span class="co">#&gt; pool6           6280</span>
-<span class="co">#&gt; est unmarked   14592</span></code></pre></div>
-<p>The original data, the data after pooling, estimates and their standard errors are shown. Here the stratified-Petersen estimate of the total number of smolts passing the at the first sampling station is 78,150 with a standard error of 14,592.</p>
+<span class="co">#&gt; pool1            NaN</span>
+<span class="co">#&gt; pool2            NaN</span>
+<span class="co">#&gt; pool3           2839</span>
+<span class="co">#&gt; pool4           9960</span>
+<span class="co">#&gt; pool5          11065</span>
+<span class="co">#&gt; pool6            NaN</span>
+<span class="co">#&gt; est unmarked    6943</span></code></pre></div>
+<p>The original data, the data after pooling, estimates and their standard errors are shown. Here the stratified-Petersen estimate of the total number of smolts passing the at the first sampling station is 66,587 with a standard error of 6,943.</p>
 <p>Each entry in the output is available in fitted model object. You will need to explore the structure</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(mod1)
 <span class="co">#&gt; [1] &quot;version&quot;      &quot;date&quot;         &quot;input&quot;        &quot;fit.setup&quot;   </span>
@@ -243,7 +249,7 @@ har.data
 <p>The results of the model fit is</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SPAS.print.model</span>(mod2)
 <span class="co">#&gt; Model Name: Pooling some rows </span>
-<span class="co">#&gt;    Date of Fit: 2019-01-03 21:19 </span>
+<span class="co">#&gt;    Date of Fit: 2019-01-16 17:49 </span>
 <span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2019-01-01 </span>
 <span class="co">#&gt;  </span>
 <span class="co">#&gt; Raw data </span>
@@ -270,38 +276,38 @@ har.data
 <span class="co">#&gt; pool56     0     1     8     8      4 374</span>
 <span class="co">#&gt;          744  1187  2136   951    735   0</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;   Conditional   Log-Likelihood: 48053.08    ;  np: 28 ;  AICc: 96162.35 </span>
+<span class="co">#&gt;   Conditional   Log-Likelihood: 48053.07    ;  np: 28 ;  AICc: 96162.34 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   Code/Message from optimization is:  0 Successful convergence </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Estimates</span>
 <span class="co">#&gt;              pool1  pool2  pool3 pool4 pool56 psi cap.prob exp factor</span>
 <span class="co">#&gt; pool12        14.0   12.6   13.1   2.1    3.3 460    0.019       51.3</span>
-<span class="co">#&gt; pool3          7.0   11.0   41.0   9.0    2.0 790    0.995        0.0</span>
-<span class="co">#&gt; pool4          0.9   15.5   36.9  12.2   10.5 667    0.034       28.8</span>
+<span class="co">#&gt; pool3          7.0   11.0   41.0   9.0    2.0 790    0.962        0.0</span>
+<span class="co">#&gt; pool4          0.9   15.5   36.9  12.2   10.5 667    0.034       28.7</span>
 <span class="co">#&gt; pool56         0.0    1.5    6.8   8.3    4.4 374    0.016       59.9</span>
-<span class="co">#&gt; est unmarked 746.0 1180.4 2142.2 950.5  733.8   0       NA         NA</span>
+<span class="co">#&gt; est unmarked 746.1 1180.4 2142.2 950.5  733.8   0       NA         NA</span>
 <span class="co">#&gt;              Pop Est</span>
-<span class="co">#&gt; pool12         26404</span>
-<span class="co">#&gt; pool3            865</span>
-<span class="co">#&gt; pool4          22130</span>
-<span class="co">#&gt; pool56         24041</span>
-<span class="co">#&gt; est unmarked   73440</span>
+<span class="co">#&gt; pool12         26400</span>
+<span class="co">#&gt; pool3            894</span>
+<span class="co">#&gt; pool4          22101</span>
+<span class="co">#&gt; pool56         24059</span>
+<span class="co">#&gt; est unmarked   73453</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SE of above estimates</span>
 <span class="co">#&gt;              pool1 pool2 pool3 pool4 pool56  psi cap.prob exp factor</span>
-<span class="co">#&gt; pool12         4.0   3.2   3.3   1.4    1.7 21.4    0.006       15.8</span>
-<span class="co">#&gt; pool3          2.6   3.3   6.4   3.0    1.4 28.1    0.281        0.3</span>
+<span class="co">#&gt; pool12         4.0   3.2   3.3   1.4    1.7 21.4    0.006       15.7</span>
+<span class="co">#&gt; pool3          2.6   3.3   6.4   3.0    1.4 28.1    0.698        0.8</span>
 <span class="co">#&gt; pool4          0.9   4.3   6.8   3.5    3.0 25.8    0.019       17.0</span>
-<span class="co">#&gt; pool56         0.0   1.6   2.3   2.7    1.7 19.3    0.011       41.5</span>
+<span class="co">#&gt; pool56         0.0   1.6   2.3   2.7    1.7 19.3    0.011       41.4</span>
 <span class="co">#&gt; est unmarked    NA    NA    NA    NA     NA  0.0       NA         NA</span>
 <span class="co">#&gt;              Pop Est</span>
-<span class="co">#&gt; pool12          7954</span>
-<span class="co">#&gt; pool3            244</span>
-<span class="co">#&gt; pool4          12648</span>
-<span class="co">#&gt; pool56         16390</span>
-<span class="co">#&gt; est unmarked   10425</span></code></pre></div>
-<p>Here the stratified-Petersen estimate of the total number of smolts passing the at the first sampling station is 73,440 with a standard error of 10,425. which is a slight reduction from the unpooled estimates.</p>
+<span class="co">#&gt; pool12          7939</span>
+<span class="co">#&gt; pool3            649</span>
+<span class="co">#&gt; pool4          12627</span>
+<span class="co">#&gt; pool56         16355</span>
+<span class="co">#&gt; est unmarked   10412</span></code></pre></div>
+<p>Here the stratified-Petersen estimate of the total number of smolts passing the at the first sampling station is 73,453 with a standard error of 10,412. which is a slight reduction from the unpooled estimates.</p>
 </div>
 </div>
 <div id="pooling-to-a-single-row-and-complete-pooling" class="section level2">
@@ -312,7 +318,7 @@ har.data
                        <span class="dt">col.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">56</span>,<span class="dv">56</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SPAS.print.model</span>(mod3)
 <span class="co">#&gt; Model Name: A single row </span>
-<span class="co">#&gt;    Date of Fit: 2019-01-03 21:19 </span>
+<span class="co">#&gt;    Date of Fit: 2019-01-16 17:49 </span>
 <span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2019-01-01 </span>
 <span class="co">#&gt;  </span>
 <span class="co">#&gt; Raw data </span>
@@ -360,7 +366,7 @@ har.data
                        <span class="dt">col.pool.in=</span><span class="kw">rep</span>(<span class="dv">1</span>, <span class="kw">ncol</span>(har.data)<span class="op">-</span><span class="dv">1</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SPAS.print.model</span>(mod4)
 <span class="co">#&gt; Model Name: Pooled Peteren </span>
-<span class="co">#&gt;    Date of Fit: 2019-01-03 21:19 </span>
+<span class="co">#&gt;    Date of Fit: 2019-01-16 17:49 </span>
 <span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2019-01-01 </span>
 <span class="co">#&gt;  </span>
 <span class="co">#&gt; Raw data </span>

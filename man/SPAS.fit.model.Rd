@@ -7,7 +7,8 @@
 SPAS.fit.model(model.id = "Stratified Petersen Estimator", rawdata,
   row.pool.in, col.pool.in, theta.pool = FALSE, CJSpool = FALSE,
   sd.noise.init.est = 0, optMethod = c("BBoptim", "optim"),
-  optMethod.control = list(maxit = 50000), svd.cutoff = 1e-04)
+  optMethod.control = list(maxit = 50000, ftol = 1e-09, gtol = 1e-05),
+  svd.cutoff = 1e-04)
 }
 \arguments{
 \item{model.id}{Character string identifying the name of the model including any pooling..}
@@ -35,7 +36,7 @@ row.pool.in=c(123,123,123,4), then the same pooling is done, but the matrix rows
 
 \item{optMethod}{What optimiation method is used. Defaults is the BBoptim function from the BB package.}
 
-\item{optMethod.control}{Control parameters for optimization method. See relevant functions for details.
+\item{optMethod.control}{Control parameters for optimization method. See spg() function in BB package or optim() function for details.
 For BBoptim, a suggest control parameter for debugging is optMethod.control=list(M=20, trace=TRUE , maxit = 50000, ftol=10^-5).}
 
 \item{svd.cutoff}{When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest singlular value to retain.}
@@ -60,8 +61,8 @@ conne.data.csv <- textConnection("
 351,  2736  ,  3847  , 1818  ,  543  ,   191 ,     0")
 conne.data <- as.matrix(read.csv(conne.data.csv, header=FALSE))
 
-mod1 <- SPAS::SPAS.fit.model(conne.data,
-                       model.id="No restrictions",
-                      row.pool.in=1:6, col.pool.in=1:6)
+mod1 <- SPAS.fit.model(conne.data, model.id="Pooling rows 1/2, 5/6; pooling columns 5/6",
+                      row.pool.in=c("12","12","3","4","56","56"),
+                      col.pool.in=c(1,2,3,4,56,56))
 
 }

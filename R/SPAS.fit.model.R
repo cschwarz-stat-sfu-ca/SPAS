@@ -23,7 +23,7 @@
 #' @param theta.pool,CJSpool NOT YET IMPLEMENTED. DO NOT CHANGE.
 #' @param sd.noise.init.est How much random noise should be added to the initial (least squares) estimates. Normally only used with severe convergence problems.
 #' @param optMethod What optimiation method is used. Defaults is the BBoptim function from the BB package.
-#' @param optMethod.control Control parameters for optimization method. See relevant functions for details.
+#' @param optMethod.control Control parameters for optimization method. See spg() function in BB package or optim() function for details.
 #'    For BBoptim, a suggest control parameter for debugging is optMethod.control=list(M=20, trace=TRUE , maxit = 50000, ftol=10^-5).
 #' @param svd.cutoff When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest singlular value to retain.
 #'  
@@ -42,9 +42,9 @@
 #' 351,  2736  ,  3847  , 1818  ,  543  ,   191 ,     0")
 #' conne.data <- as.matrix(read.csv(conne.data.csv, header=FALSE))
 #' 
-#' mod1 <- SPAS::SPAS.fit.model(conne.data,
-#'                        model.id="No restrictions",
-#'                       row.pool.in=1:6, col.pool.in=1:6)
+#' mod1 <- SPAS.fit.model(conne.data, model.id="Pooling rows 1/2, 5/6; pooling columns 5/6",
+#'                       row.pool.in=c("12","12","3","4","56","56"),
+#'                       col.pool.in=c(1,2,3,4,56,56))
 #'
 
 # Fit the OPEN SPAS model to the data.
@@ -59,7 +59,7 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
                           theta.pool=FALSE, CJSpool=FALSE, 
                           sd.noise.init.est=0,
                           optMethod=c("BBoptim","optim"), 
-                          optMethod.control=list(maxit = 50000), 
+                          optMethod.control=list(maxit = 50000, ftol=1e-9, gtol=1e-5), 
                           svd.cutoff=.0001){
 # Fit the Open SPAS model given the data and pooling information on the rows and columns
 #
@@ -163,10 +163,10 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
                             u.b     = u.b)
    # First optimization of the conditional likelihood.
    # This gives us the estimates of everything but N
-   #browser()
+   # browser()
    if((!(optMethod[1] %in% c("BBoptim","optim","SANN"))) | optMethod[1]=='BBoptim'){
        cat("Using BBoptim() to find conditional MLE\n")
-       res =BBoptim(par=init.est,
+       res =BB::BBoptim(par=init.est,
                 fn=SPAS.likelihood.star.DM,  gr=SPAS.score.DM,
                 method=1,lower=l.b,upper=u.b, 
                 control=optMethod.control,
@@ -356,6 +356,6 @@ SPAS.init.est <- function(rawdata,rowDM,colDM,thetaDM, conditional) {
 #Input : a Matrix A and Vector B (Design Matrix)
 #Output: Least Squares Solution
 LS <- function(A,b){
-   x = ginv(t(A) %*% A) %*% t(A) %*% b
+   x = MASS::ginv(t(A) %*% A) %*% t(A) %*% b
    return(x)
 }

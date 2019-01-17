@@ -51,7 +51,8 @@ SPAS.score.DM = function(Est.Star,rowDM,colDM,thetaDM,rawdata, returnnegll=TRUE,
                       diag(u / as.vector(as.vector((1-est$cap)/est$cap) %*% est$theta)-1, ncol=length(u),nrow=length(u))
    score.theta  <- as.vector(score.theta.red) %*% thetaDM
    
-   # score w.r.t. parameter for capture probabilities in first stratim - caps
+   # score w.r.t. parameter for capture probabilities- caps
+   # dont forget that Est.Star has MINUS logit(cap) as the parameter 
    score.cap <- as.vector((1-est$cap)/est$cap) * rowSums( est$theta %*% diag(u/ as.vector(as.vector((1-est$cap)/est$cap) %*% est$theta)-1, nrow=length(u), ncol=length(u))      )
    score.cap <- as.vector(score.cap) %*% rowDM
    
@@ -62,7 +63,7 @@ SPAS.score.DM = function(Est.Star,rowDM,colDM,thetaDM,rawdata, returnnegll=TRUE,
    res <- c(score.theta, score.cap, score.psi)
    # but we are minimizing the negative of the loglikelihood
    if(returnnegll) {res <- -res}
-   
+#   print(res)
    return(res)
 } 
 
@@ -144,10 +145,9 @@ SPAS.log.likelihood <- function(est,rawdata, returnnegll=FALSE, conditional=FALS
 #        d.sig = Inverse Singular Values (SVD)
 
 SPAS.i.fisher.DM <- function(est.star,rowDM,colDM,thetaDM,rawdata, conditional=FALSE, svd.cutoff=.0001){
-   hes = -hessian(SPAS.likelihood.star.DM, x=est.star, method = ("Richardson"),
+   hes = -numDeriv::hessian(SPAS.likelihood.star.DM, x=est.star, method = ("Richardson"),
                  rowDM=rowDM,colDM=colDM,thetaDM=thetaDM,rawdata=rawdata, conditional=conditional)
    hess.svd = svd(hes)
-   #browser()
    hess.svd$d = 1/(hess.svd$d+(hess.svd$d<svd.cutoff)) * (hess.svd$d > svd.cutoff)    
    vcv <- hess.svd$u %*% diag(hess.svd$d) %*% t(hess.svd$v )        
    return(list(vcv=vcv,u = hess.svd$u,v = hess.svd$v, d.sig = diag(hess.svd$d)) )

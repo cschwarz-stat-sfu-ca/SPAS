@@ -23,7 +23,8 @@ har.data
 ## ----fit1,results="hide"-------------------------------------------------
 mod1 <- SPAS.fit.model(har.data,
                        model.id="No restrictions",
-                       row.pool.in=1:6, col.pool.in=1:6)
+                       row.pool.in=1:6, col.pool.in=1:6,
+                       optMethod.control=list(ftol=.00001))
 
 ## ----mod1p---------------------------------------------------------------
 SPAS.print.model(mod1)

@@ -58,11 +58,13 @@ A total of $1895$ UNMARKED fish were recovered in column stratum 1.
 You can add row and column names to the matrix which will used when the data are printed.
 
 ## Fitting the Stratified-Petersen model
-The Stratified-Petersen model is fit to the above data object using:
+The Stratified-Petersen model is fit to the above data object. We relax the convergence criteria because of the very sparse data 
+in row 6 implies that the likelihood will be very flat. The code to fit the model is:
 ```{r fit1,results="hide"}
 mod1 <- SPAS.fit.model(conne.data,
                        model.id="No restrictions",
-                       row.pool.in=1:6, col.pool.in=1:6)
+                       row.pool.in=1:6, col.pool.in=1:6,
+                       optMethod.control=list(ftol=.0001))
 ```
 The `row.pool.in` and `col.pool.in` inform the function on which rows or columns to pool before the analysis proceeds. 
 Both parameters use a vector of codes (length $s$ for row pooing and length $t$ for column pooling) where rows/columns

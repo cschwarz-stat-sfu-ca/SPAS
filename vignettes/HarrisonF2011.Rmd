@@ -40,7 +40,7 @@ The sum of the entries in each of the first $s$ rows is then the number of anima
 The sum of the entries in each of the first $t$ columns is then the number of animals captured (marked and unmarked) in each column stratum.
 The row/column names of the matrix may be set to identify the entries in the output.
 
-Here is the raw data for the Conne River. Notice that very small number of releases and recoveries in week 6.
+Here is the raw data for the Conne River. Notice that very small number of releases and recoveries in week 6. 
 
 ```{r loaddata}
 harrison.2011.chinook.F.csv <- textConnection("
@@ -62,11 +62,15 @@ A total of `r har.data[7,1]` UNMARKED fish were recovered in column stratum 1.
 You can add row and column names to the matrix which will used when the data are printed.
 
 ## Fitting the Stratified-Petersen model
-The Stratified-Petersen model is fit to the above data object using:
+The Stratified-Petersen model is fit to the above data object.
+The very sparse last row will
+make fitting the model to the original data difficult with a very flat likelihood surface and so we relax the convergence
+criteria:
 ```{r fit1,results="hide"}
 mod1 <- SPAS.fit.model(har.data,
                        model.id="No restrictions",
-                       row.pool.in=1:6, col.pool.in=1:6)
+                       row.pool.in=1:6, col.pool.in=1:6,
+                       optMethod.control=list(ftol=.00001))
 ```
 The `row.pool.in` and `col.pool.in` inform the function on which rows or columns to pool before the analysis proceeds. 
 Both parameters use a vector of codes (length $s$ for row pooing and length $t$ for column pooling) where rows/columns

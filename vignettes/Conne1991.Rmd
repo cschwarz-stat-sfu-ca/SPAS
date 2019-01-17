@@ -58,14 +58,19 @@ A total of `r sum(conne.data[1,])` fish were tagged and released in week 1. Of t
 `r conne.data[1,2]` were recovered in column stratum 2; and `r conne.data[1,7]` were never seen again.
 A total of `r conne.data[7,1]` UNMARKED fish were recovered in column stratum 1.
 
+Notice the VERY small sample size in row 6 with only 4 fish released and non-recaptured. We will likely have to pool some rows in this problem because
+there is virtually no information provided by row 6 which makes the problem ill conditioned and may not converge properly.
+
 You can add row and column names to the matrix which will used when the data are printed.
 
 ## Fitting the Stratified-Petersen model
-The Stratified-Petersen model is fit to the above data object using:
+The Stratified-Petersen model can now be fit to the above data object. Because the likelihood is so flat, we relax
+the convergence criterion (differences in likelihood function values between iterations):
 ```{r fit1,results="hide"}
 mod1 <- SPAS::SPAS.fit.model(conne.data,
                        model.id="No restrictions",
-                       row.pool.in=1:6, col.pool.in=1:6)
+                       row.pool.in=1:6, col.pool.in=1:6,
+                       optMethod.control=list(ftol=.0001))
 ```
 The `row.pool.in` and `col.pool.in` inform the function on which rows or columns to pool before the analysis proceeds. 
 Both parameters use a vector of codes (length $s$ for row pooing and length $t$ for column pooling) where rows/columns
