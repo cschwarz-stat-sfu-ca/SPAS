@@ -4,11 +4,19 @@
 \alias{SPAS.fit.model}
 \title{Fit a Stratifed-Petersen (SP) model using  TMB.}
 \usage{
-SPAS.fit.model(model.id = "Stratified Petersen Estimator", rawdata,
-  row.pool.in, col.pool.in, row.physical.pool = TRUE,
-  theta.pool = FALSE, CJSpool = FALSE, optMethod = c("nlminb"),
-  optMethod.control = list(maxit = 50000), svd.cutoff = 1e-04,
-  chisq.cutoff = 0.1)
+SPAS.fit.model(
+  model.id = "Stratified Petersen Estimator",
+  rawdata,
+  row.pool.in,
+  col.pool.in,
+  row.physical.pool = TRUE,
+  theta.pool = FALSE,
+  CJSpool = FALSE,
+  optMethod = c("nlminb"),
+  optMethod.control = list(maxit = 50000),
+  svd.cutoff = 1e-04,
+  chisq.cutoff = 0.1
+)
 }
 \arguments{
 \item{model.id}{Character string identifying the name of the model including any pooling..}

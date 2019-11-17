@@ -32,7 +32,7 @@
 #'        to try and remove structural zero cells.
 #' @return A list with many entries. Refer to the vignettes for more details.
 #' @export
-#' @import msm MASS stats plyr TMB RcppEigen
+#' @import msm MASS stats plyr TMB 
 #' @importFrom Matrix bdiag 
 #' @examples 
 #' conne.data.csv <- textConnection("

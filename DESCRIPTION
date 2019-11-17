@@ -6,9 +6,8 @@ Date: 2020-01-01
 Author: Carl James Schwarz
 Maintainer: Carl James Schwarz <cschwarz.stat.sfu.ca@gmail.com>
 LinkingTo:
-    TMB
-   RcppEigen,
-    TMB
+    TMB,
+    RcppEigen
 Imports:
     BB,
     MASS,
@@ -38,7 +37,7 @@ Description: The Stratified-Petersen Analysis System (SPAS) is designed
     This is the R-version of the (now obsolete) standalone Windows 
     program available at <http://www.cs.umanitoba.ca/~popan/spas/spas_home.html>.
 License: GPL (>=2)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

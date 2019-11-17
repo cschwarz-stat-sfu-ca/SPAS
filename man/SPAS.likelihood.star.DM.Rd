@@ -4,9 +4,17 @@
 \alias{SPAS.likelihood.star.DM}
 \title{Score, likelihood, and related functions for fitting Stratified Petersen model}
 \usage{
-SPAS.likelihood.star.DM(Est.Star, rowDM, colDM, thetaDM, rawdata,
-  returnnegll = FALSE, conditional = TRUE, fixed.N = 0,
-  mytrace = FALSE)
+SPAS.likelihood.star.DM(
+  Est.Star,
+  rowDM,
+  colDM,
+  thetaDM,
+  rawdata,
+  returnnegll = FALSE,
+  conditional = TRUE,
+  fixed.N = 0,
+  mytrace = FALSE
+)
 }
 \description{
 These functions are used internally to fit the Stratified Petersen models and are not normally used.

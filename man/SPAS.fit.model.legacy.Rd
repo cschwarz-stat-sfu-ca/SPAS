@@ -5,12 +5,20 @@
 \title{Fit a Stratifed-Petersen (SP) model using the legacy method without TMB.
 The preferred method is to use the SPAS.fit.model() function that used TMB.}
 \usage{
-SPAS.fit.model.legacy(model.id = "Stratified Petersen Estimator",
-  rawdata, row.pool.in, col.pool.in, row.physical.pool = TRUE,
-  theta.pool = FALSE, CJSpool = FALSE, sd.noise.init.est = 0,
-  optMethod = c("BBoptim", "optim"), optMethod.control = list(maxit =
-  50000, ftol = 1e-09, gtol = 1e-05), svd.cutoff = 1e-04,
-  chisq.cutoff = 0.1)
+SPAS.fit.model.legacy(
+  model.id = "Stratified Petersen Estimator",
+  rawdata,
+  row.pool.in,
+  col.pool.in,
+  row.physical.pool = TRUE,
+  theta.pool = FALSE,
+  CJSpool = FALSE,
+  sd.noise.init.est = 0,
+  optMethod = c("BBoptim", "optim"),
+  optMethod.control = list(maxit = 50000, ftol = 1e-09, gtol = 1e-05),
+  svd.cutoff = 1e-04,
+  chisq.cutoff = 0.1
+)
 }
 \arguments{
 \item{model.id}{Character string identifying the name of the model including any pooling..}
