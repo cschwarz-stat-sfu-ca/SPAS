@@ -1,0 +1,187 @@
+---
+title: "Harrison River Female Chinook 2011 Data"
+author: "Carl James Schwarz"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Harrison River Female Chinook 2011 Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+The experiment consisted of daily sampling, but condensed to weeks.
+Returning adult salmon were tagged and released at the upstream trap. They were recaptured
+during carass surveys
+
+A stratified-Petersen estimator (Darrock, 1961; Plante et al. 1996) is found for the unpooled data and some pooling of the rows/columns.
+
+## Load the SPAS package
+```{r libraries}
+library(SPAS)
+```
+This will load the SPAS fitting functions and any associated packages needed by SPAS.
+
+## Import the data.
+The data  should be stored as an $s+1$ by $t+1$ (before pooling) matrix where the upper $s \times t$ matrix consists of the 
+The $s \times t$ upper left matrix is the number of animals released in row stratum $i$ and recovered in
+column stratum $j$. 
+Row $s+1$ contains the total number of UNMARKED animals recovered in column stratum $j$.
+Column $t+1$ contains the number of animals marked in each row stratum but not recovered in any column stratum.
+The $rawdata[s+1, t+1]$ is not used and can be set to 0 or NA.
+The sum of the entries in each of the first $s$ rows is then the number of animals marked in each row stratum.
+The sum of the entries in each of the first $t$ columns is then the number of animals captured (marked and unmarked) in each column stratum.
+The row/column names of the matrix may be set to identify the entries in the output.
+
+Here is the raw data for the Conne River. Notice that very small number of releases and recoveries in week 6. 
+
+```{r loaddata}
+harrison.2011.chinook.F.csv <- textConnection("
+  4   ,      2   ,      1   ,     1   ,     0   ,     0   ,   130
+ 12   ,      7   ,     14   ,     1   ,     3   ,     0   ,   330
+  7   ,     11   ,     41   ,     9   ,     1   ,     1   ,   790
+  1   ,     13   ,     40   ,    12   ,     9   ,     1   ,   667
+  0   ,      1   ,      8   ,     8   ,     3   ,     0   ,   309
+  0   ,      0   ,      0   ,     0   ,     0   ,     1   ,    65
+744   ,   1187   ,   2136   ,   951   ,   608   ,   127   ,     0")
+
+har.data <- as.matrix(read.csv(harrison.2011.chinook.F.csv, header=FALSE))
+har.data
+```
+A total of `r sum(har.data[1,])` fish were tagged and released in week 1. Of these fish, `r har.data[1,1]` were recovered downnstream in column stratum 1;
+`r har.data[1,2]` were recovered in column stratum 2; and `r har.data[1,7]` were never seen again.
+A total of `r har.data[7,1]` UNMARKED fish were recovered in column stratum 1.
+
+You can add row and column names to the matrix which will used when the data are printed.
+
+## Fitting the Stratified-Petersen model
+The Stratified-Petersen model is fit to the above data object.
+The very sparse last row will
+make fitting the model to the original data difficult with a very flat likelihood surface and so we relax the convergence
+criteria:
+```{r fit1,results="hide"}
+mod1 <- SPAS.fit.model(har.data,
+                       model.id="No restrictions",
+                       row.pool.in=1:6, col.pool.in=1:6,
+                       optMethod.control=list(ftol=.00001))
+```
+The `row.pool.in` and `col.pool.in` inform the function on which rows or columns to pool before the analysis proceeds. 
+Both parameters use a vector of codes (length $s$ for row pooing and length $t$ for column pooling) where rows/columns
+are pooled that share the same value.
+
+For example. `row.pool.in=c(1,2,3,4,5,6)` would imply that no rows are pooled, while
+`row.pool.in=c('a','a','a','b','b','b')` would imply that the first three rows and last three rows are pooled.
+The entries in the vector can be numeric or character; however, using character entries implies that the final
+pooled matrix is displayed in the order of the character entries. I find that using entries such as `'123'` to represent
+pooling rows 1, 2, and 3 to be easiest to use.
+
+**The SPAS system only fits models were the number of rows after pooling is less than or equal to the number of columns after pooling.**
+
+### Results from model 1 (no pooling).
+The likelihood is rather flat, so don't be too concerned about messages from the optimization on failing to converge.
+As long as the likelihood values seem to be have stabilized and estimates are sensible (i.e. capture rates not 0 or 1;
+estimates of movement sensible results), the estimates should be fine.
+
+The results of the model fit is a LARGE list. But the function `SPAS.print.model` produces a nice report
+```{r mod1p}
+SPAS.print.model(mod1)
+```
+
+The original data, the data after pooling, estimates and their standard errors are shown.
+Here the stratified-Petersen estimate of the total number of smolts passing the at the first sampling station is
+`r formatC(round(mod1$real$est.indiv$N), format='f', digits=0, big.mark=',')` with a standard error of 
+`r formatC(round(mod1$real$est.indiv$N.se), format='f', digits=0, big.mark=',')`.
+
+
+Each entry in the output is available in fitted model object. You will need to explore the
+structure
+```{r str1}
+names(mod1)
+names(mod1$real)
+names(mod1$real$est.indiv)
+```
+The `N` entries refer to the  population size; the `N.stratum` entries refer to the individual stratum population sizes;
+the `cap` entries refer to the estimated probability of capture in each row stratum;
+the `exp.factor` entries refer to `(1-cap)/cap`, or the expansion factor for each row;
+the `psi` entries refer to the number of animals tagged but never seen again (the right most column in the input data);
+and the `theta` entires refer to the expected number of animals that were tagged in row stratum $i$ and recovered in column stratum $j$ (after pooling).
+
+### Pooling some rows and columns
+As noted by Darroch (1961), the stratified-Petersen will fail if the matrix of movements is close to singular. This often happens if two rows are proportional to each other. In this case, there is no unique MLE for the probability of capture in the two rows, and they should be pooled.
+A detailed discussion of pooling is found in Schwarz and Taylor (1998).
+
+Let us now poolw the first two rows and the last two rows, but leave rows 3 and 4 alone.
+Similar, let us pool the last two columns.
+
+The code is
+```{r fit2,results="hide"}
+mod2 <- SPAS.fit.model(har.data, model.id="Pooling some rows",
+                       row.pool.in=c("12","12","3","4","56","56"),
+                       col.pool.in=c(1,2,3,4,56,56))
+```
+
+Notice how we specify the pooling for rows and columns and the choice of entries for the two corresponding vectors.
+I used character entries for the row pooling to ensure that the pooled matrix is sorted properly (see below);
+the numeric entries for the columns is ok as is.
+
+The results of the model fit is
+```{r mod2p}
+SPAS.print.model(mod2)
+```
+
+Here the stratified-Petersen estimate of the total number of smolts passing the at the first sampling station is
+`r formatC(round(mod2$real$est.indiv$N), format='f', digits=0, big.mark=',')` with a standard error of 
+`r formatC(round(mod2$real$est.indiv$N.se), format='f', digits=0, big.mark=',')`.
+which is a slight reduction
+from the unpooled estimates.
+
+## Pooling to a single row and complete pooling
+You can pool to a single row (and multiple columns) or a single row and single column (which is equivalent to the pooled Petersen estimator).
+The code and output follow:
+
+```{r mod3,results='hide'}
+mod3 <- SPAS.fit.model(har.data, model.id="A single row",
+                       row.pool.in=rep(1, nrow(har.data)-1),
+                       col.pool.in=c(1,2,3,4,56,56))
+```
+```{r mod3p}
+SPAS.print.model(mod3)
+```
+
+```{r mod4,results='hide'}
+mod4 <- SPAS.fit.model(har.data, model.id="Pooled Peteren",
+                       row.pool.in=rep(1, nrow(har.data)-1),
+                       col.pool.in=rep(1, ncol(har.data)-1))
+```
+```{r mod4p}
+SPAS.print.model(mod4)
+```
+Both models have an estimated abundance of
+`r formatC(round(mod3$real$est.indiv$N), format='f', digits=0, big.mark=',')` with a standard error of 
+`r formatC(round(mod3$real$est.indiv$N.se), format='f', digits=0, big.mark=',')`.
+which is a slight reduction
+from the unpooled estimates.
+
+## Comparing different pooling
+**Unfortunately, because pooling actually changes the data (internally), it is not possible to
+do likelihood ratio testing or to use AICc to compare different poolings.**
+Methods to compare different poolings is under
+active investigation.
+
+## References
+Darroch, J. N. (1961). The two-sample capture-recapture census when tagging and sampling are stratified. Biometrika, 48, 241–260.
+https://www.jstor.org/stable/2332748
+
+Plante, N., L.-P Rivest, and G. Tremblay. (1988). Stratified Capture-Recapture Estimation of the Size of a Closed Population. Biometrics 54, 47-60.
+https://www.jstor.org/stable/2533994
+
+Schwarz, C. J., & Taylor, C. G. (1998). The use of the stratified-Petersen estimator in fisheries management with an illustration of estimating the number of pink salmon (Oncorhynchus gorbuscha) that return to spawn in the Fraser River. Canadian Journal of Fisheries and Aquatic Sciences, 55, 281–296.
+https://doi.org/10.1139/f97-238
+

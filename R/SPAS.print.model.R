@@ -1,4 +1,4 @@
-#' Print the results from a fit of a Stratifed-Petersen (SP) model
+#' Print the results from a fit of a Stratifed-Petersen (SP) model when using the TMB optimizer
 #' 
 #' This function makes a report of the results of the model fitting
 #' .
@@ -31,7 +31,7 @@
 
 SPAS.print.model = function(x){
 #
-#  Print out model results from the OPEN SPAS model
+#  Print out model results from the OPEN SPAS model fit using TMB
 #
    cat("Model Name:",x$model.info$model.id,"\n")
    cat("   Date of Fit:",format(x$date,"%Y-%m-%d %H:%M"),"\n")
@@ -42,6 +42,7 @@ SPAS.print.model = function(x){
    cat("\n")
    cat("Row pooling setup :", x$input$row.pool.in, "\n")
    cat("Col pooling setup :", x$input$col.pool.in, "\n")
+   cat("Physical pooling  :", x$input$row.physical.pool, "\n")
    cat("Theta pooling     :", x$input$theta.pool,  "\n")
    cat("CJS pooling       :", x$input$CJSpool,     "\n")
    cat("\n")
@@ -63,23 +64,31 @@ SPAS.print.model = function(x){
    S <- nrow(temp)-1
    T <- ncol(temp)-1
 
-   temp[1:S, 1:T]  <- round(x$real$est.indiv$theta,1)
-   temp[1:S,   T+1]<- round(x$real$est.indiv$psi,1);           colnames(temp)[T+1] <- "psi"
-   temp <- cbind(temp,round(c(x$real$est.indiv$cap,NA),3));    colnames(temp)[T+2] <- "cap.prob"
-   temp <- cbind(temp,round(c( (1-x$real$est.indiv$cap)/x$real$est.indiv$cap,NA),1)); colnames(temp)[T+3] <- "exp factor"
-   temp[S+1,1:T] <-   round(as.vector((1-x$real$est.indiv$cap)/x$real$est.indiv$cap) %*% x$real$est.indiv$theta,1)  ;   rownames(temp)[S+1] <- "est unmarked" 
-   temp<- cbind(temp, round(c(x$real$est.indiv$N.stratum, x$real$est.indiv$N)))     ; colnames(temp)[T+4] <- "Pop Est"
+   temp[1:S, 1:T]  <- round(x$est$real$theta,1)
+   temp[1:S,   T+1]<- round(x$est$real$psi,1);                colnames(temp)[T+1] <- "psi"
+   temp <- cbind(temp,round(c(x$est$real$cap,       NA),3));  colnames(temp)[T+2] <- "cap.prob"
+   temp <- cbind(temp,round(c(x$est$real$exp.factor,NA),1));  colnames(temp)[T+3] <- "exp factor"
+   temp[S+1,1:T] <-   round(as.vector((1-x$est$real$cap)/x$est$real$cap) %*% matrix(x$est$real$theta,nrow=S, ncol=T)) ;   rownames(temp)[S+1] <- "est unmarked" 
+   temp<- cbind(temp, round(c(x$est$real$N.stratum, x$est$real$N)))     ; colnames(temp)[T+4] <- "Pop Est"
    cat("\nEstimates\n")
    print(temp)
    
    # get the se's of the estimates
    cat("\nSE of above estimates\n")
    temp <- x$fit.setup$pooldata
-   temp[1:S, 1:T]  <- round(x$real$est.indiv$theta.se,1)
-   temp[1:S,   T+1]<- round(x$real$est.indiv$psi.se,1);           colnames(temp)[T+1] <- "psi"
-   temp <- cbind(temp,round(c(x$real$est.indiv$cap.se,NA),3));    colnames(temp)[T+2] <- "cap.prob"
-   temp <- cbind(temp,round(c(x$real$est.indiv$exp.factor.se,NA),1));   colnames(temp)[T+3] <- "exp factor"
+   temp[1:S, 1:T]  <- round(x$se$real$theta,1)
+   temp[1:S,   T+1]<- round(x$se$real$psi,1);                 colnames(temp)[T+1] <- "psi"
+   temp <- cbind(temp,round(c(x$se$real$cap,NA),3));          colnames(temp)[T+2] <- "cap.prob"
+   temp <- cbind(temp,round(c(x$se$real$exp.factor,NA),1));   colnames(temp)[T+3] <- "exp factor"
    temp[S+1,1:T] <-   as.vector(rep(NA,T) )                    ;   rownames(temp)[S+1] <- "est unmarked" 
-   temp<- cbind(temp, round(c(x$real$est.indiv$N.stratum.se, x$real$est.indiv$N.se))); colnames(temp)[T+4] <- "Pop Est"
+   temp<- cbind(temp, round(c(x$se$real$N.stratum, x$se$real$N))); colnames(temp)[T+4] <- "Pop Est"
    print(temp)
+   
+   # goodness of fit statistics
+   cat("\n\n")
+   cat("Chisquare gof cutoff  :", x$input$chisq.cutoff, "\n")
+   cat("Chisquare gof value   :", x$gof$chisq,          "\n")
+   cat("Chisquare gof df      :", x$gof$chisq.df,       "\n")
+   cat("Chisquare gof p       :", x$gof$chisq.p,        "\n")
+   
  }

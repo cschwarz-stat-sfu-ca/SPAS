@@ -20,10 +20,16 @@ The user is allows to pool rows and/or columns prior to analysis but the number 
 less than or equal to the number of columns (s <= t). The conditional likelihood formulation of
 Plante et al (1998) is used to estimate the parameters. 
 
-Because the data are physically pooled prior to analysis, it is not yet possible to compare different
-poolings to see which is most appropriate - this is under active investigation. A good discussion 
-of how to decide on pooling rows/columns is found in Schwarz and Taylor (1998).
+A good discussion 
+of how to decide on pooling rows/columns is found in Schwarz and Taylor (1998). The *row.physical.pool*
+parameter allows you to choose between physical pooling of rows, or logical pooling of rows (the underlying
+data table is unchanged, but capture probabilities for the pooled rows are forced equal). It is not possible
+to do logical pooling of columns and only physical pooling is possible. See the help() function 
+for details.
 
+If the data are physically pooled prior to analysis, it is not possible to compare different
+poolings to see which is most appropriate using AIC or likelihood ratio tests. If you do logical 
+pooling of rows, you can compare poolings using AIC or likelihood ratio methods.
 
 ## References
 Darroch, J. N. (1961). The two-sample capture-recapture census when tagging and sampling are stratified. Biometrika, 48, 241–260.

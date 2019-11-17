@@ -2,13 +2,13 @@
 % Please edit documentation in R/SPAS.fit.model.R
 \name{SPAS.fit.model}
 \alias{SPAS.fit.model}
-\title{Fit a Stratifed-Petersen (SP) model}
+\title{Fit a Stratifed-Petersen (SP) model using  TMB.}
 \usage{
 SPAS.fit.model(model.id = "Stratified Petersen Estimator", rawdata,
-  row.pool.in, col.pool.in, theta.pool = FALSE, CJSpool = FALSE,
-  sd.noise.init.est = 0, optMethod = c("BBoptim", "optim"),
-  optMethod.control = list(maxit = 50000, ftol = 1e-09, gtol = 1e-05),
-  svd.cutoff = 1e-04)
+  row.pool.in, col.pool.in, row.physical.pool = TRUE,
+  theta.pool = FALSE, CJSpool = FALSE, optMethod = c("nlminb"),
+  optMethod.control = list(maxit = 50000), svd.cutoff = 1e-04,
+  chisq.cutoff = 0.1)
 }
 \arguments{
 \item{model.id}{Character string identifying the name of the model including any pooling..}
@@ -30,16 +30,21 @@ this is seldom sensible. A careful choice of pooling labels helps to remember wh
 that the first 3 rows are pooled and the 4th row is not pooled. Character entrie ensure that the resulting matrixi is sorted properly (e.g. if 
 row.pool.in=c(123,123,123,4), then the same pooling is done, but the matrix rows are sorted rather strangely.}
 
+\item{row.physical.pool}{Should physical pooling be done (default) or should logical pooling be done. For example, if there are 3 rows in 
+the data matrix and row.pool.in=c(1,1,3), then in physical pooling, the entries in rows 1 and 2 are physically added together to create
+2 rows in the data matrix before fitting. Because the data has changed, you cannot compare physical pooling using AIC. In logical pooling,
+the data matrix is unchanged, but now parameters p1=p2 but the movement parameters for the rest of the matrix are not forced equal.}
+
 \item{theta.pool, CJSpool}{NOT YET IMPLEMENTED. DO NOT CHANGE.}
 
-\item{sd.noise.init.est}{How much random noise should be added to the initial (least squares) estimates. Normally only used with severe convergence problems.}
+\item{optMethod}{What optimiation method is used. Defaults is the nlminb() function..}
 
-\item{optMethod}{What optimiation method is used. Defaults is the BBoptim function from the BB package.}
-
-\item{optMethod.control}{Control parameters for optimization method. See spg() function in BB package or optim() function for details.
-For BBoptim, a suggest control parameter for debugging is optMethod.control=list(M=20, trace=TRUE , maxit = 50000, ftol=10^-5).}
+\item{optMethod.control}{Control parameters for optimization method. See the documentation on the different optimization methods for details.}
 
 \item{svd.cutoff}{When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest singlular value to retain.}
+
+\item{chisq.cutoff}{When finding a goodness of fit statistic using (obs-exp)^2/exp, all cell whose Exp < gof.cutoff are ignored
+to try and remove structural zero cells.}
 }
 \value{
 A list with many entries. Refer to the vignettes for more details.
@@ -64,7 +69,6 @@ close(conne.data.csv)
  
 mod1 <- SPAS.fit.model(conne.data, model.id="Pooling rows 1/2, 5/6; pooling columns 5/6",
                       row.pool.in=c("12","12","3","4","56","56"),
-                      col.pool.in=c(1,2,3,4,56,56),
-                      optMethod.control=list(ftol=.0001))
+                      col.pool.in=c(1,2,3,4,56,56))
 
 }

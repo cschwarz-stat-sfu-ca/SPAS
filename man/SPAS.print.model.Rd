@@ -2,7 +2,7 @@
 % Please edit documentation in R/SPAS.print.model.R
 \name{SPAS.print.model}
 \alias{SPAS.print.model}
-\title{Print the results from a fit of a Stratifed-Petersen (SP) model}
+\title{Print the results from a fit of a Stratifed-Petersen (SP) model when using the TMB optimizer}
 \usage{
 SPAS.print.model(x)
 }

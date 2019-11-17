@@ -23,16 +23,18 @@ har.data
 ## ----fit1,results="hide"-------------------------------------------------
 mod1 <- SPAS.fit.model(har.data,
                        model.id="No restrictions",
-                       row.pool.in=1:6, col.pool.in=1:6,
-                       optMethod.control=list(ftol=.00001))
+                       row.pool.in=1:6, col.pool.in=1:6)
 
 ## ----mod1p---------------------------------------------------------------
 SPAS.print.model(mod1)
 
 ## ----str1----------------------------------------------------------------
+cat("Names of objects at highest level\n")
 names(mod1)
-names(mod1$real)
-names(mod1$real$est.indiv)
+cat("\n\nNames of estimates (both beta and real)\n")
+names(mod1$est)
+cat("\n\nNames of real estimates\n")
+names(mod1$est$real)
 
 ## ----fit2,results="hide"-------------------------------------------------
 mod2 <- SPAS.fit.model(har.data, model.id="Pooling some rows",

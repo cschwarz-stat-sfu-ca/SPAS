@@ -1,3 +1,14 @@
+SPAS 2020.01.01
+-------------
+
+  * Optimization using TMB package. This speeds up optimization considerably and
+    reduces the number of non-convergence issues.
+  * Implement logical pooling of rows. Because data are not physically modified
+    you can look at different row pooling using AIC. You cannot compare column
+    pooling using any method. See help files for details.
+  * Cni-square goodness of fit test implement
+
+
 SPAS 2018.11.22
 -------------
 

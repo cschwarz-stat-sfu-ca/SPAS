@@ -10,6 +10,6 @@ SPAS.likelihood.star.DM(Est.Star, rowDM, colDM, thetaDM, rawdata,
 }
 \description{
 These functions are used internally to fit the Stratified Petersen models and are not normally used.
-.
+Most of these functions are for the legacy version that does not use TMB and so likely can be eventually deleted.
 }
 \keyword{internal}

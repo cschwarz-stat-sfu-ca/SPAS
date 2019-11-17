@@ -1,18 +1,22 @@
 Package: SPAS
 Type: Package
 Title: Stratified-Petersen Analysis System
-Version: 2019.2
-Date: 2019-02-06
+Version: 2020.0
+Date: 2020-01-01
 Author: Carl James Schwarz
 Maintainer: Carl James Schwarz <cschwarz.stat.sfu.ca@gmail.com>
-Depends: 
+LinkingTo:
+    TMB
+   RcppEigen,
+    TMB
 Imports:
-   BB, 
-   MASS,
-   Matrix, 
-   msm, 
-   numDeriv, 
-   plyr
+    BB,
+    MASS,
+    Matrix,
+    msm,
+    numDeriv,
+    plyr,
+    TMB (>= 1.7.15)
 Description: The Stratified-Petersen Analysis System (SPAS) is designed
     to estimate abundance in two-sample capture-recapture experiments 
     where the capture and recaptures are stratified. This is a generalization

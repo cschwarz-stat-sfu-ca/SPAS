@@ -2,10 +2,13 @@
 title: "Harrison River Female Chinook 2011 Data"
 author: "Carl James Schwarz"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    number_sections: yes
+    toc: yes
 vignette: >
-  %\VignetteIndexEntry{Harrison River Female Chinook 2011 Data}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Harrison River Female Chinook 2011 Data} 
+  %\VignetteEngine{knitr::rmarkdown} 
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -16,20 +19,20 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Introduction
+# Introduction
 The experiment consisted of daily sampling, but condensed to weeks.
 Returning adult salmon were tagged and released at the upstream trap. They were recaptured
 during carass surveys
 
 A stratified-Petersen estimator (Darrock, 1961; Plante et al. 1996) is found for the unpooled data and some pooling of the rows/columns.
 
-## Load the SPAS package
+# Load the SPAS package
 ```{r libraries}
 library(SPAS)
 ```
 This will load the SPAS fitting functions and any associated packages needed by SPAS.
 
-## Import the data.
+# Import the data.
 The data  should be stored as an $s+1$ by $t+1$ (before pooling) matrix where the upper $s \times t$ matrix consists of the 
 The $s \times t$ upper left matrix is the number of animals released in row stratum $i$ and recovered in
 column stratum $j$. 
@@ -61,7 +64,7 @@ A total of `r har.data[7,1]` UNMARKED fish were recovered in column stratum 1.
 
 You can add row and column names to the matrix which will used when the data are printed.
 
-## Fitting the Stratified-Petersen model
+# Fitting the Stratified-Petersen model
 The Stratified-Petersen model is fit to the above data object.
 The very sparse last row will
 make fitting the model to the original data difficult with a very flat likelihood surface and so we relax the convergence
@@ -69,8 +72,7 @@ criteria:
 ```{r fit1,results="hide"}
 mod1 <- SPAS.fit.model(har.data,
                        model.id="No restrictions",
-                       row.pool.in=1:6, col.pool.in=1:6,
-                       optMethod.control=list(ftol=.00001))
+                       row.pool.in=1:6, col.pool.in=1:6)
 ```
 The `row.pool.in` and `col.pool.in` inform the function on which rows or columns to pool before the analysis proceeds. 
 Both parameters use a vector of codes (length $s$ for row pooing and length $t$ for column pooling) where rows/columns
@@ -84,11 +86,7 @@ pooling rows 1, 2, and 3 to be easiest to use.
 
 **The SPAS system only fits models were the number of rows after pooling is less than or equal to the number of columns after pooling.**
 
-### Results from model 1 (no pooling).
-The likelihood is rather flat, so don't be too concerned about messages from the optimization on failing to converge.
-As long as the likelihood values seem to be have stabilized and estimates are sensible (i.e. capture rates not 0 or 1;
-estimates of movement sensible results), the estimates should be fine.
-
+## Results from model 1 (no pooling).
 The results of the model fit is a LARGE list. But the function `SPAS.print.model` produces a nice report
 ```{r mod1p}
 SPAS.print.model(mod1)
@@ -96,16 +94,19 @@ SPAS.print.model(mod1)
 
 The original data, the data after pooling, estimates and their standard errors are shown.
 Here the stratified-Petersen estimate of the total number of smolts passing the at the first sampling station is
-`r formatC(round(mod1$real$est.indiv$N), format='f', digits=0, big.mark=',')` with a standard error of 
-`r formatC(round(mod1$real$est.indiv$N.se), format='f', digits=0, big.mark=',')`.
+`r formatC(round(mod1$est$real$N), format='f', digits=0, big.mark=',')` with a standard error of 
+`r formatC(round(mod1$se $real$N), format='f', digits=0, big.mark=',')`.
 
 
 Each entry in the output is available in fitted model object. You will need to explore the
 structure
 ```{r str1}
+cat("Names of objects at highest level\n")
 names(mod1)
-names(mod1$real)
-names(mod1$real$est.indiv)
+cat("\n\nNames of estimates (both beta and real)\n")
+names(mod1$est)
+cat("\n\nNames of real estimates\n")
+names(mod1$est$real)
 ```
 The `N` entries refer to the  population size; the `N.stratum` entries refer to the individual stratum population sizes;
 the `cap` entries refer to the estimated probability of capture in each row stratum;
@@ -113,7 +114,7 @@ the `exp.factor` entries refer to `(1-cap)/cap`, or the expansion factor for eac
 the `psi` entries refer to the number of animals tagged but never seen again (the right most column in the input data);
 and the `theta` entires refer to the expected number of animals that were tagged in row stratum $i$ and recovered in column stratum $j$ (after pooling).
 
-### Pooling some rows and columns
+# Physcially pooling some rows and columns
 As noted by Darroch (1961), the stratified-Petersen will fail if the matrix of movements is close to singular. This often happens if two rows are proportional to each other. In this case, there is no unique MLE for the probability of capture in the two rows, and they should be pooled.
 A detailed discussion of pooling is found in Schwarz and Taylor (1998).
 
@@ -137,8 +138,8 @@ SPAS.print.model(mod2)
 ```
 
 Here the stratified-Petersen estimate of the total number of smolts passing the at the first sampling station is
-`r formatC(round(mod2$real$est.indiv$N), format='f', digits=0, big.mark=',')` with a standard error of 
-`r formatC(round(mod2$real$est.indiv$N.se), format='f', digits=0, big.mark=',')`.
+`r formatC(round(mod2$est$real$N), format='f', digits=0, big.mark=',')` with a standard error of 
+`r formatC(round(mod2$est$real$N), format='f', digits=0, big.mark=',')`.
 which is a slight reduction
 from the unpooled estimates.
 
@@ -164,18 +165,17 @@ mod4 <- SPAS.fit.model(har.data, model.id="Pooled Peteren",
 SPAS.print.model(mod4)
 ```
 Both models have an estimated abundance of
-`r formatC(round(mod3$real$est.indiv$N), format='f', digits=0, big.mark=',')` with a standard error of 
-`r formatC(round(mod3$real$est.indiv$N.se), format='f', digits=0, big.mark=',')`.
+`r formatC(round(mod3$est$real$N), format='f', digits=0, big.mark=',')` with a standard error of 
+`r formatC(round(mod3$se $real$N), format='f', digits=0, big.mark=',')`.
 which is a slight reduction
 from the unpooled estimates.
 
-## Comparing different pooling
+## Comparing different physical pooling
 **Unfortunately, because pooling actually changes the data (internally), it is not possible to
-do likelihood ratio testing or to use AICc to compare different poolings.**
-Methods to compare different poolings is under
-active investigation.
+do likelihood ratio testing or to use AICc to compare different physcial poolings.**
 
-## References
+
+# References
 Darroch, J. N. (1961). The two-sample capture-recapture census when tagging and sampling are stratified. Biometrika, 48, 241–260.
 https://www.jstor.org/stable/2332748
 

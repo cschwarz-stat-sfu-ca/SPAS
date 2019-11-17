@@ -1,4 +1,4 @@
-#' Fit a Stratifed-Petersen (SP) model
+#' Fit a Stratifed-Petersen (SP) model using  TMB.
 #' 
 #' This function fits a Stratified-Petersen (Plante, 1996) to data and specify which rows/columns of the data
 #' should be pooled. The number of rows after pooling should be <= number of columns after
@@ -20,16 +20,19 @@
 #'   this is seldom sensible. A careful choice of pooling labels helps to remember what as done, e.g. row.pool.in=c("123","123","123","4") indicates
 #'   that the first 3 rows are pooled and the 4th row is not pooled. Character entrie ensure that the resulting matrixi is sorted properly (e.g. if 
 #'   row.pool.in=c(123,123,123,4), then the same pooling is done, but the matrix rows are sorted rather strangely.
+#' @param row.physical.pool  Should physical pooling be done (default) or should logical pooling be done. For example, if there are 3 rows in 
+#'   the data matrix and row.pool.in=c(1,1,3), then in physical pooling, the entries in rows 1 and 2 are physically added together to create
+#'   2 rows in the data matrix before fitting. Because the data has changed, you cannot compare physical pooling using AIC. In logical pooling,
+#'   the data matrix is unchanged, but now parameters p1=p2 but the movement parameters for the rest of the matrix are not forced equal.
 #' @param theta.pool,CJSpool NOT YET IMPLEMENTED. DO NOT CHANGE.
-#' @param sd.noise.init.est How much random noise should be added to the initial (least squares) estimates. Normally only used with severe convergence problems.
-#' @param optMethod What optimiation method is used. Defaults is the BBoptim function from the BB package.
-#' @param optMethod.control Control parameters for optimization method. See spg() function in BB package or optim() function for details.
-#'    For BBoptim, a suggest control parameter for debugging is optMethod.control=list(M=20, trace=TRUE , maxit = 50000, ftol=10^-5).
+#' @param optMethod What optimiation method is used. Defaults is the nlminb() function..
+#' @param optMethod.control Control parameters for optimization method. See the documentation on the different optimization methods for details.
 #' @param svd.cutoff When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest singlular value to retain.
-#'  
+#' @param chisq.cutoff When finding a goodness of fit statistic using (obs-exp)^2/exp, all cell whose Exp < gof.cutoff are ignored
+#'        to try and remove structural zero cells.
 #' @return A list with many entries. Refer to the vignettes for more details.
 #' @export
-#' @import BB numDeriv msm MASS stats plyr
+#' @import msm MASS stats plyr TMB RcppEigen
 #' @importFrom Matrix bdiag 
 #' @examples 
 #' conne.data.csv <- textConnection("
@@ -45,8 +48,7 @@
 #'  
 #' mod1 <- SPAS.fit.model(conne.data, model.id="Pooling rows 1/2, 5/6; pooling columns 5/6",
 #'                       row.pool.in=c("12","12","3","4","56","56"),
-#'                       col.pool.in=c(1,2,3,4,56,56),
-#'                       optMethod.control=list(ftol=.0001))
+#'                       col.pool.in=c(1,2,3,4,56,56))
 #'
 
 # Fit the OPEN SPAS model to the data.
@@ -57,12 +59,12 @@
 # The final matrix, after pooling must have s <= t.
 
 SPAS.fit.model<- function(model.id='Stratified Petersen Estimator', 
-                          rawdata,row.pool.in, col.pool.in, 
-                          theta.pool=FALSE, CJSpool=FALSE, 
-                          sd.noise.init.est=0,
-                          optMethod=c("BBoptim","optim"), 
-                          optMethod.control=list(maxit = 50000, ftol=1e-9, gtol=1e-5), 
-                          svd.cutoff=.0001){
+                          rawdata, 
+                          row.pool.in, col.pool.in, 
+                          row.physical.pool=TRUE, theta.pool=FALSE, CJSpool=FALSE, 
+                          optMethod=c("nlminb"), 
+                          optMethod.control=list(maxit = 50000), 
+                          svd.cutoff=.0001, chisq.cutoff=.1){
 # Fit the Open SPAS model given the data and pooling information on the rows and columns
 #
 # The Open models have no constraints on the movement into the observed strata for each release group
@@ -88,27 +90,33 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
    # Does final pooled matrix have s <= t?
    if(length(unique(row.pool.in)) > length(unique(col.pool.in)))stop("S must be <= T after pooling")
   
+   # check that row.phyiscal.pool is logical.
+   if(!is.logical(row.physical.pool) | length(row.physical.pool)!= 1)stop("Row.physical.pool must be logical of length 1")
    if(theta.pool)stop("Theta pooling not yet implemented")
    if(CJSpool   )stop("CJSpooling not yet implemented")
 
    # check input noise
-   if(!is.numeric(sd.noise.init.est))stop("sd.noise.input.est must be numeric")
+   #if(!is.numeric(sd.noise.init.est))stop("sd.noise.input.est must be numeric")
   
    # check optimization method
-   if(!optMethod[1] %in% c("BBoptim","optim"))stop("Invalid optimization method specified")
+   if(!optMethod[1] %in% c("nlminb"))stop("Invalid optimization method specified")
   
    if(!is.numeric(svd.cutoff))stop("Svd.cutoff must be numeric")
    if( svd.cutoff > .0001)stop("svd.cutoff is too large")   
   
+   if(!is.numeric(chisq.cutoff) | length(chisq.cutoff) != 1)stop("chisquare cutoff must be numeric and length 1")
+   
    RESULT <- NULL
-   RESULT$version <- "SPAS-R 2019-01-01"
+   RESULT$version <- "SPAS-R 2020-01-01"
    RESULT$date    <- Sys.time()   # date run and start date
    
    RESULT$input <- list(rawdata     = rawdata,
                         row.pool.in = row.pool.in,
                         col.pool.in = col.pool.in,
+                        row.physical.pool=row.physical.pool,
                         theta.pool  = theta.pool,
-                        CJSpool     = CJSpool)
+                        CJSpool     = CJSpool,
+                        chisq.cutoff= chisq.cutoff)
   
    s = nrow(rawdata)-1 # The number of release   strata prior to pooling
    t = ncol(rawdata)-1 # The number of recapture strata prior to pooling
@@ -116,179 +124,230 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
    
 #  row pooling first
    pool.frame <- data.frame(pool=as.factor(row.pool.in))
-   if(length(unique(row.pool.in)) >1)  pool.matrix <- model.matrix( ~-1 + pool, data=pool.frame)
+   if(length(unique(row.pool.in)) >1)  rowDM <- model.matrix( ~-1 + pool, data=pool.frame)
    if(length(unique(row.pool.in))==1)  {
-      pool.matrix <- matrix(1, nrow=s, ncol=1)
-      colnames(pool.matrix) <- as.character(row.pool.in[1])
+      rowDM <- matrix(1, nrow=s, ncol=1)
+      colnames(rowDM) <- as.character(row.pool.in[1])
    }
-   pool.row    <- t(pool.matrix) %*% rawdata[1:s,] 
-   pool.row    <- rbind(pool.row, rawdata[s+1,])
-   row.names(pool.row)[nrow(pool.row)] <- paste(row.names(rawdata)[s+1],"",sep="")
+   if(row.physical.pool){  # physical pooling for the rows
+      pool.row    <- t(rowDM) %*% rawdata[1:s,] 
+      pool.row    <- rbind(pool.row, rawdata[s+1,])
+      row.names(pool.row)[nrow(pool.row)] <- paste(row.names(rawdata)[s+1],"",sep="")
+   }
+   if(! row.physical.pool){  # logical pooling for the rows. nothing is done to the data
+      pool.row <- rawdata
+      row.names(pool.row) <- c(paste("pool", row.pool.in, sep="."), "")
+      row.names(pool.row)[nrow(pool.row)] <- paste(row.names(rawdata)[s+1],"",sep="")
+   }
    
 #  column pooling next
    pool.frame <- data.frame(pool=as.factor(col.pool.in))
-   if(length(unique(col.pool.in))> 1) pool.matrix <- model.matrix( ~-1 + pool, data=pool.frame)
+   if(length(unique(col.pool.in))> 1) colDM <- model.matrix( ~-1 + pool, data=pool.frame)
    if(length(unique(col.pool.in))==1)  {
-      pool.matrix <- matrix(1, nrow=t, ncol=1)
-      colnames(pool.matrix) <- as.character(col.pool.in[1])
+      colDM <- matrix(1, nrow=t, ncol=1)
+      colnames(colDM) <- as.character(col.pool.in[1])
    }
-   pooldata    <- pool.row[, 1:t] %*% pool.matrix 
+   # physical pooling of the rows
+   pooldata    <- pool.row[, 1:t] %*% colDM 
    pooldata <- cbind(pooldata, pool.row[,t+1] )
    colnames(pooldata)[ncol(pooldata)] <-paste(colnames(pool.row)[t+1],"",sep="")
+ 
+   s = nrow(pooldata)-1 # The number of release   strata AFTER physical pooling
+   t = ncol(pooldata)-1 # The number of recapture strata AFTER physical pooling
 
-   s = nrow(pooldata)-1 # The number of release   strata AFTER to pooling
-   t = ncol(pooldata)-1 # The number of recapture strata AFTER to pooling
-
-# get the design matrices to allow for covariates on p and other parameters (after pooling)
-# This is currently not implemented and so the design matrices are simple identity matrices
-   rowDM  = diag(1, nrow(pooldata)-1)
-   colDM  = diag(1, ncol(pooldata)-1)
-   thetaDM= diag(1, (nrow(pooldata)-1)*(ncol(pooldata)-1))
+# get the design matrices. If you do physical pooling, these are simple identity matrices
+   if(row.physical.pool){
+      rowDM  = diag(1, nrow(pooldata)-1)
+      colDM  = diag(1, ncol(pooldata)-1)
+      thetaDM= diag(1, (nrow(pooldata)-1)*(ncol(pooldata)-1))
+   }
+   #browser()
+   if(!row.physical.pool){ #logical pooling so create the design matrices for rows and/columns
+     # rowDM and colDM were computed earlier
+     thetaDM = diag(1, (nrow(pooldata)-1)*(ncol(pooldata)-1)) # not yet implemented
+   }
 
    # Initial Estimates obtained using least squares
-   #browser(text='Call to init.est')
-   init.est = SPAS.init.est(rawdata=pooldata,rowDM=rowDM,colDM=colDM,thetaDM=thetaDM, conditional=TRUE)
-   #browser()
-   # set the lower and upper bounds on the estimates 
-   # theta are optimized on log scale; cap on logit scale; psi on log scale; and N on log scale (not needed for conditional fit)
-   l.b = c(rep(-12,length(init.est))) # 0 ) # Lower Bound for optimization routine
-   u.b = c(rep( 12,length(init.est)))# ,30) # Upper Bound for optimization routine
+   init.est = SPAS.init.est(rawdata=pooldata,rowDM=rowDM,colDM=colDM,thetaDM=thetaDM)
 
-   # Add a little noise to the initial estimates ???
-   if(sd.noise.init.est>0){init.est <- init.est + rnorm(length(init.est),sd=sd.noise.init.est)}
+   # refer to https://stackoverflow.com/questions/48627069/guidelines-for-including-tmb-c-code-in-an-r-package
+   # on how to include a TMB file with an R package
+   
+   # set up for the optimization 
+   #dyn.load(dynlib("SPAS"))
+
+   #browser() 
+   # Create the model
+   tmb.model <- MakeADFun(data= list(n_10 = pooldata[1:s  , t+1],
+                                 u    = pooldata[s+1  , 1:t],
+                                 m    = pooldata[1:s  , 1:t, drop=FALSE],
+                                 rowDM=rowDM),
+                        parameters=list(
+                                 beta_cap   =as.vector(init.est$beta_cap),
+                                 beta_theta =matrix(init.est$beta_theta, nrow=s, ncol=t),
+                                 beta_psi   =as.vector(init.est$beta_psi)),
+                        DLL="SPAS"
+                        )
+
+   #browser()
+   
+   
+   # set the lower and upper bounds on the estimates 
+   # theta are optimized on log scale; cap on logit scale; psi on log scale
+   l.b = -12  # Lower Bound for optimization routine
+   u.b =  20  # Upper Bound for optimization routine
+
    RESULT$fit.setup <- list(pooldata=pooldata,
                             rowDM = rowDM,
                             colDM = colDM,
                             thetaDM = thetaDM,
                             init.est= init.est,
                             l.b     = l.b,
-                            u.b     = u.b)
+                            u.b     = u.b,
+                            tmb.model=tmb.model)
    # First optimization of the conditional likelihood.
    # This gives us the estimates of everything but N
-   # browser()
-   if((!(optMethod[1] %in% c("BBoptim","optim","SANN"))) | optMethod[1]=='BBoptim'){
-       cat("Using BBoptim() to find conditional MLE\n")
-       res =BB::BBoptim(par=init.est,
-                fn=SPAS.likelihood.star.DM,  gr=SPAS.score.DM,
-                method=1,lower=l.b,upper=u.b, 
-                control=optMethod.control,
-                #control=list(M=20, trace=TRUE , maxit = 50000), # ftol=10^-5),
-                quiet=FALSE,
-                rowDM=rowDM,colDM=colDM,thetaDM=thetaDM,rawdata=pooldata, returnnegll=TRUE, conditional=TRUE)
+    if(optMethod[1]=='nlminb'){
+       cat("Using nlminb to find conditional MLE\n")
+       fit <- nlminb(tmb.model$par, tmb.model$fn, tmb.model$gr, tmb.model$he, lower=l.b, upper=u.b)
+       cat("Convergence codes from nlminb ", fit$convergence, fit$message, "\n")
    }
-   if(optMethod[1] == 'optim'){
-        res =optim(par=init.est,
-                fn=SPAS.likelihood.star.DM, gr=SPAS.score.DM,
-                method="L-BFGS-B",lower=l.b,upper=u.b,
-                control=optMethod.control,
-                #control=list(trace=6, maxit = 5000),
-                rowDM=rowDM,colDM=colDM,thetaDM=thetaDM,rawdata=pooldata, returnnegll=TRUE, conditional=TRUE)
-   }
-#   if(optMethod[1] == 'SANN'){
-#      res = GenSA(par=init.est, fn=SPAS.likelihood.star.DM, lower=l.b, upper=u.b, 
-#               control=list(verbose=TRUE, max.time=600),
-#               rowDM=rowDM,colDM=colDM,thetaDM=thetaDM,rawdata=pooldata, returnnegll=TRUE, conditional=TRUE)
-#   }
-   
-   RESULT$conditional$res$optim.info <- res # results from conditional maximization
+
+   RESULT$conditional$res$optim.info <- fit # from conditional maximization
    
    # Second estimate N using a conditional estimator .
    cat("Finding conditional estimate of N\n")
-   est <- SPAS.extract.par.est(res$par, rowDM, colDM, thetaDM, conditional=TRUE)
-   est$Nhat <- sum(pooldata) + sum(est$psi*(1-est$cap)/est$cap) 
-   RESULT$conditional$res$Nhat <- est$Nhat
-   RESULT$conditional$res$Nhat.stratum <- rowSums(pooldata)[1:s]/est$cap 
    
-   # Third. We now evaluate the conditional likelihood to get full covariance matrix of ALL parameters
-   #res$par <- as.vector(c(res$par, log(est$Nhat)))  # use the conditional values with log N as the next parameter
-   RESULT$model.info <- list(model.id=model.id,
-                             logL.cond   = SPAS.likelihood.star.DM(res$par,rowDM,colDM,thetaDM,pooldata, conditional=TRUE),
-                             #logL.uncond = SPAS.likelihood.star.DM(res$par,rowDM,colDM,thetaDM,pooldata, conditional=FALSE),
-                             np   = length(res$par),       
-                             AICc = SPAS.AICc(res$par,rowDM,colDM,thetaDM,pooldata)
-                             ) 
+   # Extract the various estimates of the parameters from the optimization routine
+   RESULT$est$beta$all <- fit$par
+   
+   # The psi terms. No design matrix. Beta parameters on log-scale
+   beta_psi_index <- grepl("beta_psi", names(fit$par))
+   RESULT$est$beta$psi <- fit$par[ beta_psi_index ]
+   RESULT$est$real$psi <- exp(RESULT$est$beta$psi)
+   
+   # The theta terms. We have a design matrix and beta parameters on log scale, but nothing implemented yet
+   beta_theta_index <- grepl("beta_theta", names(fit$par))
+   RESULT$est$beta$theta <- fit$par[ beta_theta_index]
+   RESULT$est$real$theta <- as.vector(exp(thetaDM %*% RESULT$est$beta$theta))
  
-   # Extract the VCV from conditional model using numerical derivatives at the conditional estimates
-   hess = SPAS.i.fisher.DM(res$par,rowDM,colDM,thetaDM,pooldata, svd.cutoff= svd.cutoff, conditional=TRUE)
- 
-   RESULT$est.red.star$est  <- res$par
-   RESULT$est.red.star$vcv  <- hess$vcv  # hess$vcv[nrow(hess$vcv), ncol(hess$vcv)]
-   RESULT$est.red.star$se   <- sqrt(diag(hess$vcv))
-
-   # Get the estimates after expanding by the design matrix
-   # (a) Go from the reduced estimates to the expanded estimates but still on the * scale using the design matrices
-   X <- bdiag(thetaDM,                 # the theta* parameters
-              rowDM,                   # the logit(prob.capture) parameters
-              diag(1,s)                # the psi parameters
-              #diag(1)                 # the log(N) parameter (not currently estimated directly)
+   # the capture probabilities. We have a design matrix and beta terms on logit scale
+   beta_cap_index <- grepl("beta_cap", names(fit$par))
+   RESULT$est$beta$cap <- fit$par[ beta_cap_index]
+   RESULT$est$real$cap <- expit( as.vector(rowDM %*% RESULT$est$beta$cap)) 
+   
+   # extract the vcv for the various parameters and the se on the beta and regular scale
+   RESULT$vcv$beta$allinfo <- SPAS.i.hess(tmb.model$he    ( fit$par))
+   RESULT$vcv$beta$all     <- RESULT$vcv$beta$allinfo$vcv
+   RESULT$vcv$beta$psi     <- RESULT$vcv$beta$all[ beta_psi_index,   beta_psi_index]
+   RESULT$vcv$beta$cap     <- RESULT$vcv$beta$all[ beta_cap_index,   beta_cap_index]
+   RESULT$vcv$beta$theta   <- RESULT$vcv$beta$all[ beta_theta_index, beta_theta_index]
+   
+   
+   # Get the beta estimates after expanding by the design matrix
+   # Note that the ordering of the parameters is determined by the .cpp file. So if that changes, you need to update this code.
+   # (a) Go from the reduced estimates to the expanded estimates but still on the logit or log scale using the design matrices
+   X <- bdiag(rowDM,                    # the logit(prob.capture) parameters
+              thetaDM,                  # the log(theta) parameters
+               diag(1,s)                # the log(psi) parameters
               ) 
-   X <- as.matrix(X)   # sometime need to convert from spare representation
+   X <- as.matrix(X)   # sometime need to convert from sparse representation
    #browser()
-   RESULT$est.star$est <-  as.vector(X %*% RESULT$est.red.star$est)
-   RESULT$est.star$vcv  <- X %*% RESULT$est.red.star$vcv %*% t(X)
-   RESULT$est.star$se   <- sqrt(diag(RESULT$est.star$vcv))
- 
-   # (b) Go from log(theta) -> theta, log((1-p)/p) -> p, log(psi) -> psi, log(N) - > N
+   RESULT$est$beta$all.expanded <-  as.vector(X %*% RESULT$est$beta$all)
+   RESULT$vcv$beta$all.expanded <-  X %*% RESULT$vcv$beta$all %*% t(X)
+
+   # Now convert from the logit(), log() and log() scale to the real scale and find the vcv and se.
    # We use the deltamethod() function in the msm package
    # and so need to create extressions to do the delta method
-   RESULT$real$est.all <- c( exp  ( RESULT$est.star$est[1:(s*t)]),            #log(theta) -> theta
-                             expit(-RESULT$est.star$est[(s*t+1):(s*t+s)]),    #log((1-p)/p)-> p
-                             exp  ( RESULT$est.star$est[(s*t+s+1):(s*t+s+s)]) #log(psi) -> psi
-                             #exp  ( RESULT$est.star$est[(s*t+s+s+1):(s*t+s+s+1)]) # log(N) -> N (not currently done)
-                             ) 
-   
-   backtrans <- c( paste("~exp(x", 1:(s*t), ")"               , sep=""),
-                  paste("~1/(1+exp(x", (s*t+1):(s*t+s),"))"  , sep=""),
-                  paste("~exp(x", (s*t+s+1):(s*t+s+s),")"    , sep="")
-                  #paste("~exp(x", (s*t+s+s+1):(s*t+s+s+1),")", sep="")
-                  )
-   backtrans <- llply(backtrans, function(x){as.formula(x)})
-   RESULT$real$vcv.all  <- msm::deltamethod(backtrans, RESULT$est.star$est, RESULT$est.star$vcv, ses=FALSE)
-   RESULT$real$se.all   <- sqrt(diag( RESULT$real$vcv ))
-   
-   # Extract the individual VCV's of the parameters now
-   # Now extact the individual estimates 
-   RESULT$real$est.indiv  <- SPAS.extract.par.est(RESULT$est.red.star$est, rowDM, colDM, thetaDM, conditional=TRUE)
-   RESULT$real$est.indiv$N<- RESULT$conditional$res$Nhat
-   RESULT$real$est.indiv$N.stratum <- RESULT$conditional$res$Nhat.stratum
+   RESULT$est$real$all.expanded  <-c( RESULT$est$real$cap,   
+                              RESULT$est$real$theta,
+                              RESULT$est$real$psi)
+   # set up the transformations 
+   backtrans <- c(paste("~1/(1+exp(-x",    1:s,         "))"    , sep=""),
+                  paste("~exp(x",      (s+1):(s+s*t),   ")"     , sep=""),
+                  paste("~exp(x",  (s*t+s+1):(s*t+s+s),  ")"    , sep="")
+                   )
+   backtrans <- plyr::llply(backtrans, function(x){as.formula(x)})
+   RESULT$vcv$real$all.expanded  <- msm::deltamethod(backtrans,  RESULT$est$beta$all.expanded,  RESULT$vcv$beta$all.expanded, ses=FALSE)
+   RESULT$se $real$all.expanded  <- sqrt(diag( RESULT$vcv$real$all.expanded ))
 
-   RESULT$real$est.indiv$theta.vcv <-  RESULT$real$vcv.all[1:(s*t), 1:(s*t)]
-   RESULT$real$est.indiv$theta.se  <-  matrix(RESULT$real$se.all[1:(s*t)], nrow=s)
-
-   RESULT$real$est.indiv$cap.vcv   <-  RESULT$real$vcv.all[(s*t+1):(s*t+s), (s*t+1):(s*t+s) ]
-   RESULT$real$est.indiv$cap.se    <-  RESULT$real$se.all [(s*t+1):(s*t+s)]
+   # extract the vcv of the real parameters and their se
+   RESULT$vcv$real$cap    <- RESULT$vcv$real$all.expanded[        1:s  ,                 1:s      ,   drop=FALSE ]
+   RESULT$vcv$real$theta  <- RESULT$vcv$real$all.expanded[    (s+1):(s+s*t)  ,       (s+1):(s+s*t),   drop=FALSE  ]
+   RESULT$vcv$real$psi    <- RESULT$vcv$real$all.expanded[(s*t+s+1):(s*t+s+s)  , (s*t+s+1):(s*t+s+s), drop=FALSE ]
    
-   RESULT$real$est.indiv$psi.vcv  <- RESULT$real$vcv.all[(s*t+s+1):(s*t+s+s), (s*t+s+1):(s*t+s+s) ]
-   RESULT$real$est.indiv$psi.se   <- RESULT$real$se.all [(s*t+s+1):(s*t+s+s)]
+   RESULT$se$real$cap     <- sqrt(diag(RESULT$vcv$real$cap))
+   RESULT$se$real$theta   <- sqrt(diag(RESULT$vcv$real$theta))
+   RESULT$se$real$psi     <- sqrt(diag(RESULT$vcv$real$psi))
    
-   # Getting the variance of N (see question 11 of Plante's paper)
+   # estimate N = total populaton size
+   # Getting the variance of N (see equation 11 of Plante's paper)
    # Notice that we don't find the covariance of N with any of the other parameters
-   #browser()
-   part1 <- t(est$psi) %*% diag(1/est$cap^2, nrow=length(est$cap), ncol=length(est$cap)) %*% 
-            RESULT$real$est.indiv$cap.vcv %*%
-            diag(1/est$cap^2, nrow=length(est$cap), ncol=length(est$cap)) %*% est$psi
-   part2 <- sum( est$psi * ((1-est$cap)/est$cap + ((1-est$cap)/est$cap)^2 ))
-   RESULT$real$est.indiv$N.vcv     <- part1 + part2
-   RESULT$real$est.indiv$N.se      <- sqrt(RESULT$real$est.indiv$N.vcv)
+
+   RESULT$est$real$N  <- sum(pooldata, na.rm=TRUE) + tmb.model$report(fit$par)$neverseen
+   part1 <- t(RESULT$est$real$psi) %*% diag(1/RESULT$est$real$cap^2, nrow=s) %*% 
+            RESULT$vcv$real$cap %*%
+            diag(1/RESULT$est$real$cap^2, nrow=s) %*% RESULT$est$real$psi
+   part2 <- sum( RESULT$est$real$psi * ((1-RESULT$est$real$cap)/RESULT$est$real$cap + ((1-RESULT$est$real$cap)/RESULT$est$real$cap)^2 ))
+   RESULT$vcv$real$N     <- part1 + part2
+   RESULT$se$real$N      <- sqrt(RESULT$vcv$real$N)
+
+
+   # Third. We now evaluate the conditional likelihood to get full covariance matrix of ALL parameters
+   logL.cond   = -tmb.model$fn(fit$par)
+   np          = length(fit$par)
+   AIC =  2*np + 2*logL.cond #before correction
+   n = sum(rawdata, na.rm=TRUE) # total sample size  
+   AICc = AIC + 2*np*(np+1)/(n-np-1)
+
+   RESULT$model.info <- list(model.id=model.id,
+                             logL.cond   = logL.cond,
+                             np          = np,       
+                             AICc = AIC
+                             ) 
+   # Individual stratum estimates and their variances and set
+   RESULT$est$real$N.stratum <- rowSums(pooldata)[1:s]/RESULT$est$real$cap 
 
    # Variances of individual stratum estimates (conditonal on number released)
    if( s >1){
-     RESULT$real$est.indiv$N.stratum.vcv <-   rowSums(pooldata)[1:s]^2 * (1/est$cap^2)^2 * diag(RESULT$real$est.indiv$cap.vcv)
-     RESULT$real$est.indiv$N.stratum.se  <-   sqrt(RESULT$real$est.indiv$N.stratum.vcv)
+     RESULT$vcv$real$N.stratum  <-   rowSums(pooldata)[1:s]^2 * (1/RESULT$est$real$cap^2)^2 * diag(RESULT$vcv$real$cap)
+     RESULT$se $real$N.stratum  <-   sqrt(RESULT$vcv$real$N.stratum)
    }
    if( s==1){
-     RESULT$real$est.indiv$N.stratum.vcv <- RESULT$real$est.indiv$N.vcv
-     RESULT$real$est.indiv$N.stratum.se  <- RESULT$real$est.indiv$N.se 
+     RESULT$vcv$real$N.stratum  <- RESULT$vcv$real$N
+     RESULT$se $real$N.stratum  <- RESULT$se $real$N 
    }
    
    # Estimates of the expansion factors and their vcv
-   RESULT$real$est.indiv$exp.factor     <- (1-RESULT$real$est.indiv$cap)/RESULT$real$est.indiv$cap
-   RESULT$real$est.indiv$exp.factor.vcv <- diag(1/est$cap^2, nrow=length(est$cap), ncol=length(est$cap)) %*% 
-            RESULT$real$est.indiv$cap.vcv %*%
-            diag(1/est$cap^2, nrow=length(est$cap), ncol=length(est$cap))
-   if(s >  1) RESULT$real$est.indiv$exp.factor.se  <- sqrt(diag(RESULT$real$est.indiv$exp.factor.vcv))
-   if(s == 1) RESULT$real$est.indiv$exp.factor.se  <- sqrt(RESULT$real$est.indiv$exp.factor.vcv)
+   RESULT$est$real$exp.factor     <- (1-RESULT$est$real$cap)/RESULT$est$real$cap
+   RESULT$vcv$real$exp.factor     <- diag(1/RESULT$est$real$cap^2, nrow=s) %*% 
+            RESULT$vcv$real$cap %*%
+            diag(1/RESULT$est$real$cap^2, nrow=s)
+   RESULT$se$real$exp.factor  <- sqrt(diag(RESULT$vcv$real$exp.factor))
+ 
    
+   # Goodness-of-fit test. This is a simple chi-square test of observed vs. expected counts.
+   # No pooling is done to deal with sparse counts, but a "cut off" of 0.1 is used to try
+   # and eliminate cells with natural 0 counts (e.g. time stratification and t1 < t2)
+   # The psi parameters are always a perfect fit and so no need to include them in the chi-square value
+   # the cell counts, or the number of fitted parameters
+   #browser()
+   # find the component due to the movement matrix (m vs theta)
+   gof.obs1 <- as.vector(RESULT$fit.setup$pooldata[1:(-1+nrow(RESULT$fit.setup$pooldata)), 1:(-1+ncol(RESULT$fit.setup$pooldata))])
+   gof.exp1 <- as.vector(RESULT$est$real$theta)
+   select   <- gof.exp1>chisq.cutoff
+   chisq.gof <- sum((gof.obs1[select] - gof.exp1[select])^2/gof.exp1[select])
+   
+   # for the total number unobserved in recovery strata
+   gof.obs2 <- RESULT$fit.setup$pooldata[nrow(RESULT$fit.setup$pooldata),1:(-1+ncol(RESULT$fit.setup$pooldata)) ]
+   gof.exp2 <- as.vector((1-RESULT$est$real$cap)/RESULT$est$real$cap) %*% matrix(RESULT$est$real$theta,nrow=s, ncol=t) 
+   select   <- gof.exp2>chisq.cutoff
+   chisq.gof <- chisq.gof + sum((gof.obs2[select] - gof.exp2[select])^2/gof.exp2[select])
+   chisq.gof.df <-  length(RESULT$est$real$theta) + s + t-RESULT$model.info$np
+   RESULT$gof$chisq <- chisq.gof
+   RESULT$gof$chisq.df <- chisq.gof.df
+   RESULT$gof$chisq.p  <- ifelse(chisq.gof.df>0, pchisq(chisq.gof, df=chisq.gof.df, lower.tail=FALSE), NA)
+
    return(RESULT)            
 }
 
@@ -306,16 +365,13 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
 #        colDM is a design matrix used to constrain the column parameters   
 #        thetaDM is a design matrix used to contrain the movement parameters   
 #      
-# Ouput: 
-# Order of parameters is 
+# Ouput: a list with entries
 #       theta* = log( reduced theta parameters), i.e. as input to the design matrix
 #       cap*   = log((1-p)/p) for each row
 #       psi*   = log(reduced psi parameter - animals never recaptured)
-#       N*    = log(N)
 
 #
-SPAS.init.est <- function(rawdata,rowDM,colDM,thetaDM, conditional) { 
-  # if conditional=TRUE, then don't estimate N
+SPAS.init.est <- function(rawdata,rowDM,colDM,thetaDM) { 
 
    s = nrow(rawdata)-1  # The number of release   stratas 
    t = ncol(rawdata)-1  # The number of recapture stratas
@@ -337,7 +393,7 @@ SPAS.init.est <- function(rawdata,rowDM,colDM,thetaDM, conditional) {
    psi.hat <- tagged - rowSums(m)
    psi.star.hat <- log(psi.hat) # no design matrix for psi, psihat is usually equal to actual psi
    
-   # use a least squares estimator for the log (1-cao)/p
+   # use a least squares estimator for the log (1-cap)/p
    logit.cap.hat <- log( pmax(.01, LS(t(m),unmarked) ))
    logit.cap.hat <- rep(mean(logit.cap.hat), length(logit.cap.hat))
    
@@ -348,9 +404,9 @@ SPAS.init.est <- function(rawdata,rowDM,colDM,thetaDM, conditional) {
    logit.cap.star.hat <- LS(rowDM, logit.cap.hat)
    theta.star.hat     <- LS(thetaDM, theta.hat)
        
-   res<- c(theta.star.hat, logit.cap.star.hat, psi.star.hat)
-   if(!conditional) res <- c(res, logN.hat)
-   names(res) <- NULL
+   res<- list(beta_theta=theta.star.hat, 
+              beta_cap  = logit.cap.star.hat, 
+              beta_psi  =psi.star.hat)
    return(res)
 }
 

@@ -1,7 +1,7 @@
 #' Score, likelihood, and related functions for fitting Stratified Petersen model
 #' 
 #' These functions are used internally to fit the Stratified Petersen models and are not normally used.
-#' .
+#' Most of these functions are for the legacy version that does not use TMB and so likely can be eventually deleted.
 #' @keywords internal
 
 # Likelihood (and related) functions for the Open SPAS models.
@@ -129,6 +129,7 @@ SPAS.log.likelihood <- function(est,rawdata, returnnegll=FALSE, conditional=FALS
    }
    # Negative Log Likelihood ? 
    if(returnnegll){ l.l.h <- -l.l.h}
+   #browser()
    return(l.l.h)
 }
 
@@ -154,6 +155,14 @@ SPAS.i.fisher.DM <- function(est.star,rowDM,colDM,thetaDM,rawdata, conditional=F
 }
 
 
+SPAS.i.hess <- function(hess, svd.cutoff=.0001){
+   # compute the inverse of a matrix using singular value decomposition
+   # this is needed because zero entries in the movement matrix have an estimated theta==0
+   hess.svd = svd(hess)
+   hess.svd$d = 1/(hess.svd$d+(hess.svd$d<svd.cutoff)) * (hess.svd$d > svd.cutoff)    
+   vcv <- hess.svd$u %*% diag(hess.svd$d) %*% t(hess.svd$v )        
+   return(list(vcv=vcv,u = hess.svd$u,v = hess.svd$v, d.sig = diag(hess.svd$d)) )
+} 
 
 
 # Model AICc

@@ -21,16 +21,18 @@ conne.data <- as.matrix(read.csv(conne.data.csv, header=FALSE))
 ## ----fit1,results="hide"-------------------------------------------------
 mod1 <- SPAS::SPAS.fit.model(conne.data,
                        model.id="No restrictions",
-                       row.pool.in=1:6, col.pool.in=1:6,
-                       optMethod.control=list(ftol=.0001))
+                       row.pool.in=1:6, col.pool.in=1:6)
 
 ## ----mod1p---------------------------------------------------------------
 SPAS.print.model(mod1)
 
 ## ----str1----------------------------------------------------------------
+cat("Names of objects at highest level\n")
 names(mod1)
-names(mod1$real)
-names(mod1$real$est.indiv)
+cat("\n\nNames of estimates (both beta and real)\n")
+names(mod1$est)
+cat("\n\nNames of real estimates\n")
+names(mod1$est$real)
 
 ## ----fit2,results="hide"-------------------------------------------------
 mod2 <- SPAS.fit.model(conne.data, model.id="Pooling some rows",
@@ -55,4 +57,13 @@ mod4 <- SPAS.fit.model(conne.data, model.id="Pooled Peteren",
 
 ## ----mod4p---------------------------------------------------------------
 SPAS.print.model(mod4)
+
+## ----fit5,results="hide"-------------------------------------------------
+mod5 <- SPAS.fit.model(conne.data, model.id="Pooling some rows",
+                       row.pool.in=c("12","12","3","4","56","56"),
+                       row.physical.pool=FALSE,
+                       col.pool.in=c(1,2,3,4,56,56))
+
+## ------------------------------------------------------------------------
+SPAS.print.model(mod5)
 
