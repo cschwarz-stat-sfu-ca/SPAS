@@ -110,7 +110,8 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
    RESULT$version <- "SPAS-R 2020-01-01"
    RESULT$date    <- Sys.time()   # date run and start date
    
-   RESULT$input <- list(rawdata     = rawdata,
+   RESULT$input <- list(model.id    =model.id,
+                        rawdata     = rawdata,
                         row.pool.in = row.pool.in,
                         col.pool.in = col.pool.in,
                         row.physical.pool=row.physical.pool,
@@ -296,7 +297,7 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
    # Third. We now evaluate the conditional likelihood to get full covariance matrix of ALL parameters
    logL.cond   = -tmb.model$fn(fit$par)
    np          = length(fit$par)
-   AIC =  2*np + 2*logL.cond #before correction
+   AIC =  2*np - 2*logL.cond #before correction
    n = sum(rawdata, na.rm=TRUE) # total sample size  
    AICc = AIC + 2*np*(np+1)/(n-np-1)
 
