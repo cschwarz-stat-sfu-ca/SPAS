@@ -33,6 +33,10 @@ SPAS.print.model = function(x){
 #
 #  Print out model results from the OPEN SPAS model fit using TMB
 #
+#  Check that object is of the new form
+   if( x$version<"SPAS-R 2020-01-01"){
+       stop("Object was created using previous version of SPAS. Use SPAS.print.model.legacy()")
+   }
    cat("Model Name:",x$model.info$model.id,"\n")
    cat("   Date of Fit:",format(x$date,"%Y-%m-%d %H:%M"),"\n")
    cat("   Version of OPEN SPAS used :", x$version,"\n")
@@ -53,7 +57,6 @@ SPAS.print.model = function(x){
    cat("\n")
    
    cat("  Conditional   Log-Likelihood:",x$model.info$logL.cond,"   ;  np:",x$model.info$np,";  AICc:", x$model.info$AICc,"\n")
-   #cat("  Unconditional Log-Likelihood:",x$model.info$logL.uncond,";  np:",x$model.info$np,";  AICc:", x$model.info$AICc,"\n")
    cat("\n")
 
    cat("  Code/Message from optimization is: ",

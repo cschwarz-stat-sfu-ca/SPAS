@@ -31,8 +31,11 @@
 
 SPAS.print.model.legacy = function(x){
 #
-#  Print out model results from the OPEN SPAS model
+#  Print out model results from the OPEN SPAS model from the legacy code
 #
+   if( x$version>= "SPAS-R 2020-01-01"){
+       stop("Object was created using newer version of SPAS. Use SPAS.print.model()")
+   }
    cat("Model Name:",x$model.info$model.id,"\n")
    cat("   Date of Fit:",format(x$date,"%Y-%m-%d %H:%M"),"\n")
    cat("   Version of OPEN SPAS used :", x$version,"\n")
