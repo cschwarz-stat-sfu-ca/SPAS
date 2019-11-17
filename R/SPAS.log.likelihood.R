@@ -175,7 +175,7 @@ SPAS.i.hess <- function(hess, svd.cutoff=.0001){
 SPAS.AICc <- function(est.star, rowDM, colDM, thetaDM,rawdata){
    est <- SPAS.extract.par.est(est.star, rowDM, colDM, thetaDM)
    np = length(est.star)  # numer of parameters  
-   AIC =  2*np + 2*SPAS.likelihood.star.DM(est.star,rowDM,colDM,thetaDM,rawdata, returnnegll=FALSE, conditional=TRUE) #before correction
+   AIC =  2*np - 2*SPAS.likelihood.star.DM(est.star,rowDM,colDM,thetaDM,rawdata, returnnegll=FALSE, conditional=TRUE) #before correction
    n = sum(rawdata) # total sample size  
    AICc = AIC + 2*np*(np+1)/(n-np-1)
    return(AICc)
