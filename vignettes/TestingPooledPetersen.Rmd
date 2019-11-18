@@ -1,0 +1,165 @@
+---
+title: "TestingPooledPetersen"
+author: "Carl James Schwarz"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    number_sections: yes
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Harrison River Female Chinook 2011 Data} 
+  %\VignetteEngine{knitr::rmarkdown} 
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Testing if a Pooled Petersen is appropriate
+
+It is often of interest to know if a simple Pooled Petersen estimator, i.e., complete
+pooling over rows and columns,
+is appropriate.
+
+As noted in Schwwarz and Taylor (1998), the Pooled Petersen is unbiased 
+under many conditions, but the most common are:
+
+* Homogeneity of tagging probabilities, i.e. the probability of a fish being tagged in the release stratum is equal across all release strata.
+* Homogeneity of recapture probabilities, i.e. the probability of a fish being 
+recaptured is equal across all recovery strata.
+* Complete Mixing, i.e. tagged fish mix completely with untagged fish.
+* Correlation between tagging and recovery probabiltiies is zero, i.e. while
+probabilities are heterogeneous across fish, the thwo events are statistically 
+independent.
+
+We can examine the first of these conditions by examining the results of the
+stratified analysis and the results of a (logical) row pooling over all release
+stata.
+
+# Fitting the models
+
+## Reading in the data
+Thiw data were made avaialble from the Canadian Department of
+Fisheries and Oceans and represent release and recaptured
+of female fish in the Lower Shuswap region.
+
+```{r }
+
+test.data.csv <- textConnection("
+  86   ,     54   ,     39   ,   219
+  76   ,     35   ,     45   ,   168
+  24   ,     53   ,     73   ,   190
+1039   ,   1148   ,   2009   ,   0")
+
+test.data <- as.matrix(read.csv(test.data.csv, header=FALSE, strip.white=TRUE))
+test.data
+```
+
+We now fit several models
+
+* A fully 3x3 stratified analysis
+* Pooling over all rows using logical pooling
+* Pooling over all rows using physical pooling
+* Pooling over all rows and the last two columns using physical pooling
+* Complete physical pooling over rows and columns (a classical Pooled Petersen)
+
+## Fully 3x3 stratified analysis
+```{r }
+library(SPAS)
+mod1 <- SPAS.fit.model(test.data,
+                       model.id="No restrictions",
+                       row.pool.in=1:3, col.pool.in=1:3)
+
+SPAS.print.model(mod1)
+```
+
+#3 Pooling over all rows using logical pooling
+```{r }
+mod2 <- SPAS.fit.model(test.data,
+                           model.id="Logical pooling to single row",
+                           row.pool.in=c(1,1,1), col.pool.in=1:3, row.physical.pool=FALSE)
+
+SPAS.print.model(mod2)
+```
+
+## Pooling over all rows using physical pooling
+```{r }
+mod3 <- SPAS.fit.model(test.data,
+                           model.id="Physical pooling to single row",
+                           row.pool.in=c(1,1,1), col.pool.in=1:3)
+SPAS.print.model(mod3)
+```
+
+## Pooling over all rows and last two columns using physcial pooling
+```{r}
+# do physcial complete pooling 
+mod4 <- SPAS.fit.model(test.data,
+                           model.id="Physical pooling all rows and last two colum ns",
+                           row.pool.in=c(1,1,1), col.pool.in=c(1,1,3))
+SPAS.print.model(mod4)
+```
+
+## Complete pnysical pooling (Pooled Petersen Estiamteor)
+
+```{r }
+# do physcial complete pooling 
+mod5 <- SPAS.fit.model(test.data,
+                           model.id="Physical complete pooling",
+                           row.pool.in=c(1,1,1), col.pool.in=c(1,1,1))
+SPAS.print.model(mod5)
+```
+
+
+# Get the model objects fitted by tmb and create a report
+```{r }
+model.list <- mget( ls()[grepl("^mod.$",ls())])
+names(model.list)
+
+report <- plyr::ldply(model.list, function(x){
+   #browser()
+   data.frame(#version=x$version,
+              date   = as.Date(x$date),
+              model.id         = x$model.info$model.id,
+              s.a.pool         =-1+nrow(x$fit.setup$pooldata),
+              t.p.pool         =-1+ncol(x$fit.setup$pooldata),
+              logL.cond        = x$model.info$logL.cond,
+              np               = x$model.info$np,
+              AICc             = x$model.info$AICc,
+              gof.chisq        = round(x$gof$chisq,1),
+              gof.df           = x$gof$chisq.df,
+              gof.p            = round(x$gof$chisq.p,3),
+              Nhat             = round(x$est$real$N),
+              Nhat.se          = round(x$se $real$N))
+  
+})
+report
+```
+
+The AIC should be compared ONLY for the first two models because they are based on the same set of data.
+**You cannot compare models that differ in the physical pooling**
+
+In this case, there is good evidence that the Pooled Petersen is too coarse because the goodness
+of fit statistic  for the second model is very large (with a corresponding small goodness-of-fit p-value).
+Similarly, the AIC indicates that the model is 3x3 stratification (first model) is preferable to the model with 
+complete row pooling (second model).
+
+Notice that the estimates of the population size are identical under logical or physical row pooling (models 2 and 3).
+And how you pool columns (models 3, 4, 5) but assuming that the number of rows (after logical or physcal pooling as long
+the number of rows
+is not larger than the number of columns) does not affect the population size estimate (or standard error).
+
+
+# References
+Darroch, J. N. (1961). The two-sample capture-recapture census when tagging and sampling are stratified. Biometrika, 48, 241–260.
+https://www.jstor.org/stable/2332748
+
+Plante, N., L.-P Rivest, and G. Tremblay. (1988). Stratified Capture-Recapture Estimation of the Size of a Closed Population. Biometrics 54, 47-60.
+https://www.jstor.org/stable/2533994
+
+Schwarz, C. J., & Taylor, C. G. (1998). The use of the stratified-Petersen estimator in fisheries management with an illustration of estimating the number of pink salmon (Oncorhynchus gorbuscha) that return to spawn in the Fraser River. Canadian Journal of Fisheries and Aquatic Sciences, 55, 281–296.
+https://doi.org/10.1139/f97-238
+
