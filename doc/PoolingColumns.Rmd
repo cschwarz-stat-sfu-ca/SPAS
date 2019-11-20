@@ -1,0 +1,230 @@
+---
+title: "Pooling columns"
+author: "Carl James Schwarz"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    number_sections: yes
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Pooling Columns} 
+  %\VignetteEngine{knitr::rmarkdown} 
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+  
+# define reporting and removal functions
+get.models <- function(pattern){
+    # get the list of models according to the pattern specified
+    #browser()
+    model.list <- mget( ls(envir=globalenv())[grepl(pattern,ls(envir=globalenv()))], envir=globalenv())
+    model.list
+}
+
+
+make.report <- function(model.list){
+   # make a little report
+   report <- plyr::ldply(model.list, function(x){
+      #browser()
+      data.frame(#version=x$version,
+         date   = as.Date(x$date),
+         model.id         = x$model.info$model.id,
+         s.a.pool         =-1+nrow(x$fit.setup$pooldata),
+         t.p.pool         =-1+ncol(x$fit.setup$pooldata),
+         logL.cond        = x$model.info$logL.cond,
+         np               = x$model.info$np,
+         AICc             = x$model.info$AICc,
+         gof.chisq        = round(x$gof$chisq,1),
+         gof.df           = x$gof$chisq.df,
+         gof.p            = round(x$gof$chisq.p,3),
+         Nhat             = round(x$est$real$N),
+         Nhat.se          = round(x$se $real$N))
+      
+   })
+   report
+}
+
+remove.models <- function(model.list){
+    rm(list=names(model.list), envir=globalenv())
+}
+
+```
+
+# Why it is not possible to compare different column poolings.
+
+There are two issues that currently preclude a direct implementation of logical pooling for columns. 
+
+First, unlike pooling rows where physical pooling is equivalent to equating the initial tagging probabilities, there is no equivalent rule for recovery probabilities for column pooling. 
+In the current model, the expected values for cells counts are (Schwarz and Taylor) in the 2 x 3 case (i.e. $s \le t$):
+
+Releases | Recovery stratum 1|Recovery stratum 2|Recovery stratum 3 
+-----------------|---------------|--------------|--------------- 
+Release stratum 1 |	$p_1 \theta_{11} r_1$|$p_1 \theta_{12} r_2$|$p_1 \theta_{13} r_3$  
+Release stratum 2 |	$p_2 \theta_{21} r_1$|$p_2 \theta_{22} r_2$|$p_2 \theta_{23} r_3$  
+Unmarked|$\sum{(1-p_i)\theta_{i1}r_1}$|$\sum{(1-p_i)\theta_{i2}r_2}$|$\sum{(1-p_i)\theta_{i3}r_3}$
+
+
+where $p_i$ is the tagging probability in release stratum $i$; 
+$r_j$ is the recovery probability in recovery stratum $j$; 
+and $\theta_{ij}$ is the probability of moving from release stratum $i$ 
+to recovery stratum $j$. 
+In the case of $s < t$, the recovery probabilities are not separately identifiable because in any column, we can multiply $\theta_{ij}$ by a constant $k$ and divide $r_j$ by $k$ 
+and get exactly the same expected values. 
+Hence one can always force $r_i = r_j$ for any ($i$ and $j$) pair by appropriate choice 
+of $k$ values for each column.
+
+Second, in theory, you can always pool columns and NOT affect the fit. 
+As an analogy, the SPAS model is (to the first order approximation) 
+a regression problem, i.e. given a matrix of recoveries and data
+
+Stratum |Recovery stratum 1 |Recovery stratum 2|Recovery stratum 3
+------|-----------|-----------|------------
+Release stratum 1	| $m_{11}$|$m_{12}$|$m_{13}$
+Release stratum 2 | $m_{21}$|$m_{22}$|$m_{23}$
+Unmarked|$u_1$|$u_2$|$u_2$
+			
+You want to find estimates of $\beta_1$ and $\beta_2$ such that
+$$u_1≅\beta_1 m_{11}+\beta_2 m_{21}$$
+$$u_2≅\beta_1 m_{12}+\beta_2 m_{22}$$
+$$u_3≅\beta_1 m_{13}+\beta_2 m_{23}$$
+
+Pooling columns 2 and 3 reduces this system of equations to:
+$$u_1≅\beta_1 m_{11}+\beta_2 m_{21}$$
+$$u_2+u_3≅\beta_1 (m_{12}+m_{13})+\beta_2 (m_{22} +m_{23})$$
+which has the identical fit.
+
+Like the regression analogy, pooling columns is like pooling two data points 
+in a regression setting by adding the respective $X$ and $Y$ values. 
+You will very similar same regression estimates, particularly if you do a weighted regression to account for the doubling of the variation when you add to points together.
+
+So in theory, pooling columns should have negligible effect on the estimates of the population size.
+So at the moment, I doubt that it is possible to implement logical pooling of columns and compare column pooling using AIC. 
+It would be possible to implement logical pooling of columns but it solves an uninteresting problem of testing if the product of movement and recovery are identical for all release groups in the two columns which is seldom biologically plausible.
+
+
+
+# A sample dataset
+This sample data set was adopted from the Canadian Department of
+Fisheries and Oceans and represent release and recaptured
+of female fish in the Lower Shuswap region.
+
+```{r }
+
+test.data.csv <- textConnection("
+ 160   ,   127   ,     72   ,     82   ,   3592
+  24   ,    66   ,     13   ,     10   ,    532
+7960   ,  9720   ,   6264   ,   7934   ,   0  ")
+
+test.data <- as.matrix(read.csv(test.data.csv, header=FALSE, strip.white=TRUE))
+test.data
+```
+
+# Models with 2 rows and different number of columns
+We now fit two models examining the impact of pooling columns
+with different types of pooling rows.
+
+
+## Full 2x4 stratified analysis
+```{r }
+library(SPAS)
+mod..1 <- SPAS.fit.model(test.data,
+                       model.id="No restrictions",
+                       row.pool.in=1:2, col.pool.in=1:4)
+
+SPAS.print.model(mod..1)
+```
+
+## Reducing to a 2x3 matrix by pooling columns 3 and 4.
+```{r }
+mod..2 <- SPAS.fit.model(test.data,
+                           model.id="Pool last two columns",
+                           row.pool.in=c(1,2), col.pool.in=c(1,2,34,34))
+
+SPAS.print.model(mod..2)
+```
+
+## Reducing to a 2x2 matrix by pooling columns 1 and 2, and then 3 and 4.
+```{r }
+mod..3 <- SPAS.fit.model(test.data,
+                           model.id="Pool last two columns",
+                           row.pool.in=c(1,2), col.pool.in=c(12,22,34,34))
+
+SPAS.print.model(mod..3)
+```
+## Comparing the estimates 
+Notice that the population estimate and its standard error
+is identical to the unpooled case. You cannot compare the AICc values
+because the data set has changed between the two fits.
+
+```{r echo=FALSE}
+model.list <- get.models("^mod\\.\\.")
+make.report(model.list)
+remove.models(model.list)
+
+```
+
+# Comparing results with 1 row and different number of columns
+
+## Pooling over all rows using physical pooling
+```{r }
+mod..3 <- SPAS.fit.model(test.data,
+                           model.id="Physical pooling to single row",
+                           row.pool.in=c(1,1), col.pool.in=1:4)
+SPAS.print.model(mod..3)
+```
+
+## Pooling over all rows using logical pooling
+```{r }
+mod..3a <- SPAS.fit.model(test.data,
+                           model.id="Logical pooling to single row",
+                           row.pool.in=c(1,1), col.pool.in=1:4, row.physical.pool=FALSE)
+SPAS.print.model(mod..3a)
+```
+## Pooling over all rows and last two columns using physical pooling
+```{r}
+# do physcial complete pooling 
+mod..4 <- SPAS.fit.model(test.data,
+                           model.id="Physical pooling all rows and last two columns",
+                           row.pool.in=c(1,1), col.pool.in=c(12,12,34,34))
+SPAS.print.model(mod..4)
+```
+
+## Complete physical pooling (Pooled Petersen Estiamteor)
+
+```{r }
+# do physcial complete pooling 
+mod..5 <- SPAS.fit.model(test.data,
+                           model.id="Physical complete pooling",
+                           row.pool.in=c(1,1), col.pool.in=c(1,1,1,1))
+SPAS.print.model(mod..5)
+```
+
+
+## Comparing the estimates of abundance
+```{r echo=FALSE}
+model.list <- get.models("^mod\\.\\.")
+make.report(model.list)
+remove.models(model.list)
+
+```
+
+
+Notice that the estimates of the population size are identical 
+under logical or physical row pooling.
+
+
+# References
+Darroch, J. N. (1961). The two-sample capture-recapture census when tagging and sampling are stratified. Biometrika, 48, 241–260.
+https://www.jstor.org/stable/2332748
+
+Plante, N., L.-P Rivest, and G. Tremblay. (1988). Stratified Capture-Recapture Estimation of the Size of a Closed Population. Biometrics 54, 47-60.
+https://www.jstor.org/stable/2533994
+
+Schwarz, C. J., & Taylor, C. G. (1998). The use of the stratified-Petersen estimator in fisheries management with an illustration of estimating the number of pink salmon (Oncorhynchus gorbuscha) that return to spawn in the Fraser River. Canadian Journal of Fisheries and Aquatic Sciences, 55, 281–296.
+https://doi.org/10.1139/f97-238
+
