@@ -1,0 +1,158 @@
+---
+title: "Things that can go wrong"
+author: "Carl James Schwarz"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    number_sections: yes
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Things that can go wrong} 
+  %\VignetteEngine{knitr::rmarkdown} 
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(SPAS)  
+
+```
+
+# Things that can go wrong.
+There are several types of problem that can occur that make the use of 
+SPAS problematic.
+
+# Rows are proportional
+If the row in the movement matrix are proportional, then there an infinite
+number of solutions. Note it is the singularity of the movement matrix 
+that is problematic; the number of tags releases and not recovered (last column of
+the input data) can be proportion without affecting the fit.
+
+The model may converge to different solutions depending on your set up.
+There is no automatic "flagging" of this situation and you need
+to be vigilant. A diagnostic tool is the condition factor of
+$XX'$ where $X$ is the movement matrix. If the rows are exactly 
+proportional (or more generally if the rows are colinear) the
+condition factor will be $+\infty$. 
+
+The solution is to pool the row(s) that are proportional.
+
+Here are some examples:
+
+```{r }
+
+test.data.csv <- textConnection("
+ 160   ,   120   ,     72   ,     82   ,   3592
+  80   ,    60   ,     36   ,     41   ,    532
+7960   ,  9720   ,   6264   ,   7934   ,   0  ")
+
+test.data <- as.matrix(read.csv(test.data.csv, header=FALSE, strip.white=TRUE))
+test.data
+
+mod..1 <- SPAS.fit.model(test.data,
+                       model.id="No restrictions",
+                       row.pool.in=1:2, col.pool.in=1:4)
+
+SPAS.print.model(mod..1)
+```
+
+In this case, it appears that the model has converged, but this is ONE of many possible 
+solutions and cannot be relied upon.
+
+The condition factor is very large (!) as expected.
+```{r }
+# Compute the condition factor of XX'
+
+XX <- test.data[1:2, 1:4] %*% t(test.data[1:2, 1:4])
+XX
+cat("\n\nCondition factor is\n")
+kappa(XX)
+```
+
+
+# Rows are approximately proportional
+Of course with real data, it is highly unlikely that the rows in the
+recovery matrix will be exactly proportional. 
+
+The model may converge to different solutions depending on your set up.
+There is no automatic "flagging" of this situation and you need
+to be vigilant. The condition factor of $XX'$ may be useful.
+
+The solution is to pool the row(s) that are proportional.
+
+Here are some examples where the entries in row 2 are modified
+slightly to make the rows only approximately proportional
+
+```{r }
+
+test.data.csv <- textConnection("
+ 160   ,   120   ,     72   ,     82   ,   3592
+  75   ,    62   ,     38   ,     35   ,    532
+7960   ,  9720   ,   6264   ,   7934   ,   0  ")
+
+test.data <- as.matrix(read.csv(test.data.csv, header=FALSE, strip.white=TRUE))
+test.data
+
+mod..2 <- SPAS.fit.model(test.data,
+                       model.id="No restrictions",
+                       row.pool.in=1:2, col.pool.in=1:4)
+
+SPAS.print.model(mod..2)
+
+# Compute the condition factor of XX'
+
+XX <- test.data[1:2, 1:4] %*% t(test.data[1:2, 1:4])
+XX
+cat("\n\nCondition factor is\n")
+kappa(XX)
+```
+
+Now there is only one solution, but the estimate is very sensitive
+to small changes in the data. Notice that the condition factor
+is still very large.
+
+
+# Columns that are all zero
+In theory this should have no influence on the fit (see the 
+section on pooling columns). 
+
+```{r }
+
+test.data.csv <- textConnection("
+ 160   ,   120   ,     72   ,     82   ,   0, 3592
+ 100   ,    45   ,     39   ,     90   ,   0,  532
+7960   ,  9720   ,   6264   ,   7934   ,   0,    0  ")
+
+test.data <- as.matrix(read.csv(test.data.csv, header=FALSE, strip.white=TRUE))
+test.data
+
+mod..3 <- SPAS.fit.model(test.data,
+                       model.id="No restrictions",
+                       row.pool.in=1:2, col.pool.in=1:5)
+
+SPAS.print.model(mod..3)
+
+XX <- test.data[1:2, 1:5] %*% t(test.data[1:2, 1:5])
+XX
+cat("\n\nCondition factor is\n")
+kappa(XX)
+```
+
+Notice that the column of 0's does not affect the fit
+and has no impact on the condition factor of $XX'$.
+
+
+# References
+Darroch, J. N. (1961). The two-sample capture-recapture census when tagging and sampling are stratified. Biometrika, 48, 241–260.
+https://www.jstor.org/stable/2332748
+
+Plante, N., L.-P Rivest, and G. Tremblay. (1988). Stratified Capture-Recapture Estimation of the Size of a Closed Population. Biometrics 54, 47-60.
+https://www.jstor.org/stable/2533994
+
+Schwarz, C. J., & Taylor, C. G. (1998). The use of the stratified-Petersen estimator in fisheries management with an illustration of estimating the number of pink salmon (Oncorhynchus gorbuscha) that return to spawn in the Fraser River. Canadian Journal of Fisheries and Aquatic Sciences, 55, 281–296.
+https://doi.org/10.1139/f97-238
+

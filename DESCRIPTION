@@ -1,7 +1,7 @@
 Package: SPAS
 Type: Package
 Title: Stratified-Petersen Analysis System
-Version: 2020.0101
+Version: 2020.01
 Date: 2020-01-01
 Author: Carl James Schwarz
 Maintainer: Carl James Schwarz <cschwarz.stat.sfu.ca@gmail.com>
@@ -41,3 +41,4 @@ RoxygenNote: 7.0.0
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
+

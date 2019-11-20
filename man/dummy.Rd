@@ -9,3 +9,4 @@ dummy()
 \description{
 Roxygen commands
 }
+\keyword{internal}
