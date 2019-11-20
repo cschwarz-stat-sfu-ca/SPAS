@@ -3,9 +3,10 @@
 
 // Refer to http://kaskr.github.io/adcomp/matrix_arrays_8cpp-example.html for help in coding the log-likelihood function
 
-// Refer to https://stackoverflow.com/questions/48627069/guidelines-for-including-tmb-c-code-in-an-r-package
-// on instruction on how to include this in a package that used TMB
+// Refer to https://github.com/kaskr/adcomp/wiki/Development
+// on instructions for including TMB code in an R package
 
+#define TMB_LIB_INIT R_init_SPAS // stops R warning about symbolw
 #include <TMB.hpp>                                // Links in the TMB libraries
 template<class Type>
 Type objective_function<Type>::operator() () 
