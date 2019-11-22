@@ -13,7 +13,7 @@
 
 <meta name="author" content="Carl James Schwarz" />
 
-<meta name="date" content="2019-11-19" />
+<meta name="date" content="2019-11-22" />
 
 <title>Testing for Pooled Petersen</title>
 
@@ -38,7 +38,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -304,7 +304,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Testing for Pooled Petersen</h1>
 <h4 class="author">Carl James Schwarz</h4>
-<h4 class="date">2019-11-19</h4>
+<h4 class="date">2019-11-22</h4>
 
 
 <div id="TOC">
@@ -339,20 +339,20 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="reading-in-the-data" class="section level2">
 <h2><span class="header-section-number">2.1</span> Reading in the data</h2>
 <p>Thiw data were made avaialble from the Canadian Department of Fisheries and Oceans and represent release and recaptured of female fish in the Lower Shuswap region.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">test.data.csv &lt;-<span class="st"> </span><span class="kw">textConnection</span>(<span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="st">  86   ,     54   ,     39   ,   219</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="st">  76   ,     35   ,     45   ,   168</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="st">  24   ,     53   ,     73   ,   190</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="st">1039   ,   1148   ,   2009   ,   0&quot;</span>)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">test.data &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">read.csv</span>(test.data.csv, <span class="dt">header=</span><span class="ot">FALSE</span>, <span class="dt">strip.white=</span><span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">test.data</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"></a>
+<a class="sourceLine" id="cb1-2" title="2">test.data.csv &lt;-<span class="st"> </span><span class="kw">textConnection</span>(<span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="st">  86   ,     54   ,     39   ,   219</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="st">  76   ,     35   ,     45   ,   168</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="st">  24   ,     53   ,     73   ,   190</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="st">1039   ,   1148   ,   2009   ,   0&quot;</span>)</a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8">test.data &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">read.csv</span>(test.data.csv, <span class="dt">header=</span><span class="ot">FALSE</span>, <span class="dt">strip.white=</span><span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb1-9" title="9">test.data</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a></code></pre></div>
 <p>We now fit several models</p>
 <ul>
 <li>A fully 3x3 stratified analysis</li>
@@ -364,386 +364,401 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </div>
 <div id="fully-3x3-stratified-analysis" class="section level2">
 <h2><span class="header-section-number">2.2</span> Fully 3x3 stratified analysis</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(SPAS)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">mod1 &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">                       <span class="dt">model.id=</span><span class="st">&quot;No restrictions&quot;</span>,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">                       <span class="dt">row.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">col.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; outer mgc:  1407.445 </span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; outer mgc:  4133.626 </span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; outer mgc:  1602.162 </span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; outer mgc:  237.747 </span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; outer mgc:  11.2797 </span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; outer mgc:  49.32575 </span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; outer mgc:  4.749331 </span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; outer mgc:  2.049442 </span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; outer mgc:  9.45052 </span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; outer mgc:  2.380802 </span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; outer mgc:  10.40597 </span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; outer mgc:  2.647875 </span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; outer mgc:  10.87054 </span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; outer mgc:  1.960908 </span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; outer mgc:  27.7445 </span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; outer mgc:  5.406239 </span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; outer mgc:  7.31579 </span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; outer mgc:  4.551982 </span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; outer mgc:  2.173492 </span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt; outer mgc:  1.405963 </span></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">#&gt; outer mgc:  8.919649 </span></a>
-<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="co">#&gt; outer mgc:  0.7700033 </span></a>
-<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="co">#&gt; outer mgc:  3.907549 </span></a>
-<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="co">#&gt; outer mgc:  1.077837 </span></a>
-<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="co">#&gt; outer mgc:  1.705958 </span></a>
-<a class="sourceLine" id="cb2-31" data-line-number="31"><span class="co">#&gt; outer mgc:  0.9025297 </span></a>
-<a class="sourceLine" id="cb2-32" data-line-number="32"><span class="co">#&gt; outer mgc:  0.5799697 </span></a>
-<a class="sourceLine" id="cb2-33" data-line-number="33"><span class="co">#&gt; outer mgc:  0.2992383 </span></a>
-<a class="sourceLine" id="cb2-34" data-line-number="34"><span class="co">#&gt; outer mgc:  0.1649127 </span></a>
-<a class="sourceLine" id="cb2-35" data-line-number="35"><span class="co">#&gt; outer mgc:  0.08758061 </span></a>
-<a class="sourceLine" id="cb2-36" data-line-number="36"><span class="co">#&gt; outer mgc:  0.04651695 </span></a>
-<a class="sourceLine" id="cb2-37" data-line-number="37"><span class="co">#&gt; outer mgc:  0.02470727 </span></a>
-<a class="sourceLine" id="cb2-38" data-line-number="38"><span class="co">#&gt; outer mgc:  0.01312329 </span></a>
-<a class="sourceLine" id="cb2-39" data-line-number="39"><span class="co">#&gt; outer mgc:  0.006970476 </span></a>
-<a class="sourceLine" id="cb2-40" data-line-number="40"><span class="co">#&gt; outer mgc:  0.003702399 </span></a>
-<a class="sourceLine" id="cb2-41" data-line-number="41"><span class="co">#&gt; outer mgc:  0.001966548 </span></a>
-<a class="sourceLine" id="cb2-42" data-line-number="42"><span class="co">#&gt; outer mgc:  0.001044543 </span></a>
-<a class="sourceLine" id="cb2-43" data-line-number="43"><span class="co">#&gt; outer mgc:  0.0005548146 </span></a>
-<a class="sourceLine" id="cb2-44" data-line-number="44"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb2-45" data-line-number="45"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb2-46" data-line-number="46"></a>
-<a class="sourceLine" id="cb2-47" data-line-number="47"><span class="kw">SPAS.print.model</span>(mod1)</a>
-<a class="sourceLine" id="cb2-48" data-line-number="48"><span class="co">#&gt; Model Name: No restrictions </span></a>
-<a class="sourceLine" id="cb2-49" data-line-number="49"><span class="co">#&gt;    Date of Fit: 2019-11-19 20:39 </span></a>
-<a class="sourceLine" id="cb2-50" data-line-number="50"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb2-51" data-line-number="51"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb2-52" data-line-number="52"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb2-53" data-line-number="53"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
-<a class="sourceLine" id="cb2-54" data-line-number="54"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
-<a class="sourceLine" id="cb2-55" data-line-number="55"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
-<a class="sourceLine" id="cb2-56" data-line-number="56"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
-<a class="sourceLine" id="cb2-57" data-line-number="57"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a>
-<a class="sourceLine" id="cb2-58" data-line-number="58"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-59" data-line-number="59"><span class="co">#&gt; Row pooling setup : 1 2 3 </span></a>
-<a class="sourceLine" id="cb2-60" data-line-number="60"><span class="co">#&gt; Col pooling setup : 1 2 3 </span></a>
-<a class="sourceLine" id="cb2-61" data-line-number="61"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
-<a class="sourceLine" id="cb2-62" data-line-number="62"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb2-63" data-line-number="63"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb2-64" data-line-number="64"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-65" data-line-number="65"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb2-66" data-line-number="66"><span class="co">#&gt; Raw data AFTER POOLING </span></a>
-<a class="sourceLine" id="cb2-67" data-line-number="67"><span class="co">#&gt;       pool1 pool2 pool3  V4</span></a>
-<a class="sourceLine" id="cb2-68" data-line-number="68"><span class="co">#&gt; pool1    86    54    39 219</span></a>
-<a class="sourceLine" id="cb2-69" data-line-number="69"><span class="co">#&gt; pool2    76    35    45 168</span></a>
-<a class="sourceLine" id="cb2-70" data-line-number="70"><span class="co">#&gt; pool3    24    53    73 190</span></a>
-<a class="sourceLine" id="cb2-71" data-line-number="71"><span class="co">#&gt;        1039  1148  2009   0</span></a>
-<a class="sourceLine" id="cb2-72" data-line-number="72"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-73" data-line-number="73"><span class="co">#&gt;   Conditional   Log-Likelihood: 30329.53    ;  np: 15 ;  AICc: -60629.07 </span></a>
-<a class="sourceLine" id="cb2-74" data-line-number="74"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-75" data-line-number="75"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb2-76" data-line-number="76"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-77" data-line-number="77"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb2-78" data-line-number="78"><span class="co">#&gt;               pool1  pool2  pool3 psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb2-79" data-line-number="79"><span class="co">#&gt; pool1          86.0   54.0   39.0 219    1.000        0.0     398</span></a>
-<a class="sourceLine" id="cb2-80" data-line-number="80"><span class="co">#&gt; pool2          76.5   33.0   46.5 168    0.127        6.9    2558</span></a>
-<a class="sourceLine" id="cb2-81" data-line-number="81"><span class="co">#&gt; pool3          24.5   44.7   80.7 190    0.046       20.8    7413</span></a>
-<a class="sourceLine" id="cb2-82" data-line-number="82"><span class="co">#&gt; est unmarked 1038.0 1158.0 2000.0   0       NA         NA   10369</span></a>
-<a class="sourceLine" id="cb2-83" data-line-number="83"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-84" data-line-number="84"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb2-85" data-line-number="85"><span class="co">#&gt;              pool1 pool2 pool3  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb2-86" data-line-number="86"><span class="co">#&gt; pool1          9.3   7.3   6.2 14.8    0.000        0.0       0</span></a>
-<a class="sourceLine" id="cb2-87" data-line-number="87"><span class="co">#&gt; pool2          8.7   5.4   7.0 13.0    0.035        2.2     711</span></a>
-<a class="sourceLine" id="cb2-88" data-line-number="88"><span class="co">#&gt; pool3          5.0   4.3   7.5 13.8    0.006        2.8     953</span></a>
-<a class="sourceLine" id="cb2-89" data-line-number="89"><span class="co">#&gt; est unmarked    NA    NA    NA  0.0       NA         NA     467</span></a>
-<a class="sourceLine" id="cb2-90" data-line-number="90"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-91" data-line-number="91"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-92" data-line-number="92"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb2-93" data-line-number="93"><span class="co">#&gt; Chisquare gof value   : 2.581688 </span></a>
-<a class="sourceLine" id="cb2-94" data-line-number="94"><span class="co">#&gt; Chisquare gof df      : 0 </span></a>
-<a class="sourceLine" id="cb2-95" data-line-number="95"><span class="co">#&gt; Chisquare gof p       : NA</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(SPAS)</a>
+<a class="sourceLine" id="cb2-2" title="2">mod1 &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
+<a class="sourceLine" id="cb2-3" title="3">                       <span class="dt">model.id=</span><span class="st">&quot;No restrictions&quot;</span>,</a>
+<a class="sourceLine" id="cb2-4" title="4">                       <span class="dt">row.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">col.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; outer mgc:  1407.445 </span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt; outer mgc:  4133.626 </span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt; outer mgc:  1602.162 </span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; outer mgc:  237.747 </span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; outer mgc:  11.2797 </span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt; outer mgc:  49.32575 </span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt; outer mgc:  4.749331 </span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; outer mgc:  2.049442 </span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; outer mgc:  9.45052 </span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; outer mgc:  2.380802 </span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; outer mgc:  10.40597 </span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; outer mgc:  2.647875 </span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt; outer mgc:  10.87054 </span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co">#&gt; outer mgc:  1.960908 </span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt; outer mgc:  27.7445 </span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; outer mgc:  5.406239 </span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; outer mgc:  7.31579 </span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; outer mgc:  4.551982 </span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt; outer mgc:  2.173492 </span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="co">#&gt; outer mgc:  1.405963 </span></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="co">#&gt; outer mgc:  8.919649 </span></a>
+<a class="sourceLine" id="cb2-27" title="27"><span class="co">#&gt; outer mgc:  0.7700033 </span></a>
+<a class="sourceLine" id="cb2-28" title="28"><span class="co">#&gt; outer mgc:  3.907549 </span></a>
+<a class="sourceLine" id="cb2-29" title="29"><span class="co">#&gt; outer mgc:  1.077837 </span></a>
+<a class="sourceLine" id="cb2-30" title="30"><span class="co">#&gt; outer mgc:  1.705958 </span></a>
+<a class="sourceLine" id="cb2-31" title="31"><span class="co">#&gt; outer mgc:  0.9025297 </span></a>
+<a class="sourceLine" id="cb2-32" title="32"><span class="co">#&gt; outer mgc:  0.5799697 </span></a>
+<a class="sourceLine" id="cb2-33" title="33"><span class="co">#&gt; outer mgc:  0.2992383 </span></a>
+<a class="sourceLine" id="cb2-34" title="34"><span class="co">#&gt; outer mgc:  0.1649127 </span></a>
+<a class="sourceLine" id="cb2-35" title="35"><span class="co">#&gt; outer mgc:  0.08758061 </span></a>
+<a class="sourceLine" id="cb2-36" title="36"><span class="co">#&gt; outer mgc:  0.04651695 </span></a>
+<a class="sourceLine" id="cb2-37" title="37"><span class="co">#&gt; outer mgc:  0.02470727 </span></a>
+<a class="sourceLine" id="cb2-38" title="38"><span class="co">#&gt; outer mgc:  0.01312329 </span></a>
+<a class="sourceLine" id="cb2-39" title="39"><span class="co">#&gt; outer mgc:  0.006970476 </span></a>
+<a class="sourceLine" id="cb2-40" title="40"><span class="co">#&gt; outer mgc:  0.003702399 </span></a>
+<a class="sourceLine" id="cb2-41" title="41"><span class="co">#&gt; outer mgc:  0.001966548 </span></a>
+<a class="sourceLine" id="cb2-42" title="42"><span class="co">#&gt; outer mgc:  0.001044543 </span></a>
+<a class="sourceLine" id="cb2-43" title="43"><span class="co">#&gt; outer mgc:  0.0005548146 </span></a>
+<a class="sourceLine" id="cb2-44" title="44"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
+<a class="sourceLine" id="cb2-45" title="45"><span class="co">#&gt; Finding conditional estimate of N</span></a>
+<a class="sourceLine" id="cb2-46" title="46"></a>
+<a class="sourceLine" id="cb2-47" title="47"><span class="kw">SPAS.print.model</span>(mod1)</a>
+<a class="sourceLine" id="cb2-48" title="48"><span class="co">#&gt; Model Name: No restrictions </span></a>
+<a class="sourceLine" id="cb2-49" title="49"><span class="co">#&gt;    Date of Fit: 2019-11-22 15:26 </span></a>
+<a class="sourceLine" id="cb2-50" title="50"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
+<a class="sourceLine" id="cb2-51" title="51"><span class="co">#&gt;  </span></a>
+<a class="sourceLine" id="cb2-52" title="52"><span class="co">#&gt; Raw data </span></a>
+<a class="sourceLine" id="cb2-53" title="53"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
+<a class="sourceLine" id="cb2-54" title="54"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
+<a class="sourceLine" id="cb2-55" title="55"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
+<a class="sourceLine" id="cb2-56" title="56"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
+<a class="sourceLine" id="cb2-57" title="57"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a>
+<a class="sourceLine" id="cb2-58" title="58"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-59" title="59"><span class="co">#&gt; Row pooling setup : 1 2 3 </span></a>
+<a class="sourceLine" id="cb2-60" title="60"><span class="co">#&gt; Col pooling setup : 1 2 3 </span></a>
+<a class="sourceLine" id="cb2-61" title="61"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
+<a class="sourceLine" id="cb2-62" title="62"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
+<a class="sourceLine" id="cb2-63" title="63"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
+<a class="sourceLine" id="cb2-64" title="64"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-65" title="65"><span class="co">#&gt;  </span></a>
+<a class="sourceLine" id="cb2-66" title="66"><span class="co">#&gt; Raw data AFTER POOLING </span></a>
+<a class="sourceLine" id="cb2-67" title="67"><span class="co">#&gt;       pool1 pool2 pool3  V4</span></a>
+<a class="sourceLine" id="cb2-68" title="68"><span class="co">#&gt; pool1    86    54    39 219</span></a>
+<a class="sourceLine" id="cb2-69" title="69"><span class="co">#&gt; pool2    76    35    45 168</span></a>
+<a class="sourceLine" id="cb2-70" title="70"><span class="co">#&gt; pool3    24    53    73 190</span></a>
+<a class="sourceLine" id="cb2-71" title="71"><span class="co">#&gt;        1039  1148  2009   0</span></a>
+<a class="sourceLine" id="cb2-72" title="72"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-73" title="73"><span class="co">#&gt; Condition number of XX&#39; where X=pooled matrix is  123.8103 </span></a>
+<a class="sourceLine" id="cb2-74" title="74"><span class="co">#&gt; Large value of kappa (&gt;200) indicate that rows are approximately proportional which is not good</span></a>
+<a class="sourceLine" id="cb2-75" title="75"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-76" title="76"><span class="co">#&gt;   Conditional   Log-Likelihood: 30329.53    ;  np: 15 ;  AICc: -60629.07 </span></a>
+<a class="sourceLine" id="cb2-77" title="77"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-78" title="78"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
+<a class="sourceLine" id="cb2-79" title="79"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-80" title="80"><span class="co">#&gt; Estimates</span></a>
+<a class="sourceLine" id="cb2-81" title="81"><span class="co">#&gt;               pool1  pool2  pool3 psi cap.prob exp factor Pop Est</span></a>
+<a class="sourceLine" id="cb2-82" title="82"><span class="co">#&gt; pool1          86.0   54.0   39.0 219    1.000        0.0     398</span></a>
+<a class="sourceLine" id="cb2-83" title="83"><span class="co">#&gt; pool2          76.5   33.0   46.5 168    0.127        6.9    2558</span></a>
+<a class="sourceLine" id="cb2-84" title="84"><span class="co">#&gt; pool3          24.5   44.7   80.7 190    0.046       20.8    7413</span></a>
+<a class="sourceLine" id="cb2-85" title="85"><span class="co">#&gt; est unmarked 1038.0 1158.0 2000.0   0       NA         NA   10369</span></a>
+<a class="sourceLine" id="cb2-86" title="86"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-87" title="87"><span class="co">#&gt; SE of above estimates</span></a>
+<a class="sourceLine" id="cb2-88" title="88"><span class="co">#&gt;              pool1 pool2 pool3  psi cap.prob exp factor Pop Est</span></a>
+<a class="sourceLine" id="cb2-89" title="89"><span class="co">#&gt; pool1          9.3   7.3   6.2 14.8    0.000        0.0       0</span></a>
+<a class="sourceLine" id="cb2-90" title="90"><span class="co">#&gt; pool2          8.7   5.4   7.0 13.0    0.035        2.2     711</span></a>
+<a class="sourceLine" id="cb2-91" title="91"><span class="co">#&gt; pool3          5.0   4.3   7.5 13.8    0.006        2.8     953</span></a>
+<a class="sourceLine" id="cb2-92" title="92"><span class="co">#&gt; est unmarked    NA    NA    NA  0.0       NA         NA     467</span></a>
+<a class="sourceLine" id="cb2-93" title="93"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-94" title="94"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-95" title="95"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
+<a class="sourceLine" id="cb2-96" title="96"><span class="co">#&gt; Chisquare gof value   : 2.581688 </span></a>
+<a class="sourceLine" id="cb2-97" title="97"><span class="co">#&gt; Chisquare gof df      : 0 </span></a>
+<a class="sourceLine" id="cb2-98" title="98"><span class="co">#&gt; Chisquare gof p       : NA</span></a></code></pre></div>
 <p>#3 Pooling over all rows using logical pooling</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">mod2 &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">                           <span class="dt">model.id=</span><span class="st">&quot;Logical pooling to single row&quot;</span>,</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">row.physical.pool=</span><span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; outer mgc:  3908.402 </span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; outer mgc:  3442.019 </span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; outer mgc:  2339.248 </span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; outer mgc:  1225.938 </span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; outer mgc:  141.9137 </span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; outer mgc:  72.98649 </span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; outer mgc:  10.65131 </span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; outer mgc:  2.106192 </span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; outer mgc:  0.01326909 </span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; outer mgc:  2.850843e-06 </span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="kw">SPAS.print.model</span>(mod2)</a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; Model Name: Logical pooling to single row </span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt;    Date of Fit: 2019-11-19 20:39 </span></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
-<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
-<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
-<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
-<a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a>
-<a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-30" data-line-number="30"><span class="co">#&gt; Row pooling setup : 1 1 1 </span></a>
-<a class="sourceLine" id="cb3-31" data-line-number="31"><span class="co">#&gt; Col pooling setup : 1 2 3 </span></a>
-<a class="sourceLine" id="cb3-32" data-line-number="32"><span class="co">#&gt; Physical pooling  : FALSE </span></a>
-<a class="sourceLine" id="cb3-33" data-line-number="33"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb3-34" data-line-number="34"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb3-35" data-line-number="35"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-36" data-line-number="36"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb3-37" data-line-number="37"><span class="co">#&gt; Raw data AFTER POOLING </span></a>
-<a class="sourceLine" id="cb3-38" data-line-number="38"><span class="co">#&gt;        pool1 pool2 pool3  V4</span></a>
-<a class="sourceLine" id="cb3-39" data-line-number="39"><span class="co">#&gt; pool.1    86    54    39 219</span></a>
-<a class="sourceLine" id="cb3-40" data-line-number="40"><span class="co">#&gt; pool.1    76    35    45 168</span></a>
-<a class="sourceLine" id="cb3-41" data-line-number="41"><span class="co">#&gt; pool.1    24    53    73 190</span></a>
-<a class="sourceLine" id="cb3-42" data-line-number="42"><span class="co">#&gt;         1039  1148  2009   0</span></a>
-<a class="sourceLine" id="cb3-43" data-line-number="43"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-44" data-line-number="44"><span class="co">#&gt;   Conditional   Log-Likelihood: 30304.4    ;  np: 13 ;  AICc: -60582.8 </span></a>
-<a class="sourceLine" id="cb3-45" data-line-number="45"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-46" data-line-number="46"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb3-47" data-line-number="47"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-48" data-line-number="48"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb3-49" data-line-number="49"><span class="co">#&gt;               pool1  pool2  pool3 psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb3-50" data-line-number="50"><span class="co">#&gt; pool.1         58.7   50.8   55.7 219    0.104        8.7    3841</span></a>
-<a class="sourceLine" id="cb3-51" data-line-number="51"><span class="co">#&gt; pool.1         51.9   32.9   64.3 168    0.104        8.7    3127</span></a>
-<a class="sourceLine" id="cb3-52" data-line-number="52"><span class="co">#&gt; pool.1         16.4   49.9  104.3 190    0.104        8.7    3282</span></a>
-<a class="sourceLine" id="cb3-53" data-line-number="53"><span class="co">#&gt; est unmarked 1098.0 1156.0 1942.0   0       NA         NA   10250</span></a>
-<a class="sourceLine" id="cb3-54" data-line-number="54"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-55" data-line-number="55"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb3-56" data-line-number="56"><span class="co">#&gt;              pool1 pool2 pool3  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb3-57" data-line-number="57"><span class="co">#&gt; pool.1         5.5   6.0   8.2 14.8    0.004        0.4     165</span></a>
-<a class="sourceLine" id="cb3-58" data-line-number="58"><span class="co">#&gt; pool.1         5.3   5.1   8.7 13.0    0.004        0.4     134</span></a>
-<a class="sourceLine" id="cb3-59" data-line-number="59"><span class="co">#&gt; pool.1         3.2   6.0  10.2 13.8    0.004        0.4     141</span></a>
-<a class="sourceLine" id="cb3-60" data-line-number="60"><span class="co">#&gt; est unmarked    NA    NA    NA  0.0       NA         NA     325</span></a>
-<a class="sourceLine" id="cb3-61" data-line-number="61"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-62" data-line-number="62"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-63" data-line-number="63"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb3-64" data-line-number="64"><span class="co">#&gt; Chisquare gof value   : 53.85277 </span></a>
-<a class="sourceLine" id="cb3-65" data-line-number="65"><span class="co">#&gt; Chisquare gof df      : 2 </span></a>
-<a class="sourceLine" id="cb3-66" data-line-number="66"><span class="co">#&gt; Chisquare gof p       : 2.023111e-12</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">mod2 &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
+<a class="sourceLine" id="cb3-2" title="2">                           <span class="dt">model.id=</span><span class="st">&quot;Logical pooling to single row&quot;</span>,</a>
+<a class="sourceLine" id="cb3-3" title="3">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">row.physical.pool=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; outer mgc:  3908.402 </span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; outer mgc:  3442.019 </span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt; outer mgc:  2339.248 </span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt; outer mgc:  1225.938 </span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="co">#&gt; outer mgc:  141.9137 </span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co">#&gt; outer mgc:  72.98649 </span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="co">#&gt; outer mgc:  10.65131 </span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="co">#&gt; outer mgc:  2.106192 </span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; outer mgc:  0.01326909 </span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="co">#&gt; outer mgc:  2.850843e-06 </span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt; Finding conditional estimate of N</span></a>
+<a class="sourceLine" id="cb3-17" title="17"></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="kw">SPAS.print.model</span>(mod2)</a>
+<a class="sourceLine" id="cb3-19" title="19"><span class="co">#&gt; Model Name: Logical pooling to single row </span></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="co">#&gt;    Date of Fit: 2019-11-22 15:26 </span></a>
+<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt;  </span></a>
+<a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt; Raw data </span></a>
+<a class="sourceLine" id="cb3-24" title="24"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
+<a class="sourceLine" id="cb3-25" title="25"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
+<a class="sourceLine" id="cb3-26" title="26"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
+<a class="sourceLine" id="cb3-27" title="27"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
+<a class="sourceLine" id="cb3-28" title="28"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a>
+<a class="sourceLine" id="cb3-29" title="29"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-30" title="30"><span class="co">#&gt; Row pooling setup : 1 1 1 </span></a>
+<a class="sourceLine" id="cb3-31" title="31"><span class="co">#&gt; Col pooling setup : 1 2 3 </span></a>
+<a class="sourceLine" id="cb3-32" title="32"><span class="co">#&gt; Physical pooling  : FALSE </span></a>
+<a class="sourceLine" id="cb3-33" title="33"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
+<a class="sourceLine" id="cb3-34" title="34"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
+<a class="sourceLine" id="cb3-35" title="35"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-36" title="36"><span class="co">#&gt;  </span></a>
+<a class="sourceLine" id="cb3-37" title="37"><span class="co">#&gt; Raw data AFTER POOLING </span></a>
+<a class="sourceLine" id="cb3-38" title="38"><span class="co">#&gt;        pool1 pool2 pool3  V4</span></a>
+<a class="sourceLine" id="cb3-39" title="39"><span class="co">#&gt; pool.1    86    54    39 219</span></a>
+<a class="sourceLine" id="cb3-40" title="40"><span class="co">#&gt; pool.1    76    35    45 168</span></a>
+<a class="sourceLine" id="cb3-41" title="41"><span class="co">#&gt; pool.1    24    53    73 190</span></a>
+<a class="sourceLine" id="cb3-42" title="42"><span class="co">#&gt;         1039  1148  2009   0</span></a>
+<a class="sourceLine" id="cb3-43" title="43"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-44" title="44"><span class="co">#&gt; Condition number of XX&#39; where X=pooled matrix is  123.8103 </span></a>
+<a class="sourceLine" id="cb3-45" title="45"><span class="co">#&gt; Large value of kappa (&gt;200) indicate that rows are approximately proportional which is not good</span></a>
+<a class="sourceLine" id="cb3-46" title="46"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-47" title="47"><span class="co">#&gt;   Conditional   Log-Likelihood: 30304.4    ;  np: 13 ;  AICc: -60582.8 </span></a>
+<a class="sourceLine" id="cb3-48" title="48"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-49" title="49"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
+<a class="sourceLine" id="cb3-50" title="50"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-51" title="51"><span class="co">#&gt; Estimates</span></a>
+<a class="sourceLine" id="cb3-52" title="52"><span class="co">#&gt;               pool1  pool2  pool3 psi cap.prob exp factor Pop Est</span></a>
+<a class="sourceLine" id="cb3-53" title="53"><span class="co">#&gt; pool.1         58.7   50.8   55.7 219    0.104        8.7    3841</span></a>
+<a class="sourceLine" id="cb3-54" title="54"><span class="co">#&gt; pool.1         51.9   32.9   64.3 168    0.104        8.7    3127</span></a>
+<a class="sourceLine" id="cb3-55" title="55"><span class="co">#&gt; pool.1         16.4   49.9  104.3 190    0.104        8.7    3282</span></a>
+<a class="sourceLine" id="cb3-56" title="56"><span class="co">#&gt; est unmarked 1098.0 1156.0 1942.0   0       NA         NA   10250</span></a>
+<a class="sourceLine" id="cb3-57" title="57"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-58" title="58"><span class="co">#&gt; SE of above estimates</span></a>
+<a class="sourceLine" id="cb3-59" title="59"><span class="co">#&gt;              pool1 pool2 pool3  psi cap.prob exp factor Pop Est</span></a>
+<a class="sourceLine" id="cb3-60" title="60"><span class="co">#&gt; pool.1         5.5   6.0   8.2 14.8    0.004        0.4     165</span></a>
+<a class="sourceLine" id="cb3-61" title="61"><span class="co">#&gt; pool.1         5.3   5.1   8.7 13.0    0.004        0.4     134</span></a>
+<a class="sourceLine" id="cb3-62" title="62"><span class="co">#&gt; pool.1         3.2   6.0  10.2 13.8    0.004        0.4     141</span></a>
+<a class="sourceLine" id="cb3-63" title="63"><span class="co">#&gt; est unmarked    NA    NA    NA  0.0       NA         NA     325</span></a>
+<a class="sourceLine" id="cb3-64" title="64"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-65" title="65"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-66" title="66"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
+<a class="sourceLine" id="cb3-67" title="67"><span class="co">#&gt; Chisquare gof value   : 53.85277 </span></a>
+<a class="sourceLine" id="cb3-68" title="68"><span class="co">#&gt; Chisquare gof df      : 2 </span></a>
+<a class="sourceLine" id="cb3-69" title="69"><span class="co">#&gt; Chisquare gof p       : 2.023111e-12</span></a></code></pre></div>
 </div>
 <div id="pooling-over-all-rows-using-physical-pooling" class="section level2">
 <h2><span class="header-section-number">2.3</span> Pooling over all rows using physical pooling</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">mod3 &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">                           <span class="dt">model.id=</span><span class="st">&quot;Physical pooling to single row&quot;</span>,</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; outer mgc:  4138.626 </span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; outer mgc:  1519.635 </span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; outer mgc:  267.9392 </span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; outer mgc:  25.4021 </span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; outer mgc:  0.7073742 </span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; outer mgc:  0.0009756013 </span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; outer mgc:  2.069271e-09 </span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="kw">SPAS.print.model</span>(mod3)</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; Model Name: Physical pooling to single row </span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt;    Date of Fit: 2019-11-19 20:39 </span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
-<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a>
-<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt; Row pooling setup : 1 1 1 </span></a>
-<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt; Col pooling setup : 1 2 3 </span></a>
-<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
-<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb4-30" data-line-number="30"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb4-31" data-line-number="31"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-32" data-line-number="32"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb4-33" data-line-number="33"><span class="co">#&gt; Raw data AFTER POOLING </span></a>
-<a class="sourceLine" id="cb4-34" data-line-number="34"><span class="co">#&gt;   pool1 pool2 pool3  V4</span></a>
-<a class="sourceLine" id="cb4-35" data-line-number="35"><span class="co">#&gt; 1   186   142   157 577</span></a>
-<a class="sourceLine" id="cb4-36" data-line-number="36"><span class="co">#&gt;    1039  1148  2009   0</span></a>
-<a class="sourceLine" id="cb4-37" data-line-number="37"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-38" data-line-number="38"><span class="co">#&gt;   Conditional   Log-Likelihood: 31438.32    ;  np: 5 ;  AICc: -62866.64 </span></a>
-<a class="sourceLine" id="cb4-39" data-line-number="39"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-40" data-line-number="40"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb4-41" data-line-number="41"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-42" data-line-number="42"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb4-43" data-line-number="43"><span class="co">#&gt;               pool1  pool2  pool3 psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb4-44" data-line-number="44"><span class="co">#&gt; 1             126.9  133.7  224.4 577    0.104        8.7   10250</span></a>
-<a class="sourceLine" id="cb4-45" data-line-number="45"><span class="co">#&gt; est unmarked 1098.0 1156.0 1942.0   0       NA         NA   10250</span></a>
-<a class="sourceLine" id="cb4-46" data-line-number="46"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-47" data-line-number="47"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb4-48" data-line-number="48"><span class="co">#&gt;              pool1 pool2 pool3 psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb4-49" data-line-number="49"><span class="co">#&gt; 1              6.6   6.8  10.8  24    0.004        0.4     325</span></a>
-<a class="sourceLine" id="cb4-50" data-line-number="50"><span class="co">#&gt; est unmarked    NA    NA    NA   0       NA         NA     325</span></a>
-<a class="sourceLine" id="cb4-51" data-line-number="51"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-52" data-line-number="52"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-53" data-line-number="53"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb4-54" data-line-number="54"><span class="co">#&gt; Chisquare gof value   : 53.85277 </span></a>
-<a class="sourceLine" id="cb4-55" data-line-number="55"><span class="co">#&gt; Chisquare gof df      : 2 </span></a>
-<a class="sourceLine" id="cb4-56" data-line-number="56"><span class="co">#&gt; Chisquare gof p       : 2.023111e-12</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">mod3 &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
+<a class="sourceLine" id="cb4-2" title="2">                           <span class="dt">model.id=</span><span class="st">&quot;Physical pooling to single row&quot;</span>,</a>
+<a class="sourceLine" id="cb4-3" title="3">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; outer mgc:  4138.626 </span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; outer mgc:  1519.635 </span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; outer mgc:  267.9392 </span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; outer mgc:  25.4021 </span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; outer mgc:  0.7073742 </span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; outer mgc:  0.0009756013 </span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; outer mgc:  2.069271e-09 </span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; Finding conditional estimate of N</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="kw">SPAS.print.model</span>(mod3)</a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; Model Name: Physical pooling to single row </span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt;    Date of Fit: 2019-11-22 15:26 </span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt;  </span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; Raw data </span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
+<a class="sourceLine" id="cb4-24" title="24"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a>
+<a class="sourceLine" id="cb4-25" title="25"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt; Row pooling setup : 1 1 1 </span></a>
+<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt; Col pooling setup : 1 2 3 </span></a>
+<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
+<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
+<a class="sourceLine" id="cb4-30" title="30"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
+<a class="sourceLine" id="cb4-31" title="31"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-32" title="32"><span class="co">#&gt;  </span></a>
+<a class="sourceLine" id="cb4-33" title="33"><span class="co">#&gt; Raw data AFTER POOLING </span></a>
+<a class="sourceLine" id="cb4-34" title="34"><span class="co">#&gt;   pool1 pool2 pool3  V4</span></a>
+<a class="sourceLine" id="cb4-35" title="35"><span class="co">#&gt; 1   186   142   157 577</span></a>
+<a class="sourceLine" id="cb4-36" title="36"><span class="co">#&gt;    1039  1148  2009   0</span></a>
+<a class="sourceLine" id="cb4-37" title="37"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-38" title="38"><span class="co">#&gt; Condition number of XX&#39; where X=pooled matrix is  1.350036e+32 </span></a>
+<a class="sourceLine" id="cb4-39" title="39"><span class="co">#&gt; Large value of kappa (&gt;200) indicate that rows are approximately proportional which is not good</span></a>
+<a class="sourceLine" id="cb4-40" title="40"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-41" title="41"><span class="co">#&gt;   Conditional   Log-Likelihood: 31438.32    ;  np: 5 ;  AICc: -62866.64 </span></a>
+<a class="sourceLine" id="cb4-42" title="42"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-43" title="43"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
+<a class="sourceLine" id="cb4-44" title="44"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-45" title="45"><span class="co">#&gt; Estimates</span></a>
+<a class="sourceLine" id="cb4-46" title="46"><span class="co">#&gt;               pool1  pool2  pool3 psi cap.prob exp factor Pop Est</span></a>
+<a class="sourceLine" id="cb4-47" title="47"><span class="co">#&gt; 1             126.9  133.7  224.4 577    0.104        8.7   10250</span></a>
+<a class="sourceLine" id="cb4-48" title="48"><span class="co">#&gt; est unmarked 1098.0 1156.0 1942.0   0       NA         NA   10250</span></a>
+<a class="sourceLine" id="cb4-49" title="49"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-50" title="50"><span class="co">#&gt; SE of above estimates</span></a>
+<a class="sourceLine" id="cb4-51" title="51"><span class="co">#&gt;              pool1 pool2 pool3 psi cap.prob exp factor Pop Est</span></a>
+<a class="sourceLine" id="cb4-52" title="52"><span class="co">#&gt; 1              6.6   6.8  10.8  24    0.004        0.4     325</span></a>
+<a class="sourceLine" id="cb4-53" title="53"><span class="co">#&gt; est unmarked    NA    NA    NA   0       NA         NA     325</span></a>
+<a class="sourceLine" id="cb4-54" title="54"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-55" title="55"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-56" title="56"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
+<a class="sourceLine" id="cb4-57" title="57"><span class="co">#&gt; Chisquare gof value   : 53.85277 </span></a>
+<a class="sourceLine" id="cb4-58" title="58"><span class="co">#&gt; Chisquare gof df      : 2 </span></a>
+<a class="sourceLine" id="cb4-59" title="59"><span class="co">#&gt; Chisquare gof p       : 2.023111e-12</span></a></code></pre></div>
 </div>
 <div id="pooling-over-all-rows-and-last-two-columns-using-physcial-pooling" class="section level2">
 <h2><span class="header-section-number">2.4</span> Pooling over all rows and last two columns using physcial pooling</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># do physcial complete pooling </span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">mod4 &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">                           <span class="dt">model.id=</span><span class="st">&quot;Physical pooling all rows and last two colum ns&quot;</span>,</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; outer mgc:  4133.875 </span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; outer mgc:  3617.132 </span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; outer mgc:  908.9971 </span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; outer mgc:  128.982 </span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; outer mgc:  5.742086 </span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; outer mgc:  0.02915585 </span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; outer mgc:  1.360541e-06 </span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="kw">SPAS.print.model</span>(mod4)</a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; Model Name: Physical pooling all rows and last two colum ns </span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt;    Date of Fit: 2019-11-19 20:39 </span></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a>
-<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">#&gt; Row pooling setup : 1 1 1 </span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">#&gt; Col pooling setup : 1 1 3 </span></a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
-<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">#&gt; Raw data AFTER POOLING </span></a>
-<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co">#&gt;   pool1 pool3  V4</span></a>
-<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="co">#&gt; 1   328   157 577</span></a>
-<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="co">#&gt;    2187  2009   0</span></a>
-<a class="sourceLine" id="cb5-38" data-line-number="38"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-39" data-line-number="39"><span class="co">#&gt;   Conditional   Log-Likelihood: 33180.75    ;  np: 4 ;  AICc: -66353.49 </span></a>
-<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-41" data-line-number="41"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb5-42" data-line-number="42"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-43" data-line-number="43"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb5-44" data-line-number="44"><span class="co">#&gt;               pool1  pool3 psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb5-45" data-line-number="45"><span class="co">#&gt; 1             260.6  224.4 577    0.104        8.7   10250</span></a>
-<a class="sourceLine" id="cb5-46" data-line-number="46"><span class="co">#&gt; est unmarked 2254.0 1942.0   0       NA         NA   10250</span></a>
-<a class="sourceLine" id="cb5-47" data-line-number="47"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-48" data-line-number="48"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb5-49" data-line-number="49"><span class="co">#&gt;              pool1 pool3 psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb5-50" data-line-number="50"><span class="co">#&gt; 1             12.3  10.8  24    0.004        0.4     325</span></a>
-<a class="sourceLine" id="cb5-51" data-line-number="51"><span class="co">#&gt; est unmarked    NA    NA   0       NA         NA     325</span></a>
-<a class="sourceLine" id="cb5-52" data-line-number="52"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-53" data-line-number="53"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-54" data-line-number="54"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb5-55" data-line-number="55"><span class="co">#&gt; Chisquare gof value   : 42.0552 </span></a>
-<a class="sourceLine" id="cb5-56" data-line-number="56"><span class="co">#&gt; Chisquare gof df      : 1 </span></a>
-<a class="sourceLine" id="cb5-57" data-line-number="57"><span class="co">#&gt; Chisquare gof p       : 8.873292e-11</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># do physcial complete pooling </span></a>
+<a class="sourceLine" id="cb5-2" title="2">mod4 &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
+<a class="sourceLine" id="cb5-3" title="3">                           <span class="dt">model.id=</span><span class="st">&quot;Physical pooling all rows and last two colum ns&quot;</span>,</a>
+<a class="sourceLine" id="cb5-4" title="4">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt; outer mgc:  4133.875 </span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt; outer mgc:  3617.132 </span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt; outer mgc:  908.9971 </span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="co">#&gt; outer mgc:  128.982 </span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="co">#&gt; outer mgc:  5.742086 </span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="co">#&gt; outer mgc:  0.02915585 </span></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="co">#&gt; outer mgc:  1.360541e-06 </span></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="co">#&gt; Finding conditional estimate of N</span></a>
+<a class="sourceLine" id="cb5-15" title="15"><span class="kw">SPAS.print.model</span>(mod4)</a>
+<a class="sourceLine" id="cb5-16" title="16"><span class="co">#&gt; Model Name: Physical pooling all rows and last two colum ns </span></a>
+<a class="sourceLine" id="cb5-17" title="17"><span class="co">#&gt;    Date of Fit: 2019-11-22 15:26 </span></a>
+<a class="sourceLine" id="cb5-18" title="18"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
+<a class="sourceLine" id="cb5-19" title="19"><span class="co">#&gt;  </span></a>
+<a class="sourceLine" id="cb5-20" title="20"><span class="co">#&gt; Raw data </span></a>
+<a class="sourceLine" id="cb5-21" title="21"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
+<a class="sourceLine" id="cb5-22" title="22"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
+<a class="sourceLine" id="cb5-23" title="23"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
+<a class="sourceLine" id="cb5-24" title="24"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
+<a class="sourceLine" id="cb5-25" title="25"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a>
+<a class="sourceLine" id="cb5-26" title="26"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-27" title="27"><span class="co">#&gt; Row pooling setup : 1 1 1 </span></a>
+<a class="sourceLine" id="cb5-28" title="28"><span class="co">#&gt; Col pooling setup : 1 1 3 </span></a>
+<a class="sourceLine" id="cb5-29" title="29"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
+<a class="sourceLine" id="cb5-30" title="30"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
+<a class="sourceLine" id="cb5-31" title="31"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
+<a class="sourceLine" id="cb5-32" title="32"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-33" title="33"><span class="co">#&gt;  </span></a>
+<a class="sourceLine" id="cb5-34" title="34"><span class="co">#&gt; Raw data AFTER POOLING </span></a>
+<a class="sourceLine" id="cb5-35" title="35"><span class="co">#&gt;   pool1 pool3  V4</span></a>
+<a class="sourceLine" id="cb5-36" title="36"><span class="co">#&gt; 1   328   157 577</span></a>
+<a class="sourceLine" id="cb5-37" title="37"><span class="co">#&gt;    2187  2009   0</span></a>
+<a class="sourceLine" id="cb5-38" title="38"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-39" title="39"><span class="co">#&gt; Condition number of XX&#39; where X=pooled matrix is  4.847876e+16 </span></a>
+<a class="sourceLine" id="cb5-40" title="40"><span class="co">#&gt; Large value of kappa (&gt;200) indicate that rows are approximately proportional which is not good</span></a>
+<a class="sourceLine" id="cb5-41" title="41"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-42" title="42"><span class="co">#&gt;   Conditional   Log-Likelihood: 33180.75    ;  np: 4 ;  AICc: -66353.49 </span></a>
+<a class="sourceLine" id="cb5-43" title="43"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-44" title="44"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
+<a class="sourceLine" id="cb5-45" title="45"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-46" title="46"><span class="co">#&gt; Estimates</span></a>
+<a class="sourceLine" id="cb5-47" title="47"><span class="co">#&gt;               pool1  pool3 psi cap.prob exp factor Pop Est</span></a>
+<a class="sourceLine" id="cb5-48" title="48"><span class="co">#&gt; 1             260.6  224.4 577    0.104        8.7   10250</span></a>
+<a class="sourceLine" id="cb5-49" title="49"><span class="co">#&gt; est unmarked 2254.0 1942.0   0       NA         NA   10250</span></a>
+<a class="sourceLine" id="cb5-50" title="50"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-51" title="51"><span class="co">#&gt; SE of above estimates</span></a>
+<a class="sourceLine" id="cb5-52" title="52"><span class="co">#&gt;              pool1 pool3 psi cap.prob exp factor Pop Est</span></a>
+<a class="sourceLine" id="cb5-53" title="53"><span class="co">#&gt; 1             12.3  10.8  24    0.004        0.4     325</span></a>
+<a class="sourceLine" id="cb5-54" title="54"><span class="co">#&gt; est unmarked    NA    NA   0       NA         NA     325</span></a>
+<a class="sourceLine" id="cb5-55" title="55"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-56" title="56"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-57" title="57"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
+<a class="sourceLine" id="cb5-58" title="58"><span class="co">#&gt; Chisquare gof value   : 42.0552 </span></a>
+<a class="sourceLine" id="cb5-59" title="59"><span class="co">#&gt; Chisquare gof df      : 1 </span></a>
+<a class="sourceLine" id="cb5-60" title="60"><span class="co">#&gt; Chisquare gof p       : 8.873292e-11</span></a></code></pre></div>
 </div>
 <div id="complete-pnysical-pooling-pooled-petersen-estiamteor" class="section level2">
 <h2><span class="header-section-number">2.5</span> Complete pnysical pooling (Pooled Petersen Estiamteor)</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># do physcial complete pooling </span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">mod5 &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">                           <span class="dt">model.id=</span><span class="st">&quot;Physical complete pooling&quot;</span>,</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; outer mgc:  4139.929 </span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; outer mgc:  12199 </span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; outer mgc:  3556.981 </span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; outer mgc:  739.2359 </span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; outer mgc:  92.68885 </span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; outer mgc:  5.542151 </span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; outer mgc:  0.03100836 </span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt; outer mgc:  9.911684e-07 </span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="kw">SPAS.print.model</span>(mod5)</a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt; Model Name: Physical complete pooling </span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt;    Date of Fit: 2019-11-19 20:39 </span></a>
-<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
-<a class="sourceLine" id="cb6-23" data-line-number="23"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
-<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
-<a class="sourceLine" id="cb6-25" data-line-number="25"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
-<a class="sourceLine" id="cb6-26" data-line-number="26"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a>
-<a class="sourceLine" id="cb6-27" data-line-number="27"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-28" data-line-number="28"><span class="co">#&gt; Row pooling setup : 1 1 1 </span></a>
-<a class="sourceLine" id="cb6-29" data-line-number="29"><span class="co">#&gt; Col pooling setup : 1 1 1 </span></a>
-<a class="sourceLine" id="cb6-30" data-line-number="30"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
-<a class="sourceLine" id="cb6-31" data-line-number="31"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb6-32" data-line-number="32"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb6-33" data-line-number="33"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-34" data-line-number="34"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb6-35" data-line-number="35"><span class="co">#&gt; Raw data AFTER POOLING </span></a>
-<a class="sourceLine" id="cb6-36" data-line-number="36"><span class="co">#&gt;      1  V4</span></a>
-<a class="sourceLine" id="cb6-37" data-line-number="37"><span class="co">#&gt; 1  485 577</span></a>
-<a class="sourceLine" id="cb6-38" data-line-number="38"><span class="co">#&gt;   4196   0</span></a>
-<a class="sourceLine" id="cb6-39" data-line-number="39"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-40" data-line-number="40"><span class="co">#&gt;   Conditional   Log-Likelihood: 36412.34    ;  np: 3 ;  AICc: -72818.69 </span></a>
-<a class="sourceLine" id="cb6-41" data-line-number="41"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-42" data-line-number="42"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb6-43" data-line-number="43"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-44" data-line-number="44"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb6-45" data-line-number="45"><span class="co">#&gt;                 1 psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb6-46" data-line-number="46"><span class="co">#&gt; 1             485 577    0.104        8.7   10250</span></a>
-<a class="sourceLine" id="cb6-47" data-line-number="47"><span class="co">#&gt; est unmarked 4196   0       NA         NA   10250</span></a>
-<a class="sourceLine" id="cb6-48" data-line-number="48"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-49" data-line-number="49"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb6-50" data-line-number="50"><span class="co">#&gt;               1 psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb6-51" data-line-number="51"><span class="co">#&gt; 1            22  24    0.004        0.4     325</span></a>
-<a class="sourceLine" id="cb6-52" data-line-number="52"><span class="co">#&gt; est unmarked NA   0       NA         NA     325</span></a>
-<a class="sourceLine" id="cb6-53" data-line-number="53"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-54" data-line-number="54"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-55" data-line-number="55"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb6-56" data-line-number="56"><span class="co">#&gt; Chisquare gof value   : 2.025601e-15 </span></a>
-<a class="sourceLine" id="cb6-57" data-line-number="57"><span class="co">#&gt; Chisquare gof df      : 0 </span></a>
-<a class="sourceLine" id="cb6-58" data-line-number="58"><span class="co">#&gt; Chisquare gof p       : NA</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># do physcial complete pooling </span></a>
+<a class="sourceLine" id="cb6-2" title="2">mod5 &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
+<a class="sourceLine" id="cb6-3" title="3">                           <span class="dt">model.id=</span><span class="st">&quot;Physical complete pooling&quot;</span>,</a>
+<a class="sourceLine" id="cb6-4" title="4">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt; outer mgc:  4139.929 </span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; outer mgc:  12199 </span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; outer mgc:  3556.981 </span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt; outer mgc:  739.2359 </span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt; outer mgc:  92.68885 </span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; outer mgc:  5.542151 </span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt; outer mgc:  0.03100836 </span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt; outer mgc:  9.911684e-07 </span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="co">#&gt; Finding conditional estimate of N</span></a>
+<a class="sourceLine" id="cb6-16" title="16"><span class="kw">SPAS.print.model</span>(mod5)</a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="co">#&gt; Model Name: Physical complete pooling </span></a>
+<a class="sourceLine" id="cb6-18" title="18"><span class="co">#&gt;    Date of Fit: 2019-11-22 15:26 </span></a>
+<a class="sourceLine" id="cb6-19" title="19"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
+<a class="sourceLine" id="cb6-20" title="20"><span class="co">#&gt;  </span></a>
+<a class="sourceLine" id="cb6-21" title="21"><span class="co">#&gt; Raw data </span></a>
+<a class="sourceLine" id="cb6-22" title="22"><span class="co">#&gt;        V1   V2   V3  V4</span></a>
+<a class="sourceLine" id="cb6-23" title="23"><span class="co">#&gt; [1,]   86   54   39 219</span></a>
+<a class="sourceLine" id="cb6-24" title="24"><span class="co">#&gt; [2,]   76   35   45 168</span></a>
+<a class="sourceLine" id="cb6-25" title="25"><span class="co">#&gt; [3,]   24   53   73 190</span></a>
+<a class="sourceLine" id="cb6-26" title="26"><span class="co">#&gt; [4,] 1039 1148 2009   0</span></a>
+<a class="sourceLine" id="cb6-27" title="27"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-28" title="28"><span class="co">#&gt; Row pooling setup : 1 1 1 </span></a>
+<a class="sourceLine" id="cb6-29" title="29"><span class="co">#&gt; Col pooling setup : 1 1 1 </span></a>
+<a class="sourceLine" id="cb6-30" title="30"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
+<a class="sourceLine" id="cb6-31" title="31"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
+<a class="sourceLine" id="cb6-32" title="32"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
+<a class="sourceLine" id="cb6-33" title="33"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-34" title="34"><span class="co">#&gt;  </span></a>
+<a class="sourceLine" id="cb6-35" title="35"><span class="co">#&gt; Raw data AFTER POOLING </span></a>
+<a class="sourceLine" id="cb6-36" title="36"><span class="co">#&gt;      1  V4</span></a>
+<a class="sourceLine" id="cb6-37" title="37"><span class="co">#&gt; 1  485 577</span></a>
+<a class="sourceLine" id="cb6-38" title="38"><span class="co">#&gt;   4196   0</span></a>
+<a class="sourceLine" id="cb6-39" title="39"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-40" title="40"><span class="co">#&gt; Condition number of XX&#39; where X=pooled matrix is  1 </span></a>
+<a class="sourceLine" id="cb6-41" title="41"><span class="co">#&gt; Large value of kappa (&gt;200) indicate that rows are approximately proportional which is not good</span></a>
+<a class="sourceLine" id="cb6-42" title="42"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-43" title="43"><span class="co">#&gt;   Conditional   Log-Likelihood: 36412.34    ;  np: 3 ;  AICc: -72818.69 </span></a>
+<a class="sourceLine" id="cb6-44" title="44"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-45" title="45"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
+<a class="sourceLine" id="cb6-46" title="46"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-47" title="47"><span class="co">#&gt; Estimates</span></a>
+<a class="sourceLine" id="cb6-48" title="48"><span class="co">#&gt;                 1 psi cap.prob exp factor Pop Est</span></a>
+<a class="sourceLine" id="cb6-49" title="49"><span class="co">#&gt; 1             485 577    0.104        8.7   10250</span></a>
+<a class="sourceLine" id="cb6-50" title="50"><span class="co">#&gt; est unmarked 4196   0       NA         NA   10250</span></a>
+<a class="sourceLine" id="cb6-51" title="51"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-52" title="52"><span class="co">#&gt; SE of above estimates</span></a>
+<a class="sourceLine" id="cb6-53" title="53"><span class="co">#&gt;               1 psi cap.prob exp factor Pop Est</span></a>
+<a class="sourceLine" id="cb6-54" title="54"><span class="co">#&gt; 1            22  24    0.004        0.4     325</span></a>
+<a class="sourceLine" id="cb6-55" title="55"><span class="co">#&gt; est unmarked NA   0       NA         NA     325</span></a>
+<a class="sourceLine" id="cb6-56" title="56"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-57" title="57"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-58" title="58"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
+<a class="sourceLine" id="cb6-59" title="59"><span class="co">#&gt; Chisquare gof value   : 2.025601e-15 </span></a>
+<a class="sourceLine" id="cb6-60" title="60"><span class="co">#&gt; Chisquare gof df      : 0 </span></a>
+<a class="sourceLine" id="cb6-61" title="61"><span class="co">#&gt; Chisquare gof p       : NA</span></a></code></pre></div>
 </div>
 </div>
 <div id="get-the-model-objects-fitted-by-tmb-and-create-a-report" class="section level1">
 <h1><span class="header-section-number">3</span> Get the model objects fitted by tmb and create a report</h1>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">model.list &lt;-<span class="st"> </span><span class="kw">mget</span>( <span class="kw">ls</span>()[<span class="kw">grepl</span>(<span class="st">&quot;^mod.$&quot;</span>,<span class="kw">ls</span>())])</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">names</span>(model.list)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; [1] &quot;mod1&quot; &quot;mod2&quot; &quot;mod3&quot; &quot;mod4&quot; &quot;mod5&quot;</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">report &lt;-<span class="st"> </span>plyr<span class="op">::</span><span class="kw">ldply</span>(model.list, <span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">   <span class="co">#browser()</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">   <span class="kw">data.frame</span>(<span class="co">#version=x$version,</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">              <span class="dt">date   =</span> <span class="kw">as.Date</span>(x<span class="op">$</span>date),</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">              <span class="dt">model.id         =</span> x<span class="op">$</span>model.info<span class="op">$</span>model.id,</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">              <span class="dt">s.a.pool         =</span><span class="op">-</span><span class="dv">1</span><span class="op">+</span><span class="kw">nrow</span>(x<span class="op">$</span>fit.setup<span class="op">$</span>pooldata),</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">              <span class="dt">t.p.pool         =</span><span class="op">-</span><span class="dv">1</span><span class="op">+</span><span class="kw">ncol</span>(x<span class="op">$</span>fit.setup<span class="op">$</span>pooldata),</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">              <span class="dt">logL.cond        =</span> x<span class="op">$</span>model.info<span class="op">$</span>logL.cond,</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">              <span class="dt">np               =</span> x<span class="op">$</span>model.info<span class="op">$</span>np,</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">              <span class="dt">AICc             =</span> x<span class="op">$</span>model.info<span class="op">$</span>AICc,</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">              <span class="dt">gof.chisq        =</span> <span class="kw">round</span>(x<span class="op">$</span>gof<span class="op">$</span>chisq,<span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">              <span class="dt">gof.df           =</span> x<span class="op">$</span>gof<span class="op">$</span>chisq.df,</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">              <span class="dt">gof.p            =</span> <span class="kw">round</span>(x<span class="op">$</span>gof<span class="op">$</span>chisq.p,<span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18">              <span class="dt">Nhat             =</span> <span class="kw">round</span>(x<span class="op">$</span>est<span class="op">$</span>real<span class="op">$</span>N),</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">              <span class="dt">Nhat.se          =</span> <span class="kw">round</span>(x<span class="op">$</span>se <span class="op">$</span>real<span class="op">$</span>N))</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">  </a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">})</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">report</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt;    .id       date                                        model.id s.a.pool</span></a>
-<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt; 1 mod1 2019-11-20                                 No restrictions        3</span></a>
-<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">#&gt; 2 mod2 2019-11-20                   Logical pooling to single row        3</span></a>
-<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">#&gt; 3 mod3 2019-11-20                  Physical pooling to single row        1</span></a>
-<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">#&gt; 4 mod4 2019-11-20 Physical pooling all rows and last two colum ns        1</span></a>
-<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt; 5 mod5 2019-11-20                       Physical complete pooling        1</span></a>
-<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">#&gt;   t.p.pool logL.cond np      AICc gof.chisq gof.df gof.p  Nhat Nhat.se</span></a>
-<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="co">#&gt; 1        3  30329.53 15 -60629.07       2.6      0    NA 10369     467</span></a>
-<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co">#&gt; 2        3  30304.40 13 -60582.80      53.9      2     0 10250     325</span></a>
-<a class="sourceLine" id="cb7-32" data-line-number="32"><span class="co">#&gt; 3        3  31438.32  5 -62866.64      53.9      2     0 10250     325</span></a>
-<a class="sourceLine" id="cb7-33" data-line-number="33"><span class="co">#&gt; 4        2  33180.75  4 -66353.49      42.1      1     0 10250     325</span></a>
-<a class="sourceLine" id="cb7-34" data-line-number="34"><span class="co">#&gt; 5        1  36412.34  3 -72818.69       0.0      0    NA 10250     325</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">model.list &lt;-<span class="st"> </span><span class="kw">mget</span>( <span class="kw">ls</span>()[<span class="kw">grepl</span>(<span class="st">&quot;^mod.$&quot;</span>,<span class="kw">ls</span>())])</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">names</span>(model.list)</a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co">#&gt; [1] &quot;mod1&quot; &quot;mod2&quot; &quot;mod3&quot; &quot;mod4&quot; &quot;mod5&quot;</span></a>
+<a class="sourceLine" id="cb7-4" title="4"></a>
+<a class="sourceLine" id="cb7-5" title="5">report &lt;-<span class="st"> </span>plyr<span class="op">::</span><span class="kw">ldply</span>(model.list, <span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb7-6" title="6">   <span class="co">#browser()</span></a>
+<a class="sourceLine" id="cb7-7" title="7">   <span class="kw">data.frame</span>(<span class="co">#version=x$version,</span></a>
+<a class="sourceLine" id="cb7-8" title="8">              <span class="dt">date   =</span> <span class="kw">as.Date</span>(x<span class="op">$</span>date),</a>
+<a class="sourceLine" id="cb7-9" title="9">              <span class="dt">model.id         =</span> x<span class="op">$</span>model.info<span class="op">$</span>model.id,</a>
+<a class="sourceLine" id="cb7-10" title="10">              <span class="dt">s.a.pool         =</span><span class="op">-</span><span class="dv">1</span><span class="op">+</span><span class="kw">nrow</span>(x<span class="op">$</span>fit.setup<span class="op">$</span>pooldata),</a>
+<a class="sourceLine" id="cb7-11" title="11">              <span class="dt">t.p.pool         =</span><span class="op">-</span><span class="dv">1</span><span class="op">+</span><span class="kw">ncol</span>(x<span class="op">$</span>fit.setup<span class="op">$</span>pooldata),</a>
+<a class="sourceLine" id="cb7-12" title="12">              <span class="dt">logL.cond        =</span> x<span class="op">$</span>model.info<span class="op">$</span>logL.cond,</a>
+<a class="sourceLine" id="cb7-13" title="13">              <span class="dt">np               =</span> x<span class="op">$</span>model.info<span class="op">$</span>np,</a>
+<a class="sourceLine" id="cb7-14" title="14">              <span class="dt">AICc             =</span> x<span class="op">$</span>model.info<span class="op">$</span>AICc,</a>
+<a class="sourceLine" id="cb7-15" title="15">              <span class="dt">gof.chisq        =</span> <span class="kw">round</span>(x<span class="op">$</span>gof<span class="op">$</span>chisq,<span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb7-16" title="16">              <span class="dt">gof.df           =</span> x<span class="op">$</span>gof<span class="op">$</span>chisq.df,</a>
+<a class="sourceLine" id="cb7-17" title="17">              <span class="dt">gof.p            =</span> <span class="kw">round</span>(x<span class="op">$</span>gof<span class="op">$</span>chisq.p,<span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb7-18" title="18">              <span class="dt">Nhat             =</span> <span class="kw">round</span>(x<span class="op">$</span>est<span class="op">$</span>real<span class="op">$</span>N),</a>
+<a class="sourceLine" id="cb7-19" title="19">              <span class="dt">Nhat.se          =</span> <span class="kw">round</span>(x<span class="op">$</span>se <span class="op">$</span>real<span class="op">$</span>N))</a>
+<a class="sourceLine" id="cb7-20" title="20">  </a>
+<a class="sourceLine" id="cb7-21" title="21">})</a>
+<a class="sourceLine" id="cb7-22" title="22">report</a>
+<a class="sourceLine" id="cb7-23" title="23"><span class="co">#&gt;    .id       date                                        model.id s.a.pool</span></a>
+<a class="sourceLine" id="cb7-24" title="24"><span class="co">#&gt; 1 mod1 2019-11-22                                 No restrictions        3</span></a>
+<a class="sourceLine" id="cb7-25" title="25"><span class="co">#&gt; 2 mod2 2019-11-22                   Logical pooling to single row        3</span></a>
+<a class="sourceLine" id="cb7-26" title="26"><span class="co">#&gt; 3 mod3 2019-11-22                  Physical pooling to single row        1</span></a>
+<a class="sourceLine" id="cb7-27" title="27"><span class="co">#&gt; 4 mod4 2019-11-22 Physical pooling all rows and last two colum ns        1</span></a>
+<a class="sourceLine" id="cb7-28" title="28"><span class="co">#&gt; 5 mod5 2019-11-22                       Physical complete pooling        1</span></a>
+<a class="sourceLine" id="cb7-29" title="29"><span class="co">#&gt;   t.p.pool logL.cond np      AICc gof.chisq gof.df gof.p  Nhat Nhat.se</span></a>
+<a class="sourceLine" id="cb7-30" title="30"><span class="co">#&gt; 1        3  30329.53 15 -60629.07       2.6      0    NA 10369     467</span></a>
+<a class="sourceLine" id="cb7-31" title="31"><span class="co">#&gt; 2        3  30304.40 13 -60582.80      53.9      2     0 10250     325</span></a>
+<a class="sourceLine" id="cb7-32" title="32"><span class="co">#&gt; 3        3  31438.32  5 -62866.64      53.9      2     0 10250     325</span></a>
+<a class="sourceLine" id="cb7-33" title="33"><span class="co">#&gt; 4        2  33180.75  4 -66353.49      42.1      1     0 10250     325</span></a>
+<a class="sourceLine" id="cb7-34" title="34"><span class="co">#&gt; 5        1  36412.34  3 -72818.69       0.0      0    NA 10250     325</span></a></code></pre></div>
 <p>The AIC should be compared ONLY for the first two models because they are based on the same set of data. <strong>You cannot compare models that differ in the physical pooling</strong></p>
 <p>In this case, there is good evidence that the Pooled Petersen is too coarse because the goodness of fit statistic for the second model is very large (with a corresponding small goodness-of-fit p-value). Similarly, the AIC indicates that the model is 3x3 stratification (first model) is preferable to the model with complete row pooling (second model).</p>
 <p>Notice that the estimates of the population size are identical under logical or physical row pooling (models 2 and 3). And how you pool columns (models 3, 4, 5) but assuming that the number of rows (after logical or physcal pooling as long the number of rows is not larger than the number of columns) does not affect the population size estimate (or standard error).</p>

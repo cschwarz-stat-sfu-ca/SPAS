@@ -6,7 +6,7 @@ SPAS 2020.01.01
   * Implement logical pooling of rows. Because data are not physically modified
     you can look at different row pooling using AIC. You cannot compare column
     pooling using any method. See help files for details.
-  * Cni-square goodness of fit test implemented.
+  * Chi-square goodness of fit test implemented.
   * The structure of the fitted model object has changed. This may break some 
     of your code.
 

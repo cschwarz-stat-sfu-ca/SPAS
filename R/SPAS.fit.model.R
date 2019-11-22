@@ -168,6 +168,11 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
      thetaDM = diag(1, (nrow(pooldata)-1)*(ncol(pooldata)-1)) # not yet implemented
    }
 
+   # compute the condition factor of XX' there X = pooled matrix
+   # a large kappe value indicate the rows are colinear and so the estimates are unstable
+   RESULT$kappa <- kappa( pooldata[1:s, 1:t] %*% t(pooldata[1:s, 1:t]))
+   
+   
    # Initial Estimates obtained using least squares
    init.est = SPAS.init.est(rawdata=pooldata,rowDM=rowDM,colDM=colDM,thetaDM=thetaDM)
 

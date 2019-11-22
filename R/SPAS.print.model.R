@@ -55,6 +55,9 @@ SPAS.print.model = function(x){
    cat("Raw data AFTER POOLING \n")
    print(x$fit.setup$pooldata)
    cat("\n")
+   cat("Condition number of XX' where X=pooled matrix is ", x$kappa, "\n")
+   cat("Large value of kappa (>200) indicate that rows are approximately proportional which is not good\n")
+   cat("\n")
    
    cat("  Conditional   Log-Likelihood:",x$model.info$logL.cond,"   ;  np:",x$model.info$np,";  AICc:", x$model.info$AICc,"\n")
    cat("\n")
