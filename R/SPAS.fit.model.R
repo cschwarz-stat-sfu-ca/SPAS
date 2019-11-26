@@ -168,9 +168,22 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
      thetaDM = diag(1, (nrow(pooldata)-1)*(ncol(pooldata)-1)) # not yet implemented
    }
 
-   # compute the condition factor of XX' there X = pooled matrix
-   # a large kappe value indicate the rows are colinear and so the estimates are unstable
+   # compute the condition number of XX' there X = physical matrix 
+   # after physical pooling but prior to logical pooling
+   # a large kappa value indicate the rows are colinear and so the estimates are unstable
    RESULT$kappa <- kappa( pooldata[1:s, 1:t] %*% t(pooldata[1:s, 1:t]))
+   
+   # compute the kappa after logical pooling of the data
+   logical.pooldata <-   t(rowDM) %*% pooldata[1:s, 1:t]
+   RESULT$kappa.after.lp <- kappa( logical.pooldata %*% t(logical.pooldata))
+   
+   # compute the pooled Petersen using the Chapman modification (add 1) and the se
+   n1 <- sum(pooldata[1:s,    ])
+   m2 <- sum(pooldata[1:s, 1:t])
+   n2 <- sum(pooldata[   , 1:t])
+   RESULT$est$N.Chapman = (n1+1)*(n2+1)/(m2+1) - 1
+   RESULT$vcv$N.Chapman = ((n1+1)*(n2+1)*(n1-m2)*(n2-m2)) / ((m2+1)^2 * (m2+2))
+   RESULT$se $N.Chapman = sqrt(RESULT$vcv$N.Chapman)
    
    
    # Initial Estimates obtained using least squares

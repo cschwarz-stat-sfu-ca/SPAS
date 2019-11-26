@@ -26,18 +26,18 @@ library(SPAS)
 There are several types of problem that can occur that make the use of 
 SPAS problematic.
 
-# Rows are proportional
+## Rows are proportional
 If the row in the movement matrix are proportional, then there an infinite
 number of solutions. Note it is the singularity of the movement matrix 
 that is problematic; the number of tags releases and not recovered (last column of
-the input data) can be proportion without affecting the fit.
+the input data) can be proportional without affecting the fit.
 
 The model may converge to different solutions depending on your set up.
 There is no automatic "flagging" of this situation and you need
-to be vigilant. A diagnostic tool is the condition factor of
+to be vigilant. A diagnostic tool is the condition number of
 $XX'$ where $X$ is the movement matrix. If the rows are exactly 
 proportional (or more generally if the rows are colinear) the
-condition factor will be $+\infty$. 
+condition number will be $+\infty$. 
 
 The solution is to pool the row(s) that are proportional.
 
@@ -63,24 +63,35 @@ SPAS.print.model(mod..1)
 In this case, it appears that the model has converged, but this is ONE of many possible 
 solutions and cannot be relied upon.
 
-The condition factor is very large (!) as expected.
+The condition number is very large (!) as expected and shown in the above output:
 ```{r }
-# Compute the condition factor of XX'
+# Compute the condition number of XX'
 
 XX <- test.data[1:2, 1:4] %*% t(test.data[1:2, 1:4])
 XX
-cat("\n\nCondition factor is\n")
+cat("\n\nCondition number is\n")
 kappa(XX)
 ```
 
+We will either physcially or logically pool rows:
+```{r echo=TRUE}
+mod..2 <- SPAS.fit.model(test.data,
+                       model.id="No restrictions",
+                       row.pool.in=c(1,1), col.pool.in=1:4, 
+                       row.physical.pool=FALSE)
 
-# Rows are approximately proportional
+SPAS.print.model(mod..2)
+```
+
+This has solved the colinearity problem.
+
+## Rows are approximately proportional
 Of course with real data, it is highly unlikely that the rows in the
 recovery matrix will be exactly proportional. 
 
 The model may converge to different solutions depending on your set up.
 There is no automatic "flagging" of this situation and you need
-to be vigilant. The condition factor of $XX'$ may be useful.
+to be vigilant. The condition number of $XX'$ may be useful.
 
 The solution is to pool the row(s) that are proportional.
 
@@ -103,16 +114,16 @@ mod..2 <- SPAS.fit.model(test.data,
 
 SPAS.print.model(mod..2)
 
-# Compute the condition factor of XX'
+# Compute the condition number of XX'
 
 XX <- test.data[1:2, 1:4] %*% t(test.data[1:2, 1:4])
 XX
-cat("\n\nCondition factor is\n")
+cat("\n\nCondition number is\n")
 kappa(XX)
 ```
 
 Now there is only one solution, but the estimate is very sensitive
-to small changes in the data. Notice that the condition factor
+to small changes in the data. Notice that the condition number
 is still very large.
 
 
@@ -138,12 +149,12 @@ SPAS.print.model(mod..3)
 
 XX <- test.data[1:2, 1:5] %*% t(test.data[1:2, 1:5])
 XX
-cat("\n\nCondition factor is\n")
+cat("\n\nCondition number is\n")
 kappa(XX)
 ```
 
 Notice that the column of 0's does not affect the fit
-and has no impact on the condition factor of $XX'$.
+and has no impact on the condition number of $XX'$.
 
 
 # References

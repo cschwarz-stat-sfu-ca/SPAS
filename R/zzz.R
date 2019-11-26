@@ -15,6 +15,12 @@
 }
 
 
+# SEE http://r-pkgs.had.co.nz/src.html on why you need the following
+.onUnload <- function (libpath) {
+  library.dynam.unload("SPAS", libpath)
+}
+
+
 
 
 

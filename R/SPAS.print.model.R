@@ -49,14 +49,18 @@ SPAS.print.model = function(x){
    cat("Physical pooling  :", x$input$row.physical.pool, "\n")
    cat("Theta pooling     :", x$input$theta.pool,  "\n")
    cat("CJS pooling       :", x$input$CJSpool,     "\n")
-   cat("\n")
+   cat("\n\n")
    
-   cat(" \n")
-   cat("Raw data AFTER POOLING \n")
+   cat("Chapman estimator of population size ",round(x$est$N.Chapman),
+       ' (SE ', round(x$se$N.Chapman), " )\n")
+   cat(" \n\n")
+   cat("Raw data AFTER PHYSICAL (but not logical) POOLING \n")
    print(x$fit.setup$pooldata)
    cat("\n")
-   cat("Condition number of XX' where X=pooled matrix is ", x$kappa, "\n")
-   cat("Large value of kappa (>200) indicate that rows are approximately proportional which is not good\n")
+   cat("Condition factor of XX' where X= (physically) pooled matrix is ", x$kappa, "\n")
+   cat("Condition factor of XX' after logical pooling                  ", x$kappa.after.lp, "\n")
+   cat("\n")
+   cat("Large value of kappa (>1000) indicate that rows are approximately proportional which is not good\n")
    cat("\n")
    
    cat("  Conditional   Log-Likelihood:",x$model.info$logL.cond,"   ;  np:",x$model.info$np,";  AICc:", x$model.info$AICc,"\n")
