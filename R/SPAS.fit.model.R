@@ -171,10 +171,10 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
    # compute the condition number of XX' there X = physical matrix 
    # after physical pooling but prior to logical pooling
    # a large kappa value indicate the rows are colinear and so the estimates are unstable
-   RESULT$kappa <- kappa( pooldata[1:s, 1:t] %*% t(pooldata[1:s, 1:t]))
+   RESULT$kappa <- kappa( pooldata[1:s, 1:t,drop=FALSE] %*% t(pooldata[1:s, 1:t,drop=FALSE]))
    
    # compute the kappa after logical pooling of the data
-   logical.pooldata <-   t(rowDM) %*% pooldata[1:s, 1:t]
+   logical.pooldata <-   t(rowDM) %*% pooldata[1:s, 1:t,drop=FALSE]
    RESULT$kappa.after.lp <- kappa( logical.pooldata %*% t(logical.pooldata))
    
    # compute the pooled Petersen using the Chapman modification (add 1) and the se
