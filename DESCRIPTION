@@ -1,7 +1,7 @@
 Package: SPAS
 Type: Package
 Title: Stratified-Petersen Analysis System
-Version: 2020.1
+Version: 2020.1.0
 Date: 2020-01-01
 Author: Carl James Schwarz
 Maintainer: Carl James Schwarz <cschwarz.stat.sfu.ca@gmail.com>
