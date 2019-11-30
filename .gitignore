@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-
+src/*.so
+src/*.o
 doc
 Meta
