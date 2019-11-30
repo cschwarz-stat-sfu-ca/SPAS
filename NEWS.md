@@ -1,4 +1,4 @@
-SPAS 2020.01.01
+SPAS 2020.1.0
 -------------
 
   * Optimization using TMB package. This speeds up optimization considerably and
