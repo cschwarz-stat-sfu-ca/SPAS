@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 This analyzes a dataset from the Conne River, Newfoundland collected in 1992. Smolts are tagged and released at one location in the river.
 A fence at a second station also captures fish. Data are stratified on a weekly level.
 
-A stratified-Petersen estimator (Darrock, 1961; Plante et al. 1996) is found for the original data and some pooling of the rows/columns.
+A stratified-Petersen estimator (Darroch, 1961; Plante et al. 1996) is found for the original data and some pooling of the rows/columns.
 
 # Load the SPAS package
 ```{r libraries}
@@ -54,7 +54,7 @@ conne.data.csv <- textConnection("
 1895, 8503, 2184,  525,  155,  118,         0")
 conne.data <- as.matrix(read.csv(conne.data.csv, header=FALSE))
 ```
-A total of $149+126+1561=1836$ fish were tagged and released in week 1. Of these fish, $149$ were recovered downnstream in column stratum 1;
+A total of $149+126+1561=1836$ fish were tagged and released in week 1. Of these fish, $149$ were recovered down stream in column stratum 1;
 126 were recovered in column stratum 2; and $1561$ were never seen again.
 A total of $1895$ UNMARKED fish were recovered in column stratum 1.
 
@@ -105,7 +105,7 @@ The `N` entries refer to the  population size; the `N.stratum` entries refer to 
 the `cap` entries refer to the estimated probability of capture in each row stratum;
 the `exp.factor` entries refer to `(1-cap)/cap`, or the expansion factor for each row;
 the `psi` entries refer to the number of animals tagged but never seen again (the right most column in the input data);
-and the `theta` entires refer to the expected number of animals that were tagged in row stratum $i$ and recovered in column stratum $j$ (after pooling).
+and the `theta` entries refer to the expected number of animals that were tagged in row stratum $i$ and recovered in column stratum $j$ (after pooling).
 
 # Physically pooling some rows and columns
 As noted by Darroch (1961), the stratified-Petersen will fail if the matrix of movements is close to singular. This often happens if two rows are proportional to each other. In this case, there is no unique MLE for the probability of capture in the two rows, and they should be pooled.

@@ -15,7 +15,7 @@ logit(p)
 These functions are helper functions for the SPAS package and not normally accessed by the user
 }
 \details{
-\code{logit} - compute the logit of a proporton
+\code{logit} - compute the logit of a proportion
 \code{expit} - compute a proportion from a logit
 }
 \keyword{internal}

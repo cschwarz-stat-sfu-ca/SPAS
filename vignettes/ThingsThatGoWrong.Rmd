@@ -73,7 +73,7 @@ cat("\n\nCondition number is\n")
 kappa(XX)
 ```
 
-We will either physcially or logically pool rows:
+We will either physically or logically pool rows:
 ```{r echo=TRUE}
 mod..2 <- SPAS.fit.model(test.data,
                        model.id="No restrictions",

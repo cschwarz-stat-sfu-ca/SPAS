@@ -25,25 +25,25 @@ It is often of interest to know if a simple Pooled Petersen estimator, i.e., com
 pooling over rows and columns,
 is appropriate.
 
-As noted in Schwwarz and Taylor (1998), the Pooled Petersen is unbiased 
+As noted in Schwarz and Taylor (1998), the Pooled Petersen is unbiased 
 under many conditions, but the most common are:
 
 * Homogeneity of tagging probabilities, i.e. the probability of a fish being tagged in the release stratum is equal across all release strata.
 * Homogeneity of recapture probabilities, i.e. the probability of a fish being 
 recaptured is equal across all recovery strata.
 * Complete Mixing, i.e. tagged fish mix completely with untagged fish.
-* Correlation between tagging and recovery probabiltiies is zero, i.e. while
-probabilities are heterogeneous across fish, the thwo events are statistically 
+* Correlation between tagging and recovery probabilities is zero, i.e. while
+probabilities are heterogeneous across fish, the two events are statistically 
 independent.
 
 We can examine the first of these conditions by examining the results of the
 stratified analysis and the results of a (logical) row pooling over all release
-stata.
+strata.
 
 # Fitting the models
 
 ## Reading in the data
-Thiw data were made avaialble from the Canadian Department of
+This data were made available from the Canadian Department of
 Fisheries and Oceans and represent release and recaptured
 of female fish in the Lower Shuswap region.
 
@@ -94,19 +94,19 @@ mod3 <- SPAS.fit.model(test.data,
 SPAS.print.model(mod3)
 ```
 
-## Pooling over all rows and last two columns using physcial pooling
+## Pooling over all rows and last two columns using physical pooling
 ```{r}
-# do physcial complete pooling 
+# do physical complete pooling 
 mod4 <- SPAS.fit.model(test.data,
                            model.id="Physical pooling all rows and last two colum ns",
                            row.pool.in=c(1,1,1), col.pool.in=c(1,1,3))
 SPAS.print.model(mod4)
 ```
 
-## Complete pnysical pooling (Pooled Petersen Estiamteor)
+## Complete physical pooling (Pooled Petersen Estimator)
 
 ```{r }
-# do physcial complete pooling 
+# do physical complete pooling 
 mod5 <- SPAS.fit.model(test.data,
                            model.id="Physical complete pooling",
                            row.pool.in=c(1,1,1), col.pool.in=c(1,1,1))
@@ -148,7 +148,7 @@ Similarly, the AIC indicates that the model is 3x3 stratification (first model) 
 complete row pooling (second model).
 
 Notice that the estimates of the population size are identical under logical or physical row pooling (models 2 and 3).
-And how you pool columns (models 3, 4, 5) but assuming that the number of rows (after logical or physcal pooling as long
+And how you pool columns (models 3, 4, 5) but assuming that the number of rows (after logical or physical pooling as long
 the number of rows
 is not larger than the number of columns) does not affect the population size estimate (or standard error).
 

@@ -1,4 +1,4 @@
-#' Fit a Stratifed-Petersen (SP) model using  TMB.
+#' Fit a Stratified-Petersen (SP) model using  TMB.
 #' 
 #' This function fits a Stratified-Petersen (Plante, 1996) to data and specify which rows/columns of the data
 #' should be pooled. The number of rows after pooling should be <= number of columns after
@@ -18,16 +18,17 @@
 #'   row.pool.in = c(1,2,3,4) implies no pooling because all entries are distinct; row.pool.in=c("a","a","b","b") implies that the 
 #'   first two rows will be pooled and the last two rows will be pooled. It is not necessary that row/columns be continuous to be pooled, but
 #'   this is seldom sensible. A careful choice of pooling labels helps to remember what as done, e.g. row.pool.in=c("123","123","123","4") indicates
-#'   that the first 3 rows are pooled and the 4th row is not pooled. Character entrie ensure that the resulting matrixi is sorted properly (e.g. if 
+#'   that the first 3 rows are pooled and the 4th row is not pooled. Character entries ensure that the resulting matrix is sorted properly (e.g. if 
 #'   row.pool.in=c(123,123,123,4), then the same pooling is done, but the matrix rows are sorted rather strangely.
 #' @param row.physical.pool  Should physical pooling be done (default) or should logical pooling be done. For example, if there are 3 rows in 
 #'   the data matrix and row.pool.in=c(1,1,3), then in physical pooling, the entries in rows 1 and 2 are physically added together to create
 #'   2 rows in the data matrix before fitting. Because the data has changed, you cannot compare physical pooling using AIC. In logical pooling,
 #'   the data matrix is unchanged, but now parameters p1=p2 but the movement parameters for the rest of the matrix are not forced equal.
 #' @param theta.pool,CJSpool NOT YET IMPLEMENTED. DO NOT CHANGE.
-#' @param optMethod What optimiation method is used. Defaults is the nlminb() function..
+#' @param optMethod What optimization method is used. Defaults is the nlminb() function..
 #' @param optMethod.control Control parameters for optimization method. See the documentation on the different optimization methods for details.
-#' @param svd.cutoff When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest singlular value to retain.
+#' @param svd.cutoff When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest 
+#'   singular value to retain.
 #' @param chisq.cutoff When finding a goodness of fit statistic using (obs-exp)^2/exp, all cell whose Exp < gof.cutoff are ignored
 #'        to try and remove structural zero cells.
 #' @return A list with many entries. Refer to the vignettes for more details.

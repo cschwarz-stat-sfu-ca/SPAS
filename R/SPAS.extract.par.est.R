@@ -2,7 +2,7 @@
 #' 
 #' This function is normally used internally and not by users of the package.
 #' 
-#' @param est.red Vector of Parmeter estimates
+#' @param est.red Vector of parameter estimates
 #' @param rowDM Design matrix for covariates for row parameters (after pooling). Not currently implemented so
 #'   this is usually an identity matrix.
 #' @param colDM Design matrix for covariates for column parameters (after pooling). Not currently implemented so

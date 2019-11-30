@@ -2,7 +2,7 @@
 % Please edit documentation in R/SPAS.print.model.R
 \name{SPAS.print.model}
 \alias{SPAS.print.model}
-\title{Print the results from a fit of a Stratifed-Petersen (SP) model when using the TMB optimizer}
+\title{Print the results from a fit of a Stratified-Petersen (SP) model when using the TMB optimizer}
 \usage{
 SPAS.print.model(x)
 }
@@ -30,8 +30,7 @@ close(conne.data.csv)
  
 mod1 <- SPAS.fit.model(conne.data, model.id="Pooling rows 1/2, 5/6; pooling columns 5/6",
                       row.pool.in=c("12","12","3","4","56","56"),
-                      col.pool.in=c(1,2,3,4,56,56),
-                      optMethod.control=list(ftol=.0001))
+                      col.pool.in=c(1,2,3,4,56,56))
 
 SPAS.print.model(mod1)
 }

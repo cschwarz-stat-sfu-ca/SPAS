@@ -2,7 +2,7 @@
 % Please edit documentation in R/SPAS.fit.model.R
 \name{SPAS.fit.model}
 \alias{SPAS.fit.model}
-\title{Fit a Stratifed-Petersen (SP) model using  TMB.}
+\title{Fit a Stratified-Petersen (SP) model using  TMB.}
 \usage{
 SPAS.fit.model(
   model.id = "Stratified Petersen Estimator",
@@ -35,7 +35,7 @@ The vectors consists of entries where pooling takes place if the entries are the
 row.pool.in = c(1,2,3,4) implies no pooling because all entries are distinct; row.pool.in=c("a","a","b","b") implies that the 
 first two rows will be pooled and the last two rows will be pooled. It is not necessary that row/columns be continuous to be pooled, but
 this is seldom sensible. A careful choice of pooling labels helps to remember what as done, e.g. row.pool.in=c("123","123","123","4") indicates
-that the first 3 rows are pooled and the 4th row is not pooled. Character entrie ensure that the resulting matrixi is sorted properly (e.g. if 
+that the first 3 rows are pooled and the 4th row is not pooled. Character entries ensure that the resulting matrix is sorted properly (e.g. if 
 row.pool.in=c(123,123,123,4), then the same pooling is done, but the matrix rows are sorted rather strangely.}
 
 \item{row.physical.pool}{Should physical pooling be done (default) or should logical pooling be done. For example, if there are 3 rows in 
@@ -45,11 +45,12 @@ the data matrix is unchanged, but now parameters p1=p2 but the movement paramete
 
 \item{theta.pool, CJSpool}{NOT YET IMPLEMENTED. DO NOT CHANGE.}
 
-\item{optMethod}{What optimiation method is used. Defaults is the nlminb() function..}
+\item{optMethod}{What optimization method is used. Defaults is the nlminb() function..}
 
 \item{optMethod.control}{Control parameters for optimization method. See the documentation on the different optimization methods for details.}
 
-\item{svd.cutoff}{When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest singlular value to retain.}
+\item{svd.cutoff}{When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest 
+singular value to retain.}
 
 \item{chisq.cutoff}{When finding a goodness of fit statistic using (obs-exp)^2/exp, all cell whose Exp < gof.cutoff are ignored
 to try and remove structural zero cells.}

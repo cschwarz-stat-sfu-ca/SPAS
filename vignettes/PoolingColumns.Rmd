@@ -194,7 +194,7 @@ mod..4 <- SPAS.fit.model(test.data,
 SPAS.print.model(mod..4)
 ```
 
-## Complete physical pooling (Pooled Petersen Estiamteor)
+## Complete physical pooling (Pooled Petersen Estimator)
 
 ```{r }
 # do physcial complete pooling 

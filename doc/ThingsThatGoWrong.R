@@ -24,12 +24,20 @@ mod..1 <- SPAS.fit.model(test.data,
 SPAS.print.model(mod..1)
 
 ## -----------------------------------------------------------------------------
-# Compute the condition factor of XX'
+# Compute the condition number of XX'
 
 XX <- test.data[1:2, 1:4] %*% t(test.data[1:2, 1:4])
 XX
-cat("\n\nCondition factor is\n")
+cat("\n\nCondition number is\n")
 kappa(XX)
+
+## ----echo=TRUE----------------------------------------------------------------
+mod..2 <- SPAS.fit.model(test.data,
+                       model.id="No restrictions",
+                       row.pool.in=c(1,1), col.pool.in=1:4, 
+                       row.physical.pool=FALSE)
+
+SPAS.print.model(mod..2)
 
 ## -----------------------------------------------------------------------------
 
@@ -47,11 +55,11 @@ mod..2 <- SPAS.fit.model(test.data,
 
 SPAS.print.model(mod..2)
 
-# Compute the condition factor of XX'
+# Compute the condition number of XX'
 
 XX <- test.data[1:2, 1:4] %*% t(test.data[1:2, 1:4])
 XX
-cat("\n\nCondition factor is\n")
+cat("\n\nCondition number is\n")
 kappa(XX)
 
 ## -----------------------------------------------------------------------------
@@ -72,6 +80,6 @@ SPAS.print.model(mod..3)
 
 XX <- test.data[1:2, 1:5] %*% t(test.data[1:2, 1:5])
 XX
-cat("\n\nCondition factor is\n")
+cat("\n\nCondition number is\n")
 kappa(XX)
 

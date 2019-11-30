@@ -1,4 +1,4 @@
-#' Print the results from a fit of a Stratifed-Petersen (SP) model when using the TMB optimizer
+#' Print the results from a fit of a Stratified-Petersen (SP) model when using the TMB optimizer
 #' 
 #' This function makes a report of the results of the model fitting
 #' .

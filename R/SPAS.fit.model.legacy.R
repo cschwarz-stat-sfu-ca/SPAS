@@ -1,4 +1,4 @@
-#' Fit a Stratifed-Petersen (SP) model using the legacy method without TMB.
+#' Fit a Stratified-Petersen (SP) model using the legacy method without TMB.
 #' The preferred method is to use the SPAS.fit.model() function that used TMB.
 #' 
 #' This function fits a Stratified-Petersen (Plante, 1996) to data and specify which rows/columns of the data
@@ -27,10 +27,11 @@
 #'   the data matrix is unchanged, but now parameters p1=p2 but the movement parameters for the rest of the matrix are not forced equal.
 #' @param theta.pool,CJSpool NOT YET IMPLEMENTED. DO NOT CHANGE.
 #' @param sd.noise.init.est How much random noise should be added to the initial (least squares) estimates. Normally only used with severe convergence problems.
-#' @param optMethod What optimiation method is used. Defaults is the BBoptim function from the BB package.
+#' @param optMethod What optimization method is used. Defaults is the BBoptim function from the BB package.
 #' @param optMethod.control Control parameters for optimization method. See spg() function in BB package or optim() function for details.
 #'    For BBoptim, a suggest control parameter for debugging is optMethod.control=list(M=20, trace=TRUE , maxit = 50000, ftol=10^-5).
-#' @param svd.cutoff When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest singlular value to retain.
+#' @param svd.cutoff When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest 
+#'    singular value to retain.
 #' @param chisq.cutoff When finding a goodness of fit statistic using (obs-exp)^2/exp, all cell whose Exp < gof.cutoff are ignored
 #'        to try and remove structural zero cells.
 #' @return A list with many entries. Refer to the vignettes for more details.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/SPAS.fit.model.legacy.R
 \name{SPAS.fit.model.legacy}
 \alias{SPAS.fit.model.legacy}
-\title{Fit a Stratifed-Petersen (SP) model using the legacy method without TMB.
+\title{Fit a Stratified-Petersen (SP) model using the legacy method without TMB.
 The preferred method is to use the SPAS.fit.model() function that used TMB.}
 \usage{
 SPAS.fit.model.legacy(
@@ -49,12 +49,13 @@ the data matrix is unchanged, but now parameters p1=p2 but the movement paramete
 
 \item{sd.noise.init.est}{How much random noise should be added to the initial (least squares) estimates. Normally only used with severe convergence problems.}
 
-\item{optMethod}{What optimiation method is used. Defaults is the BBoptim function from the BB package.}
+\item{optMethod}{What optimization method is used. Defaults is the BBoptim function from the BB package.}
 
 \item{optMethod.control}{Control parameters for optimization method. See spg() function in BB package or optim() function for details.
 For BBoptim, a suggest control parameter for debugging is optMethod.control=list(M=20, trace=TRUE , maxit = 50000, ftol=10^-5).}
 
-\item{svd.cutoff}{When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest singlular value to retain.}
+\item{svd.cutoff}{When finding the variance-covariance matrix, a singular value decomposition is used. This identifies the smallest 
+singular value to retain.}
 
 \item{chisq.cutoff}{When finding a goodness of fit statistic using (obs-exp)^2/exp, all cell whose Exp < gof.cutoff are ignored
 to try and remove structural zero cells.}

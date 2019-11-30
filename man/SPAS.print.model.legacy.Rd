@@ -2,7 +2,7 @@
 % Please edit documentation in R/SPAS.print.model.legacy.R
 \name{SPAS.print.model.legacy}
 \alias{SPAS.print.model.legacy}
-\title{Print the results from a fit of a Stratifed-Petersen (SP) model from the legacy (i.e. pre using TMB) code}
+\title{Print the results from a fit of a Stratified-Petersen (SP) model from the legacy (i.e. pre using TMB) code}
 \usage{
 SPAS.print.model.legacy(x)
 }

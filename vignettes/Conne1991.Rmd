@@ -25,7 +25,7 @@ A fence at a second station also captures fish. Data are stratified on a weekly 
 
 The Conne River 1992 vignette has larger sample sizes.
 
-A stratified-Petersen estimator (Darrock, 1961; Plante et al. 1996) is found for the original data and some pooling of the rows/columns.
+A stratified-Petersen estimator (Darroch, 1961; Plante et al. 1996) is found for the original data and some pooling of the rows/columns.
 
 # Load the SPAS package
 ```{r libraries}
@@ -57,7 +57,7 @@ conne.data.csv <- textConnection("
 351,  2736  ,  3847  , 1818  ,  543  ,   191 ,     0")
 conne.data <- as.matrix(read.csv(conne.data.csv, header=FALSE))
 ```
-A total of `r sum(conne.data[1,])` fish were tagged and released in week 1. Of these fish, `r conne.data[1,1]` were recovered downnstream in column stratum 1;
+A total of `r sum(conne.data[1,])` fish were tagged and released in week 1. Of these fish, `r conne.data[1,1]` were recovered down stream in column stratum 1;
 `r conne.data[1,2]` were recovered in column stratum 2; and `r conne.data[1,7]` were never seen again.
 A total of `r conne.data[7,1]` UNMARKED fish were recovered in column stratum 1.
 
@@ -115,7 +115,7 @@ The `N` entries refer to the  population size; the `N.stratum` entries refer to 
 the `cap` entries refer to the estimated probability of capture in each row stratum;
 the `exp.factor` entries refer to `(1-cap)/cap`, or the expansion factor for each row;
 the `psi` entries refer to the number of animals tagged but never seen again (the right most column in the input data);
-and the `theta` entires refer to the expected number of animals that were tagged in row stratum $i$ and recovered in column stratum $j$ (after pooling).
+and the `theta` entries refer to the expected number of animals that were tagged in row stratum $i$ and recovered in column stratum $j$ (after pooling).
 
 # Physically pooling some rows and columns
 As noted by Darroch (1961), the stratified-Petersen will fail if the matrix of movements is close to singular. This often happens if two rows are proportional to each other. In this case, there is no unique MLE for the probability of capture in the last two rows, and they should be pooled.
@@ -147,7 +147,7 @@ Here the stratified-Petersen estimate of the total number of smolts passing the 
 which is a slight reduction
 from the unpooled estimates.
 
-## Physcially pooling to a single row and complete pooling
+## Physically pooling to a single row and complete pooling
 You can pool to a single row (and multiple columns) or a single row and single column (which is equivalent to the pooled Petersen estimator).
 The code and output follow:
 
@@ -189,7 +189,7 @@ are forced equal. Logical pooling is specified using the same keywords for physi
 
 ## Logical pooling the first two rows, the last two rows, and physical pooling of the  last two columns
 Let us now logically pool the first two rows and the last two rows, but leave rows 3 and 4 alone.
-Similar, let us physcically pool the last two columns.
+Similar, let us physically pool the last two columns.
 
 The code is
 ```{r fit5,results="hide"}

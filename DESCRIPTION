@@ -37,8 +37,7 @@ Description: The Stratified-Petersen Analysis System (SPAS) is designed
     This is the R-version of the (now obsolete) standalone Windows 
     program available at <http://www.cs.umanitoba.ca/~popan/spas/spas_home.html>.
 License: GPL (>=2)
-RoxygenNote: 7.0.0
+RoxygenNote: 7.0.1
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
-

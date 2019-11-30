@@ -22,9 +22,9 @@ knitr::opts_chunk$set(
 # Introduction
 The experiment consisted of daily sampling, but condensed to weeks.
 Returning adult salmon were tagged and released at the upstream trap. They were recaptured
-during carass surveys
+during carcass surveys
 
-A stratified-Petersen estimator (Darrock, 1961; Plante et al. 1996) is found for the unpooled data and some pooling of the rows/columns.
+A stratified-Petersen estimator (Darroch, 1961; Plante et al. 1996) is found for the unpooled data and some pooling of the rows/columns.
 
 # Load the SPAS package
 ```{r libraries}
@@ -58,7 +58,7 @@ harrison.2011.chinook.F.csv <- textConnection("
 har.data <- as.matrix(read.csv(harrison.2011.chinook.F.csv, header=FALSE))
 har.data
 ```
-A total of `r sum(har.data[1,])` fish were tagged and released in week 1. Of these fish, `r har.data[1,1]` were recovered downnstream in column stratum 1;
+A total of `r sum(har.data[1,])` fish were tagged and released in week 1. Of these fish, `r har.data[1,1]` were recovered down stream in column stratum 1;
 `r har.data[1,2]` were recovered in column stratum 2; and `r har.data[1,7]` were never seen again.
 A total of `r har.data[7,1]` UNMARKED fish were recovered in column stratum 1.
 
@@ -112,7 +112,7 @@ The `N` entries refer to the  population size; the `N.stratum` entries refer to 
 the `cap` entries refer to the estimated probability of capture in each row stratum;
 the `exp.factor` entries refer to `(1-cap)/cap`, or the expansion factor for each row;
 the `psi` entries refer to the number of animals tagged but never seen again (the right most column in the input data);
-and the `theta` entires refer to the expected number of animals that were tagged in row stratum $i$ and recovered in column stratum $j$ (after pooling).
+and the `theta` entries refer to the expected number of animals that were tagged in row stratum $i$ and recovered in column stratum $j$ (after pooling).
 
 # Pooling some rows and columns
 As noted by Darroch (1961), the stratified-Petersen will fail if the matrix of movements is close to singular. This often happens if two rows are proportional to each other. In this case, there is no unique MLE for the probability of capture in the two rows, and they should be pooled.
@@ -145,7 +145,7 @@ which is a slight reduction
 from the unpooled estimates.
 
 ## Physical pooling to a single row and complete pooling
-You can physcially pool to a single row (and multiple columns) or a single row and single column (which is equivalent to the pooled Petersen estimator).
+You can physically pool to a single row (and multiple columns) or a single row and single column (which is equivalent to the pooled Petersen estimator).
 The code and output follow:
 
 ```{r mod3, echo=TRUE}
@@ -208,7 +208,7 @@ Both models have an estimated abundance of
 which is a slight reduction
 from the unpooled estimates.  
 
-Note that the estimates from physcial and logical pooling are the same.
+Note that the estimates from physical and logical pooling are the same.
 
 
 ## Logically pooling every successive pair of rows
@@ -259,7 +259,7 @@ report
 
 
 **Unfortunately, because pooling actually changes the data (internally), it is not possible to
-do likelihood ratio testing or to use AICc to compare different physcial poolings.**
+do likelihood ratio testing or to use AICc to compare different physical poolings.**
 
 Different logical poolings can be compared without problems. In this case, models 1, 5, 6 and 8 can be compared because they involve no pooling, or logical pooling of the rows. Model 8 has the (arithmetically) smallest AIC but is not much preferred over
 model 6 because the difference in AIC is small.

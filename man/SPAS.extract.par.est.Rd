@@ -7,7 +7,7 @@
 SPAS.extract.par.est(est.red, rowDM, colDM, thetaDM, conditional = TRUE)
 }
 \arguments{
-\item{est.red}{Vector of Parmeter estimates}
+\item{est.red}{Vector of parameter estimates}
 
 \item{rowDM}{Design matrix for covariates for row parameters (after pooling). Not currently implemented so
 this is usually an identity matrix.}

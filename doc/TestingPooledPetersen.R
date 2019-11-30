@@ -37,14 +37,14 @@ mod3 <- SPAS.fit.model(test.data,
 SPAS.print.model(mod3)
 
 ## -----------------------------------------------------------------------------
-# do physcial complete pooling 
+# do physical complete pooling 
 mod4 <- SPAS.fit.model(test.data,
                            model.id="Physical pooling all rows and last two colum ns",
                            row.pool.in=c(1,1,1), col.pool.in=c(1,1,3))
 SPAS.print.model(mod4)
 
 ## -----------------------------------------------------------------------------
-# do physcial complete pooling 
+# do physical complete pooling 
 mod5 <- SPAS.fit.model(test.data,
                            model.id="Physical complete pooling",
                            row.pool.in=c(1,1,1), col.pool.in=c(1,1,1))

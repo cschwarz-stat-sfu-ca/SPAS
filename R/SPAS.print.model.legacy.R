@@ -1,4 +1,4 @@
-#' Print the results from a fit of a Stratifed-Petersen (SP) model from the legacy (i.e. pre using TMB) code
+#' Print the results from a fit of a Stratified-Petersen (SP) model from the legacy (i.e. pre using TMB) code
 #' 
 #' This function makes a report of the results of the model fitting
 #' .
