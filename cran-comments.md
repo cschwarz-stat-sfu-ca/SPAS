@@ -20,7 +20,7 @@ There were 2 NOTES:
   
 * checking CRAN incoming feasibility ... NOTE
    Maintainer: ‘Carl James Schwarz <cschwarz.stat.sfu.ca@gmail.com>’
-   Version contains large components (2020.1)  
+   Version contains large components (2020.1.1)  
   
   This is the 2020 release of the package.
 
