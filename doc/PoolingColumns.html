@@ -12,7 +12,7 @@
 
 <meta name="author" content="Carl James Schwarz" />
 
-<meta name="date" content="2019-11-29" />
+<meta name="date" content="2019-12-01" />
 
 <title>Pooling columns</title>
 
@@ -303,7 +303,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Pooling columns</h1>
 <h4 class="author">Carl James Schwarz</h4>
-<h4 class="date">2019-11-29</h4>
+<h4 class="date">2019-12-01</h4>
 
 
 <div id="TOC">
@@ -445,7 +445,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb2-18" title="18"></a>
 <a class="sourceLine" id="cb2-19" title="19"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt; Model Name: No restrictions </span></a>
-<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-11-29 22:59 </span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
 <a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
 <a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt;  </span></a>
 <a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt; Raw data </span></a>
@@ -519,7 +519,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb3-18" title="18"></a>
 <a class="sourceLine" id="cb3-19" title="19"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb3-20" title="20"><span class="co">#&gt; Model Name: Pool last two columns </span></a>
-<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-11-29 22:59 </span></a>
+<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
 <a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
 <a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt;  </span></a>
 <a class="sourceLine" id="cb3-24" title="24"><span class="co">#&gt; Raw data </span></a>
@@ -593,7 +593,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb4-18" title="18"></a>
 <a class="sourceLine" id="cb4-19" title="19"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; Model Name: Pool last two columns </span></a>
-<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-11-29 22:59 </span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
 <a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
 <a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt;  </span></a>
 <a class="sourceLine" id="cb4-24" title="24"><span class="co">#&gt; Raw data </span></a>
@@ -649,14 +649,14 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <h2><span class="header-section-number">3.4</span> Comparing the estimates</h2>
 <p>Notice that the population estimate and its standard error is identical to the unpooled case. You cannot compare the AICc values because the data set has changed between the two fits.</p>
 <pre><code>#&gt;      .id       date                      model.id s.a.pool t.p.pool logL.cond
-#&gt; 1 mod..1 2019-11-30               No restrictions        2        4 285428.40
-#&gt; 2 mod..2 2019-11-30         Pool last two columns        2        3 295293.64
-#&gt; 3 mod..3 2019-11-30         Pool last two columns        2        3 295293.64
-#&gt; 4 mod..4 2019-11-30                Pooled Peteren        1        1  60410.94
-#&gt; 5 mod..5 2019-11-30     Logical Pooling some rows        6        5  47585.39
-#&gt; 6 mod..6 2019-11-30   A single row - Logical Pool        6        5  47580.39
-#&gt; 7 mod..7 2019-11-30 Pooled Peteren - Logical Pool        6        1  56584.83
-#&gt; 8 mod..8 2019-11-30    Logical Pooling pairs rows        6        5  47584.73
+#&gt; 1 mod..1 2019-12-02               No restrictions        2        4 285428.40
+#&gt; 2 mod..2 2019-12-02         Pool last two columns        2        3 295293.64
+#&gt; 3 mod..3 2019-12-02         Pool last two columns        2        3 295293.64
+#&gt; 4 mod..4 2019-12-02                Pooled Peteren        1        1  60410.94
+#&gt; 5 mod..5 2019-12-02     Logical Pooling some rows        6        5  47585.39
+#&gt; 6 mod..6 2019-12-02   A single row - Logical Pool        6        5  47580.39
+#&gt; 7 mod..7 2019-12-02 Pooled Peteren - Logical Pool        6        1  56584.83
+#&gt; 8 mod..8 2019-12-02    Logical Pooling pairs rows        6        5  47584.73
 #&gt;   np       AICc gof.chisq gof.df gof.p   Nhat Nhat.se
 #&gt; 1 12 -570832.81      32.0      2 0.000 296206   13192
 #&gt; 2 10 -590567.29      31.6      1 0.000 296206   13192
@@ -689,7 +689,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb6-15" title="15"><span class="co">#&gt; Finding conditional estimate of N</span></a>
 <a class="sourceLine" id="cb6-16" title="16"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb6-17" title="17"><span class="co">#&gt; Model Name: Physical pooling to single row </span></a>
-<a class="sourceLine" id="cb6-18" title="18"><span class="co">#&gt;    Date of Fit: 2019-11-29 22:59 </span></a>
+<a class="sourceLine" id="cb6-18" title="18"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
 <a class="sourceLine" id="cb6-19" title="19"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
 <a class="sourceLine" id="cb6-20" title="20"><span class="co">#&gt;  </span></a>
 <a class="sourceLine" id="cb6-21" title="21"><span class="co">#&gt; Raw data </span></a>
@@ -760,7 +760,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb7-18" title="18"><span class="co">#&gt; Finding conditional estimate of N</span></a>
 <a class="sourceLine" id="cb7-19" title="19"><span class="kw">SPAS.print.model</span>(mod..3a)</a>
 <a class="sourceLine" id="cb7-20" title="20"><span class="co">#&gt; Model Name: Logical pooling to single row </span></a>
-<a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-11-29 22:59 </span></a>
+<a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
 <a class="sourceLine" id="cb7-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
 <a class="sourceLine" id="cb7-23" title="23"><span class="co">#&gt;  </span></a>
 <a class="sourceLine" id="cb7-24" title="24"><span class="co">#&gt; Raw data </span></a>
@@ -834,7 +834,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb8-18" title="18"><span class="co">#&gt; Finding conditional estimate of N</span></a>
 <a class="sourceLine" id="cb8-19" title="19"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">4</span>)</a>
 <a class="sourceLine" id="cb8-20" title="20"><span class="co">#&gt; Model Name: Physical pooling all rows and last two columns </span></a>
-<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-11-29 22:59 </span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
 <a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
 <a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt;  </span></a>
 <a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; Raw data </span></a>
@@ -905,7 +905,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb9-18" title="18"><span class="co">#&gt; Finding conditional estimate of N</span></a>
 <a class="sourceLine" id="cb9-19" title="19"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb9-20" title="20"><span class="co">#&gt; Model Name: Physical complete pooling </span></a>
-<a class="sourceLine" id="cb9-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-11-29 22:59 </span></a>
+<a class="sourceLine" id="cb9-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
 <a class="sourceLine" id="cb9-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
 <a class="sourceLine" id="cb9-23" title="23"><span class="co">#&gt;  </span></a>
 <a class="sourceLine" id="cb9-24" title="24"><span class="co">#&gt; Raw data </span></a>
@@ -957,10 +957,10 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="comparing-the-estimates-of-abundance" class="section level2">
 <h2><span class="header-section-number">4.5</span> Comparing the estimates of abundance</h2>
 <pre><code>#&gt;       .id       date                                       model.id s.a.pool
-#&gt; 1  mod..3 2019-11-30                 Physical pooling to single row        1
-#&gt; 2 mod..3a 2019-11-30                  Logical pooling to single row        2
-#&gt; 3  mod..4 2019-11-30 Physical pooling all rows and last two columns        1
-#&gt; 4  mod..5 2019-11-30                      Physical complete pooling        1
+#&gt; 1  mod..3 2019-12-02                 Physical pooling to single row        1
+#&gt; 2 mod..3a 2019-12-02                  Logical pooling to single row        2
+#&gt; 3  mod..4 2019-12-02 Physical pooling all rows and last two columns        1
+#&gt; 4  mod..5 2019-12-02                      Physical complete pooling        1
 #&gt;   t.p.pool logL.cond np      AICc gof.chisq gof.df gof.p   Nhat Nhat.se
 #&gt; 1        4  287272.7  6 -574533.3      38.4      3     0 273857   10831
 #&gt; 2        4  285423.8 11 -570825.7      38.4      3     0 273857   10831

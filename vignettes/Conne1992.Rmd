@@ -32,7 +32,7 @@ library(SPAS)
 This will load the SPAS fitting functions and any associated packages needed by SPAS.
 
 # Import the data.
-The data  should be stored as an $s+1$ by $t+1$ (before pooling) matrix where the upper $s \times t$ matrix consists of the 
+The data  should be stored as an $s+1$ by $t+1$ (before pooling) matrix.
 The $s \times t$ upper left matrix is the number of animals released in row stratum $i$ and recovered in
 column stratum $j$. 
 Row $s+1$ contains the total number of UNMARKED animals recovered in column stratum $j$.
