@@ -7,7 +7,12 @@
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
-There were 2 NOTES:
+There were 3 NOTES:
+
+* Found the following (possibly) invalid URLs:
+   ...
+  
+  These were checked and are valid URLs.
 
 * checking installed package size ... NOTE
   installed size is 12.8Mb

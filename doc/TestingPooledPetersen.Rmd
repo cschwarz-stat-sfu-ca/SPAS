@@ -6,6 +6,9 @@ output:
   rmarkdown::html_vignette:
     number_sections: yes
     toc: yes
+    md_extensions: [ 
+      "-autolink_bare_uris" 
+    ]
 vignette: >
   %\VignetteIndexEntry{Testing for Pooled Petersen} 
   %\VignetteEngine{knitr::rmarkdown} 
@@ -114,7 +117,8 @@ SPAS.print.model(mod5)
 ```
 
 
-# Get the model objects fitted by tmb and create a report
+# Get the model objects fitted by TMB and create a report
+
 ```{r }
 model.list <- mget( ls()[grepl("^mod.$",ls())])
 names(model.list)

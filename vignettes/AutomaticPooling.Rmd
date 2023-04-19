@@ -35,16 +35,16 @@ and proceeds as follows:
 - All columns that have 0 recaptures of tagged fish and 0 fish inspected are discarded
 - Starting at the first row and working forwards in time,
 and then working from the final row and working backwards in time,
-rows are pooled until a minimum of \code(min.released) are released.
+rows are pooled until a minimum of *min.released* are released.
 An alternating pooling (from the top, from the bottom, from the top, etc) is used
 - Starting at the first column and working forwards in time,
 and then working from the final column and working backwards in time,
-columns are pooled until a minimum of \code(min.inspected) are inspected.
+columns are pooled until a minimum of *min.inspected* are inspected.
 An alternating pooling (from the left, from the right, from the left, etc) is used.
-- If the sum of the total recaptures from released fish is <= \code{min.recaps}, then all rows are pooled
+- If the sum of the total recaptures from released fish is <= *min.recaps*, then all rows are pooled
 (which reduces to a Chapman estimator)
 
-The values of \code{min.released},\code{min.inspected},\code{min.recaps} can be passes as
+The values of *min.released*,*min.inspected*,*min.recaps* can be passed as
 arguments to the function.
 
 The function returns a suggested pooling vector for the rows and columns and a reduced
