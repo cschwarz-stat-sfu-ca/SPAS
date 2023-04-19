@@ -106,10 +106,10 @@ res
 ```
 
 There were no rows or columns that were all zero, so the 
-*res$reddata$ is the same as the original data.
+reduced data (*res*) is the same as the original data.
 
-THe suggested pooling vector for columns indicates no pooling was done (all entries are the same).
-The suggested pooling vector for rows, suggests that forws 5 and 6 be pooled as indicated by the
+The suggested pooling vector for columns indicates no pooling was done (all entries are the same).
+The suggested pooling vector for rows, suggests rows 5 and 6 be pooled as indicated by the
 duplicate entries of *6* in the pooling vector.
 
 Finally, the reduced data and suggest pooling vectors are presented in one display.

@@ -66,7 +66,7 @@ to try and remove structural zero cells.}
 
 \item{min.released}{Minimum number of releases in a pooled row}
 
-\item{min.inspected}{Miniumum number of inspections in a pooled column}
+\item{min.inspected}{Minimum number of inspections in a pooled column}
 
 \item{min.recaps}{Minimum number of recaptures before any rows can be pooled}
 

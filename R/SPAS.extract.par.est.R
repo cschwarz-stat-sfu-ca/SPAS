@@ -9,12 +9,12 @@
 #'   this is usually an identity matrix.
 #' @param thetaDM Design matrix for covariates for movement parameters (after pooling). Not currently implemented so
 #'   this is usually an identity matrix.
-#' @param conditional Indicates if a conditional (poisson model) or full likelihood (multinomial) fit was done.
+#' @param conditional Indicates if a conditional (Poisson model) or full likelihood (Multinomial) fit was done.
 #'
 #' @return 
 #'   Returns a list with entries 
 #' \itemize{
-#'   \item theta The modelled number of animals released in row stratum i and recovered in column stratum j.
+#'   \item theta The modeled number of animals released in row stratum i and recovered in column stratum j.
 #'   \item cap. The estimated probability of tagging in row stratum i.
 #'   \item psi. The estimated number of animals never seen after tagging for each row stratum.
 #'   \item N.   The estimated population size.
