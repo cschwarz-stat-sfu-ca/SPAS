@@ -35,7 +35,7 @@ Description: The Stratified-Petersen Analysis System (SPAS) is designed
     a spline is used to model the distribution of the population 
     over time as it passes the second capture location.
     This is the R-version of the (now obsolete) standalone Windows 
-    program available at <https://www.cs.umanitoba.ca/~popan/spas/spas_home.html>.
+    program available at <https://home.cs.umanitoba.ca/~popan/spas/spas_home.html>.
 License: GPL (>=2)
 RoxygenNote: 7.2.3
 Suggests: knitr,
