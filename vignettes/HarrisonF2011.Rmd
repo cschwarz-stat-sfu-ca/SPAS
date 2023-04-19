@@ -6,6 +6,9 @@ output:
   rmarkdown::html_vignette:
     number_sections: yes
     toc: yes
+    md_extensions: [ 
+      "-autolink_bare_uris" 
+    ]
 vignette: >
   %\VignetteIndexEntry{Harrison River Female Chinook 2011 Data} 
   %\VignetteEngine{knitr::rmarkdown} 
