@@ -1,9 +1,8 @@
-## Resubmission
-* Note about cran-comments.md has been fixed.
+## 2023 Update
+* Additional functionality added.
 
 ## Test environments
 * local OS X install, R 4.3.2
-* local Windoze 10, R 3.6.1
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
