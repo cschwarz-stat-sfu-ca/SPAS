@@ -7,11 +7,9 @@
 
 .onAttach <- function(libname,pkgname){
 
-  packageStartupMessage("***** SPAS: Stratified Petersen Analysis System - Version 2020.1.1 2020-01-01) ***** \n\n",
+  packageStartupMessage("***** SPAS: Stratified Petersen Analysis System - Version 2023.3.31 2023-03-31) ***** \n\n",
         "      Help available with  help(package='SPAS') \n",
-        '      Several vignettes are available. See browseVignettes(package="SPAS") \n\n',
-        '      ***** CAUTION ***** Output object has significantly changed since last release ****\n',
-        '      Use SPAS.print.legacy() to display previously created objects')
+        '      Several vignettes are available. See browseVignettes(package="SPAS") \n\n')
 }
 
 

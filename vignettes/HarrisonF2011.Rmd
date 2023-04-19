@@ -43,7 +43,7 @@ The sum of the entries in each of the first $s$ rows is then the number of anima
 The sum of the entries in each of the first $t$ columns is then the number of animals captured (marked and unmarked) in each column stratum.
 The row/column names of the matrix may be set to identify the entries in the output.
 
-Here is the raw data for the Conne River. Notice that very small number of releases and recoveries in week 6. 
+Here is the raw data for the Harrison River. Notice that very small number of releases and recoveries in week 6. 
 
 ```{r loaddata}
 harrison.2011.chinook.F.csv <- textConnection("

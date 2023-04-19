@@ -1,0 +1,143 @@
+---
+title: "Automatic Pooling"
+author: "Carl James Schwarz"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    number_sections: yes
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Automatic Pooling} 
+  %\VignetteEngine{knitr::rmarkdown} 
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+Several vignettes explored how to pool rows and/or columns to deal with the near singularity
+of the recapture matrix. A new function has been introduced *SPAS.autopool()* that attempts
+to automate this process.
+
+The automatic pooling algorithm follows recommendations in Schwarz and Taylor (1998)
+and proceeds as follows:
+
+- All rows that have 0 releases are discarded
+- All columns that have 0 recaptures of tagged fish and 0 fish inspected are discarded
+- Starting at the first row and working forwards in time,
+and then working from the final row and working backwards in time,
+rows are pooled until a minimum of \code(min.released) are released.
+An alternating pooling (from the top, from the bottom, from the top, etc) is used
+- Starting at the first column and working forwards in time,
+and then working from the final column and working backwards in time,
+columns are pooled until a minimum of \code(min.inspected) are inspected.
+An alternating pooling (from the left, from the right, from the left, etc) is used.
+- If the sum of the total recaptures from released fish is <= \code{min.recaps}, then all rows are pooled
+(which reduces to a Chapman estimator)
+
+The values of \code{min.released},\code{min.inspected},\code{min.recaps} can be passes as
+arguments to the function.
+
+The function returns a suggested pooling vector for the rows and columns and a reduced
+data matrix if there are rows that are all zero or columns that are all zero.
+
+The *SPAS.fit.model()* function also now has a *autopool* argument where an automated
+pooling will be attempted rather than you passing the pooling vectors.
+
+# Example. 
+
+The example from the Harrison River will be used:
+
+## Load the SPAS package
+
+```{r libraries}
+library(SPAS)
+```
+This will load the SPAS fitting functions and any associated packages needed by SPAS.
+
+## Import the data.
+
+The data  should be stored as an $s+1$ by $t+1$ (before pooling) matrix.
+The $s \times t$ upper left matrix is the number of animals released in row stratum $i$ and recovered in
+column stratum $j$. 
+Row $s+1$ contains the total number of UNMARKED animals recovered in column stratum $j$.
+Column $t+1$ contains the number of animals marked in each row stratum but not recovered in any column stratum.
+The $rawdata[s+1, t+1]$ is not used and can be set to 0 or NA.
+The sum of the entries in each of the first $s$ rows is then the number of animals marked in each row stratum.
+The sum of the entries in each of the first $t$ columns is then the number of animals captured (marked and unmarked) in each column stratum.
+The row/column names of the matrix may be set to identify the entries in the output.
+
+Here is the raw data for the Harrison River. Notice that very small number of releases and recoveries in week 6. 
+
+```{r loaddata}
+harrison.2011.chinook.F.csv <- textConnection("
+  4   ,      2   ,      1   ,     1   ,     0   ,     0   ,   130
+ 12   ,      7   ,     14   ,     1   ,     3   ,     0   ,   330
+  7   ,     11   ,     41   ,     9   ,     1   ,     1   ,   790
+  1   ,     13   ,     40   ,    12   ,     9   ,     1   ,   667
+  0   ,      1   ,      8   ,     8   ,     3   ,     0   ,   309
+  0   ,      0   ,      0   ,     0   ,     0   ,     1   ,    65
+744   ,   1187   ,   2136   ,   951   ,   608   ,   127   ,     0")
+
+har.data <- as.matrix(read.csv(harrison.2011.chinook.F.csv, header=FALSE))
+har.data
+```
+
+A total of `r sum(har.data[1,])` fish were tagged and released in week 1. Of these fish, `r har.data[1,1]` were recovered down stream in column stratum 1;
+`r har.data[1,2]` were recovered in column stratum 2; and `r har.data[1,7]` were never seen again.
+A total of `r har.data[7,1]` UNMARKED fish were recovered in column stratum 1.
+
+You can add row and column names to the matrix which will used when the data are printed.
+
+## Automate Pooling
+
+We invoke the *SPAS.autopool()* function and look at the output:
+
+```{r}
+res <- SPAS.autopool(har.data)
+res
+
+```
+
+There were no rows or columns that were all zero, so the 
+*res$reddata$ is the same as the original data.
+
+THe suggested pooling vector for columns indicates no pooling was done (all entries are the same).
+The suggested pooling vector for rows, suggests that forws 5 and 6 be pooled as indicated by the
+duplicate entries of *6* in the pooling vector.
+
+Finally, the reduced data and suggest pooling vectors are presented in one display.
+
+## Fitting allowing for automated pooling.
+
+We can use the *autopool* argument in the *SPAS.fit.model* to do automated pooling
+prior to the fit.
+
+```{r}
+mod..1 <- SPAS.fit.model(har.data,
+                       model.id="Automated pooling",
+                       autopool=TRUE)
+SPAS.print.model(mod..1)
+```
+
+The automated pooling combined the last two rows, but the fit is not entire satisfactory
+because of the high condition number on *X'X*.
+
+Some further bespoke pooling is likely necessary.
+
+
+# References
+
+Schwarz, C. J., & Taylor, C. G. (1998). 
+The use of the stratified-Petersen estimator in fisheries management 
+with an illustration of estimating the number of pink salmon 
+(Oncorhynchus gorbuscha) that return to spawn in the Fraser River. 
+Canadian Journal of Fisheries and Aquatic Sciences, 55, 281–296.
+https://doi.org/10.1139/f97-238
+

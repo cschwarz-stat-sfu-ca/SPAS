@@ -5,25 +5,11 @@
 #' pooling
 #' .
 #' @param model.id Character string identifying the name of the model including any pooling..
-#' @param rawdata An (s+1) x (t+1) of the raw data BEFORE pooling.
-#'   The s x t upper left matrix is the number of animals released in row stratum i and recovered in
-#'   column stratum j. Row s+1 contains the total number of UNMARKED animals recovered in column stratum j.
-#'   Column t+1 contains the number of animals marked in each row stratum but not recovered in any column stratum.
-#'   The rawdata[s+1, t+1] is not used and can be set to 0 or NA.
-#'   The sum of the entries in each of the first s rows is then the number of animals marked in each row stratum.
-#'   The sum of the entries in each of the first t columns is then the number of animals captured (marked and unmarked) in each column stratum.
-#'   The row/column names of the matrix may be set to identify the entries in the output.
-#' @param row.pool.in,col.pool.in Vectors (character/numeric) of length s and t respectively. These identify the rows/columns to be pooled before the analysis is done.
-#'   The vectors consists of entries where pooling takes place if the entries are the same. For example, if s=4, then 
-#'   row.pool.in = c(1,2,3,4) implies no pooling because all entries are distinct; row.pool.in=c("a","a","b","b") implies that the 
-#'   first two rows will be pooled and the last two rows will be pooled. It is not necessary that row/columns be continuous to be pooled, but
-#'   this is seldom sensible. A careful choice of pooling labels helps to remember what as done, e.g. row.pool.in=c("123","123","123","4") indicates
-#'   that the first 3 rows are pooled and the 4th row is not pooled. Character entries ensure that the resulting matrix is sorted properly (e.g. if 
-#'   row.pool.in=c(123,123,123,4), then the same pooling is done, but the matrix rows are sorted rather strangely.
-#' @param row.physical.pool  Should physical pooling be done (default) or should logical pooling be done. For example, if there are 3 rows in 
-#'   the data matrix and row.pool.in=c(1,1,3), then in physical pooling, the entries in rows 1 and 2 are physically added together to create
-#'   2 rows in the data matrix before fitting. Because the data has changed, you cannot compare physical pooling using AIC. In logical pooling,
-#'   the data matrix is unchanged, but now parameters p1=p2 but the movement parameters for the rest of the matrix are not forced equal.
+#' @template param.rawdata 
+#' @template param.autopool
+#' @template param.autopool.settings
+#' @template param.row.pool.in
+#' @template param.row.physical.pool
 #' @param theta.pool,CJSpool NOT YET IMPLEMENTED. DO NOT CHANGE.
 #' @param optMethod What optimization method is used. Defaults is the nlminb() function..
 #' @param optMethod.control Control parameters for optimization method. See the documentation on the different optimization methods for details.
@@ -50,7 +36,9 @@
 #' mod1 <- SPAS.fit.model(conne.data, model.id="Pooling rows 1/2, 5/6; pooling columns 5/6",
 #'                       row.pool.in=c("12","12","3","4","56","56"),
 #'                       col.pool.in=c(1,2,3,4,56,56))
-#'
+#' mod2 <- SPAS.fit.model(conne.data, model.id="Auto pool",
+#'                       autopool=TRUE)
+
 
 # Fit the OPEN SPAS model to the data.
 # This does the physical pooling of the data prior to the fit
@@ -60,12 +48,16 @@
 # The final matrix, after pooling must have s <= t.
 
 SPAS.fit.model<- function(model.id='Stratified Petersen Estimator', 
-                          rawdata, 
-                          row.pool.in, col.pool.in, 
+                          rawdata, autopool=FALSE,
+                          row.pool.in=NULL, col.pool.in=NULL, 
                           row.physical.pool=TRUE, theta.pool=FALSE, CJSpool=FALSE, 
                           optMethod=c("nlminb"), 
                           optMethod.control=list(maxit = 50000), 
-                          svd.cutoff=.0001, chisq.cutoff=.1){
+                          svd.cutoff=.0001, chisq.cutoff=.1,
+                          min.released  =100, # autopooling settings
+                          min.inspected = 50,
+                          min.recaps    = 50,
+                          min.rows=1, min.cols=1){
 # Fit the Open SPAS model given the data and pooling information on the rows and columns
 #
 # The Open models have no constraints on the movement into the observed strata for each release group
@@ -84,12 +76,17 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
    if( nrow(rawdata) < 2)  stop("Input raw data needs at least 2 rows")
    if( ncol(rawdata) < 2)  stop("Input raw data needs at least 2 columns")
    if( !is.numeric(rawdata))stop("Input raw data must be numeric")
-   
-   if(length(row.pool.in) != (nrow(rawdata)-1))stop("Row pooling vector not right length - number of rows(rawdata) -1")
-   if(length(col.pool.in) != (ncol(rawdata)-1))stop("Column pooling vector not right length - number of columns(rawdata) -1")
   
-   # Does final pooled matrix have s <= t?
-   if(length(unique(row.pool.in)) > length(unique(col.pool.in)))stop("S must be <= T after pooling")
+   if(!is.logical(autopool) || length(autopool) !=1)stop("Autopool must be logical and length 1")
+   if( autopool){
+      if( !is.null(row.pool.in)) stop("Cannot specify row pooling if autopool=TRUE")
+      if( !is.null(col.pool.in)) stop("Cannot specify columh pooling if autopool=TRUE")
+   }
+  
+   if(!autopool){
+      if(length(row.pool.in) != (nrow(rawdata)-1))stop("Row pooling vector not right length - number of rows(rawdata) -1")
+      if(length(col.pool.in) != (ncol(rawdata)-1))stop("Column pooling vector not right length - number of columns(rawdata) -1")
+   }
   
    # check that row.phyiscal.pool is logical.
    if(!is.logical(row.physical.pool) | length(row.physical.pool)!= 1)stop("Row.physical.pool must be logical of length 1")
@@ -107,8 +104,23 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
   
    if(!is.numeric(chisq.cutoff) | length(chisq.cutoff) != 1)stop("chisquare cutoff must be numeric and length 1")
    
+   if(autopool){
+      res <- SPAS.autopool(rawdata, 
+                           min.released  = min.released,
+                           min.inspected = min.inspected,
+                           min.recaps    = min.recaps,
+                           min.rows      = min.rows, 
+                           min.cols      = min.cols)
+      rawdata <- res$reddata
+      row.pool.in <- res$row.pool
+      col.pool.in <- res$col.pool
+   }
+
+   # Does final pooled matrix have s <= t?
+   if(length(unique(row.pool.in)) > length(unique(col.pool.in)))stop("S must be <= T after pooling")
+  
    RESULT <- NULL
-   RESULT$version <- "SPAS-R 2020-01-01"
+   RESULT$version <- "SPAS-R 2023-03-31"
    RESULT$date    <- Sys.time()   # date run and start date
    
    RESULT$input <- list(model.id    =model.id,

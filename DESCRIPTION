@@ -1,20 +1,20 @@
 Package: SPAS
 Type: Package
 Title: Stratified-Petersen Analysis System
-Version: 2020.1.1
-Date: 2020-01-01
+Version: 2023.3.31
+Date: 2023-03-31
 Author: Carl James Schwarz
 Maintainer: Carl James Schwarz <cschwarz.stat.sfu.ca@gmail.com>
 LinkingTo:
     TMB,
     RcppEigen
 Imports:
-    BB,
     MASS,
     Matrix,
     msm,
     numDeriv,
     plyr,
+    reshape2,
     TMB (>= 1.7.15)
 Description: The Stratified-Petersen Analysis System (SPAS) is designed
     to estimate abundance in two-sample capture-recapture experiments 
@@ -35,9 +35,10 @@ Description: The Stratified-Petersen Analysis System (SPAS) is designed
     a spline is used to model the distribution of the population 
     over time as it passes the second capture location.
     This is the R-version of the (now obsolete) standalone Windows 
-    program available at <http://www.cs.umanitoba.ca/~popan/spas/spas_home.html>.
+    program available at <https://www.cs.umanitoba.ca/~popan/spas/spas_home.html>.
 License: GPL (>=2)
-RoxygenNote: 7.0.1
+RoxygenNote: 7.2.3
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
+Encoding: UTF-8

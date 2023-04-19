@@ -7,15 +7,21 @@
 SPAS.fit.model(
   model.id = "Stratified Petersen Estimator",
   rawdata,
-  row.pool.in,
-  col.pool.in,
+  autopool = FALSE,
+  row.pool.in = NULL,
+  col.pool.in = NULL,
   row.physical.pool = TRUE,
   theta.pool = FALSE,
   CJSpool = FALSE,
   optMethod = c("nlminb"),
   optMethod.control = list(maxit = 50000),
   svd.cutoff = 1e-04,
-  chisq.cutoff = 0.1
+  chisq.cutoff = 0.1,
+  min.released = 100,
+  min.inspected = 50,
+  min.recaps = 50,
+  min.rows = 1,
+  min.cols = 1
 )
 }
 \arguments{
@@ -29,6 +35,9 @@ The rawdata[s+1, t+1] is not used and can be set to 0 or NA.
 The sum of the entries in each of the first s rows is then the number of animals marked in each row stratum.
 The sum of the entries in each of the first t columns is then the number of animals captured (marked and unmarked) in each column stratum.
 The row/column names of the matrix may be set to identify the entries in the output.}
+
+\item{autopool}{Should the automatic pooling algorithms be used.
+Give more details here on these rule work.}
 
 \item{row.pool.in, col.pool.in}{Vectors (character/numeric) of length s and t respectively. These identify the rows/columns to be pooled before the analysis is done.
 The vectors consists of entries where pooling takes place if the entries are the same. For example, if s=4, then 
@@ -54,6 +63,14 @@ singular value to retain.}
 
 \item{chisq.cutoff}{When finding a goodness of fit statistic using (obs-exp)^2/exp, all cell whose Exp < gof.cutoff are ignored
 to try and remove structural zero cells.}
+
+\item{min.released}{Minimum number of releases in a pooled row}
+
+\item{min.inspected}{Miniumum number of inspections in a pooled column}
+
+\item{min.recaps}{Minimum number of recaptures before any rows can be pooled}
+
+\item{min.rows, min.cols}{Minimum number or rows and columns after pooling}
 }
 \value{
 A list with many entries. Refer to the vignettes for more details.
@@ -79,5 +96,6 @@ close(conne.data.csv)
 mod1 <- SPAS.fit.model(conne.data, model.id="Pooling rows 1/2, 5/6; pooling columns 5/6",
                       row.pool.in=c("12","12","3","4","56","56"),
                       col.pool.in=c(1,2,3,4,56,56))
-
+mod2 <- SPAS.fit.model(conne.data, model.id="Auto pool",
+                      autopool=TRUE)
 }

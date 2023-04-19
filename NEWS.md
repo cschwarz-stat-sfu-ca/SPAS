@@ -1,3 +1,10 @@
+SPAS 2023.03.31
+---------------
+
+* Implement an autopool argument on the model fitting
+* Add a function to compute autopooling for a data matrix.
+
+
 SPAS 2020.1.1
 -------------
 
