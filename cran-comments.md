@@ -9,8 +9,9 @@
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
-There were 2 NOTES:
-
+Local OS X intall: There were 1 Notes: See below
+check_win_release: There were 0 Notes:
+check_win_devel  : There were 0 Notes:
 
 * checking installed package size ... NOTE
   installed size is 12.8Mb
@@ -20,11 +21,6 @@ There were 2 NOTES:
   Compiled Template Model Builder (TMB) code that is automatically generated
   by the TMB R package.
   
-* checking CRAN incoming feasibility ... NOTE
-   Maintainer: ‘Carl James Schwarz <cschwarz.stat.sfu.ca@gmail.com>’
-   Version contains large components (2023.3.31)  
-  
-  This is the 2023 release of the package.
 
 ## Reverse dependencies
 None.
