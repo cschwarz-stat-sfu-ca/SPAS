@@ -1,5 +1,5 @@
 ---
-title: "Pooling columns"
+title: "Pooling Columns"
 author: "Carl James Schwarz"
 date: "`r Sys.Date()`"
 output:

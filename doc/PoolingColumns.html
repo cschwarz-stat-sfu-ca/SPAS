@@ -8,80 +8,111 @@
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <meta name="author" content="Carl James Schwarz" />
 
-<meta name="date" content="2019-12-01" />
+<meta name="date" content="2023-04-19" />
 
-<title>Pooling columns</title>
+<title>Pooling Columns</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {  }
+{ }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -90,13 +121,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -104,6 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
+
 
 
 
@@ -117,9 +156,6 @@ padding-right: 2em;
 font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
 line-height: 1.35;
-}
-#header {
-text-align: center;
 }
 #TOC {
 clear: both;
@@ -288,7 +324,8 @@ code > span.st { color: #d14; }
 code > span.co { color: #888888; font-style: italic; } 
 code > span.ot { color: #007020; } 
 code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
 
@@ -301,42 +338,61 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 
-<h1 class="title toc-ignore">Pooling columns</h1>
+<h1 class="title toc-ignore">Pooling Columns</h1>
 <h4 class="author">Carl James Schwarz</h4>
-<h4 class="date">2019-12-01</h4>
+<h4 class="date">2023-04-19</h4>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#why-it-is-not-possible-to-compare-different-column-poolings."><span class="toc-section-number">1</span> Why it is not possible to compare different column poolings.</a></li>
-<li><a href="#a-sample-dataset"><span class="toc-section-number">2</span> A sample dataset</a></li>
-<li><a href="#models-with-2-rows-and-different-number-of-columns"><span class="toc-section-number">3</span> Models with 2 rows and different number of columns</a><ul>
-<li><a href="#full-2x4-stratified-analysis"><span class="toc-section-number">3.1</span> Full 2x4 stratified analysis</a></li>
-<li><a href="#reducing-to-a-2x3-matrix-by-pooling-columns-3-and-4."><span class="toc-section-number">3.2</span> Reducing to a 2x3 matrix by pooling columns 3 and 4.</a></li>
-<li><a href="#reducing-to-a-2x2-matrix-by-pooling-columns-1-and-2-and-then-3-and-4."><span class="toc-section-number">3.3</span> Reducing to a 2x2 matrix by pooling columns 1 and 2, and then 3 and 4.</a></li>
-<li><a href="#comparing-the-estimates"><span class="toc-section-number">3.4</span> Comparing the estimates</a></li>
+<li><a href="#why-it-is-not-possible-to-compare-different-column-poolings." id="toc-why-it-is-not-possible-to-compare-different-column-poolings."><span class="toc-section-number">1</span> Why it is not possible to compare
+different column poolings.</a></li>
+<li><a href="#a-sample-dataset" id="toc-a-sample-dataset"><span class="toc-section-number">2</span> A sample dataset</a></li>
+<li><a href="#models-with-2-rows-and-different-number-of-columns" id="toc-models-with-2-rows-and-different-number-of-columns"><span class="toc-section-number">3</span> Models with 2 rows and different
+number of columns</a>
+<ul>
+<li><a href="#full-2x4-stratified-analysis" id="toc-full-2x4-stratified-analysis"><span class="toc-section-number">3.1</span> Full 2x4 stratified
+analysis</a></li>
+<li><a href="#reducing-to-a-2x3-matrix-by-pooling-columns-3-and-4." id="toc-reducing-to-a-2x3-matrix-by-pooling-columns-3-and-4."><span class="toc-section-number">3.2</span> Reducing to a 2x3 matrix by
+pooling columns 3 and 4.</a></li>
+<li><a href="#reducing-to-a-2x2-matrix-by-pooling-columns-1-and-2-and-then-3-and-4." id="toc-reducing-to-a-2x2-matrix-by-pooling-columns-1-and-2-and-then-3-and-4."><span class="toc-section-number">3.3</span> Reducing to a 2x2 matrix by
+pooling columns 1 and 2, and then 3 and 4.</a></li>
+<li><a href="#comparing-the-estimates" id="toc-comparing-the-estimates"><span class="toc-section-number">3.4</span> Comparing the estimates</a></li>
 </ul></li>
-<li><a href="#comparing-results-with-1-row-and-different-number-of-columns"><span class="toc-section-number">4</span> Comparing results with 1 row and different number of columns</a><ul>
-<li><a href="#pooling-over-all-rows-using-physical-pooling"><span class="toc-section-number">4.1</span> Pooling over all rows using physical pooling</a></li>
-<li><a href="#pooling-over-all-rows-using-logical-pooling"><span class="toc-section-number">4.2</span> Pooling over all rows using logical pooling</a></li>
-<li><a href="#pooling-over-all-rows-and-last-two-columns-using-physical-pooling"><span class="toc-section-number">4.3</span> Pooling over all rows and last two columns using physical pooling</a></li>
-<li><a href="#complete-physical-pooling-pooled-petersen-estimator"><span class="toc-section-number">4.4</span> Complete physical pooling (Pooled Petersen Estimator)</a></li>
-<li><a href="#comparing-the-estimates-of-abundance"><span class="toc-section-number">4.5</span> Comparing the estimates of abundance</a></li>
+<li><a href="#comparing-results-with-1-row-and-different-number-of-columns" id="toc-comparing-results-with-1-row-and-different-number-of-columns"><span class="toc-section-number">4</span> Comparing results with 1 row and
+different number of columns</a>
+<ul>
+<li><a href="#pooling-over-all-rows-using-physical-pooling" id="toc-pooling-over-all-rows-using-physical-pooling"><span class="toc-section-number">4.1</span> Pooling over all rows using
+physical pooling</a></li>
+<li><a href="#pooling-over-all-rows-using-logical-pooling" id="toc-pooling-over-all-rows-using-logical-pooling"><span class="toc-section-number">4.2</span> Pooling over all rows using
+logical pooling</a></li>
+<li><a href="#pooling-over-all-rows-and-last-two-columns-using-physical-pooling" id="toc-pooling-over-all-rows-and-last-two-columns-using-physical-pooling"><span class="toc-section-number">4.3</span> Pooling over all rows and last two
+columns using physical pooling</a></li>
+<li><a href="#complete-physical-pooling-pooled-petersen-estimator" id="toc-complete-physical-pooling-pooled-petersen-estimator"><span class="toc-section-number">4.4</span> Complete physical pooling (Pooled
+Petersen Estimator)</a></li>
+<li><a href="#comparing-the-estimates-of-abundance" id="toc-comparing-the-estimates-of-abundance"><span class="toc-section-number">4.5</span> Comparing the estimates of
+abundance</a></li>
 </ul></li>
-<li><a href="#references"><span class="toc-section-number">5</span> References</a></li>
+<li><a href="#references" id="toc-references"><span class="toc-section-number">5</span> References</a></li>
 </ul>
 </div>
 
-<div id="why-it-is-not-possible-to-compare-different-column-poolings." class="section level1">
-<h1><span class="header-section-number">1</span> Why it is not possible to compare different column poolings.</h1>
-<p>There are two issues that currently preclude a direct implementation of logical pooling for columns.</p>
-<p>First, unlike pooling rows where physical pooling is equivalent to equating the initial tagging probabilities, there is no equivalent rule for recovery probabilities for column pooling. In the current model, the expected values for cells counts are (Schwarz and Taylor) in the 2 x 3 case (i.e. <span class="math inline">\(s \le t\)</span>):</p>
+<div id="why-it-is-not-possible-to-compare-different-column-poolings." class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Why it is not possible
+to compare different column poolings.</h1>
+<p>There are two issues that currently preclude a direct implementation
+of logical pooling for columns.</p>
+<p>First, unlike pooling rows where physical pooling is equivalent to
+equating the initial tagging probabilities, there is no equivalent rule
+for recovery probabilities for column pooling. In the current model, the
+expected values for cells counts are (Schwarz and Taylor) in the 2 x 3
+case (i.e. <span class="math inline">\(s \le t\)</span>):</p>
 <table>
 <colgroup>
-<col width="27%"></col>
-<col width="24%"></col>
-<col width="22%"></col>
-<col width="24%"></col>
+<col width="27%" />
+<col width="24%" />
+<col width="22%" />
+<col width="24%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -367,8 +423,18 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </tr>
 </tbody>
 </table>
-<p>where <span class="math inline">\(p_i\)</span> is the tagging probability in release stratum <span class="math inline">\(i\)</span>; <span class="math inline">\(r_j\)</span> is the recovery probability in recovery stratum <span class="math inline">\(j\)</span>; and <span class="math inline">\(\theta_{ij}\)</span> is the probability of moving from release stratum <span class="math inline">\(i\)</span> to recovery stratum <span class="math inline">\(j\)</span>. In the case of <span class="math inline">\(s &lt; t\)</span>, the recovery probabilities are not separately identifiable because in any column, we can multiply <span class="math inline">\(\theta_{ij}\)</span> by a constant <span class="math inline">\(k\)</span> and divide <span class="math inline">\(r_j\)</span> by <span class="math inline">\(k\)</span> and get exactly the same expected values. Hence one can always force <span class="math inline">\(r_i = r_j\)</span> for any (<span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>) pair by appropriate choice of <span class="math inline">\(k\)</span> values for each column.</p>
-<p>Second, in theory, you can always pool columns and NOT affect the fit. As an analogy, the SPAS model is (to the first order approximation) a regression problem, i.e. given a matrix of recoveries and data</p>
+<p>where <span class="math inline">\(p_i\)</span> is the tagging
+probability in release stratum <span class="math inline">\(i\)</span>;
+<span class="math inline">\(r_j\)</span> is the recovery probability in
+recovery stratum <span class="math inline">\(j\)</span>; and <span class="math inline">\(\theta_{ij}\)</span> is the probability of moving
+from release stratum <span class="math inline">\(i\)</span> to recovery
+stratum <span class="math inline">\(j\)</span>. In the case of <span class="math inline">\(s &lt; t\)</span>, the recovery probabilities are
+not separately identifiable because in any column, we can multiply <span class="math inline">\(\theta_{ij}\)</span> by a constant <span class="math inline">\(k\)</span> and divide <span class="math inline">\(r_j\)</span> by <span class="math inline">\(k\)</span> and get exactly the same expected
+values. Hence one can always force <span class="math inline">\(r_i =
+r_j\)</span> for any (<span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>) pair by appropriate choice of <span class="math inline">\(k\)</span> values for each column.</p>
+<p>Second, in theory, you can always pool columns and NOT affect the
+fit. As an analogy, the SPAS model is (to the first order approximation)
+a regression problem, i.e. given a matrix of recoveries and data</p>
 <table>
 <thead>
 <tr class="header">
@@ -400,263 +466,284 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </tbody>
 </table>
 <p>You want to find estimates of <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span> such that <span class="math display">\[u_1≅\beta_1 m_{11}+\beta_2 m_{21}\]</span> <span class="math display">\[u_2≅\beta_1 m_{12}+\beta_2 m_{22}\]</span> <span class="math display">\[u_3≅\beta_1 m_{13}+\beta_2 m_{23}\]</span></p>
-<p>Pooling columns 2 and 3 reduces this system of equations to: <span class="math display">\[u_1≅\beta_1 m_{11}+\beta_2 m_{21}\]</span> <span class="math display">\[u_2+u_3≅\beta_1 (m_{12}+m_{13})+\beta_2 (m_{22} +m_{23})\]</span> which has the identical fit.</p>
-<p>Like the regression analogy, pooling columns is like pooling two data points in a regression setting by adding the respective <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> values. You will very similar same regression estimates, particularly if you do a weighted regression to account for the doubling of the variation when you add to points together.</p>
-<p>So in theory, pooling columns should have negligible effect on the estimates of the population size. So at the moment, I doubt that it is possible to implement logical pooling of columns and compare column pooling using AIC. It would be possible to implement logical pooling of columns but it solves an uninteresting problem of testing if the product of movement and recovery are identical for all release groups in the two columns which is seldom biologically plausible.</p>
+<p>Pooling columns 2 and 3 reduces this system of equations to: <span class="math display">\[u_1≅\beta_1 m_{11}+\beta_2 m_{21}\]</span> <span class="math display">\[u_2+u_3≅\beta_1 (m_{12}+m_{13})+\beta_2 (m_{22}
++m_{23})\]</span> which has the identical fit.</p>
+<p>Like the regression analogy, pooling columns is like pooling two data
+points in a regression setting by adding the respective <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> values. You will very similar same
+regression estimates, particularly if you do a weighted regression to
+account for the doubling of the variation when you add to points
+together.</p>
+<p>So in theory, pooling columns should have negligible effect on the
+estimates of the population size. So at the moment, I doubt that it is
+possible to implement logical pooling of columns and compare column
+pooling using AIC. It would be possible to implement logical pooling of
+columns but it solves an uninteresting problem of testing if the product
+of movement and recovery are identical for all release groups in the two
+columns which is seldom biologically plausible.</p>
 </div>
-<div id="a-sample-dataset" class="section level1">
+<div id="a-sample-dataset" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> A sample dataset</h1>
-<p>This sample data set was adopted from the Canadian Department of Fisheries and Oceans and represent release and recaptured of female fish in the Lower Shuswap region.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"></a>
-<a class="sourceLine" id="cb1-2" title="2">test.data.csv &lt;-<span class="st"> </span><span class="kw">textConnection</span>(<span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="st"> 160   ,   127   ,     72   ,     82   ,   3592</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="st">  24   ,    66   ,     13   ,     10   ,    532</span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="st">7960   ,  9720   ,   6264   ,   7934   ,   0  &quot;</span>)</a>
-<a class="sourceLine" id="cb1-6" title="6"></a>
-<a class="sourceLine" id="cb1-7" title="7">test.data &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">read.csv</span>(test.data.csv, <span class="dt">header=</span><span class="ot">FALSE</span>, <span class="dt">strip.white=</span><span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb1-8" title="8">test.data</a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt;        V1   V2   V3   V4   V5</span></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; [1,]  160  127   72   82 3592</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; [2,]   24   66   13   10  532</span></a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></a></code></pre></div>
+<p>This sample data set was adopted from the Canadian Department of
+Fisheries and Oceans and represent release and recaptured of female fish
+in the Lower Shuswap region.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>test.data.csv <span class="ot">&lt;-</span> <span class="fu">textConnection</span>(<span class="st">&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st"> 160   ,   127   ,     72   ,     82   ,   3592</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">  24   ,    66   ,     13   ,     10   ,    532</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">7960   ,  9720   ,   6264   ,   7934   ,   0  &quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>test.data <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">read.csv</span>(test.data.csv, <span class="at">header=</span><span class="cn">FALSE</span>, <span class="at">strip.white=</span><span class="cn">TRUE</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>test.data</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        V1   V2   V3   V4   V5</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  160  127   72   82 3592</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]   24   66   13   10  532</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></span></code></pre></div>
 </div>
-<div id="models-with-2-rows-and-different-number-of-columns" class="section level1">
-<h1><span class="header-section-number">3</span> Models with 2 rows and different number of columns</h1>
-<p>We now fit two models examining the impact of pooling columns with different types of pooling rows.</p>
-<div id="full-2x4-stratified-analysis" class="section level2">
-<h2><span class="header-section-number">3.1</span> Full 2x4 stratified analysis</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(SPAS)</a>
-<a class="sourceLine" id="cb2-2" title="2">mod..<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb2-3" title="3">                       <span class="dt">model.id=</span><span class="st">&quot;No restrictions&quot;</span>,</a>
-<a class="sourceLine" id="cb2-4" title="4">                       <span class="dt">row.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">col.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; outer mgc:  25668.84 </span></a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt; outer mgc:  31226.96 </span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt; outer mgc:  27658.72 </span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; outer mgc:  8924.818 </span></a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; outer mgc:  6133.671 </span></a>
-<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt; outer mgc:  743.5753 </span></a>
-<a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt; outer mgc:  27.31259 </span></a>
-<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; outer mgc:  0.4124965 </span></a>
-<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; outer mgc:  0.08327987 </span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; outer mgc:  0.03053576 </span></a>
-<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb2-18" title="18"></a>
-<a class="sourceLine" id="cb2-19" title="19"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt; Model Name: No restrictions </span></a>
-<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
-<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb2-25" title="25"><span class="co">#&gt;        V1   V2   V3   V4   V5</span></a>
-<a class="sourceLine" id="cb2-26" title="26"><span class="co">#&gt; [1,]  160  127   72   82 3592</span></a>
-<a class="sourceLine" id="cb2-27" title="27"><span class="co">#&gt; [2,]   24   66   13   10  532</span></a>
-<a class="sourceLine" id="cb2-28" title="28"><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></a>
-<a class="sourceLine" id="cb2-29" title="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-30" title="30"><span class="co">#&gt; Row pooling setup : 1 2 </span></a>
-<a class="sourceLine" id="cb2-31" title="31"><span class="co">#&gt; Col pooling setup : 1 2 3 4 </span></a>
-<a class="sourceLine" id="cb2-32" title="32"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
-<a class="sourceLine" id="cb2-33" title="33"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb2-34" title="34"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb2-35" title="35"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-36" title="36"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-37" title="37"><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></a>
-<a class="sourceLine" id="cb2-38" title="38"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb2-39" title="39"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-40" title="40"><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></a>
-<a class="sourceLine" id="cb2-41" title="41"><span class="co">#&gt;       pool1 pool2 pool3 pool4   V5</span></a>
-<a class="sourceLine" id="cb2-42" title="42"><span class="co">#&gt; pool1   160   127    72    82 3592</span></a>
-<a class="sourceLine" id="cb2-43" title="43"><span class="co">#&gt; pool2    24    66    13    10  532</span></a>
-<a class="sourceLine" id="cb2-44" title="44"><span class="co">#&gt;        7960  9720  6264  7934    0</span></a>
-<a class="sourceLine" id="cb2-45" title="45"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-46" title="46"><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  45.64022 </span></a>
-<a class="sourceLine" id="cb2-47" title="47"><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   45.64022 </span></a>
-<a class="sourceLine" id="cb2-48" title="48"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-49" title="49"><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></a>
-<a class="sourceLine" id="cb2-50" title="50"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-51" title="51"><span class="co">#&gt;   Conditional   Log-Likelihood: 285428.4    ;  np: 12 ;  AICc: -570832.8 </span></a>
-<a class="sourceLine" id="cb2-52" title="52"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-53" title="53"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb2-54" title="54"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-55" title="55"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb2-56" title="56"><span class="co">#&gt;               pool1  pool2  pool3  pool4  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb2-57" title="57"><span class="co">#&gt; pool1         110.8  134.4   86.5  109.4 3592    0.014       72.3  295561</span></a>
-<a class="sourceLine" id="cb2-58" title="58"><span class="co">#&gt; pool2          24.0   66.0   13.0   10.0  532    1.000        0.0     645</span></a>
-<a class="sourceLine" id="cb2-59" title="59"><span class="co">#&gt; est unmarked 8009.0 9713.0 6250.0 7907.0    0       NA         NA  296206</span></a>
-<a class="sourceLine" id="cb2-60" title="60"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-61" title="61"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb2-62" title="62"><span class="co">#&gt;              pool1 pool2 pool3 pool4  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb2-63" title="63"><span class="co">#&gt; pool1          5.4   6.5   4.2   5.3 59.9    0.001        3.5   13978</span></a>
-<a class="sourceLine" id="cb2-64" title="64"><span class="co">#&gt; pool2          4.9   8.1   3.6   3.2 23.1    0.000        0.0       0</span></a>
-<a class="sourceLine" id="cb2-65" title="65"><span class="co">#&gt; est unmarked    NA    NA    NA    NA  0.0       NA         NA   13192</span></a>
-<a class="sourceLine" id="cb2-66" title="66"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-67" title="67"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-68" title="68"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb2-69" title="69"><span class="co">#&gt; Chisquare gof value   : 31.95852 </span></a>
-<a class="sourceLine" id="cb2-70" title="70"><span class="co">#&gt; Chisquare gof df      : 2 </span></a>
-<a class="sourceLine" id="cb2-71" title="71"><span class="co">#&gt; Chisquare gof p       : 1.148937e-07</span></a></code></pre></div>
+<div id="models-with-2-rows-and-different-number-of-columns" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Models with 2 rows and
+different number of columns</h1>
+<p>We now fit two models examining the impact of pooling columns with
+different types of pooling rows.</p>
+<div id="full-2x4-stratified-analysis" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Full 2x4 stratified
+analysis</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SPAS)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mod..<span class="dv">1</span> <span class="ot">&lt;-</span> <span class="fu">SPAS.fit.model</span>(test.data,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">model.id=</span><span class="st">&quot;No restrictions&quot;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">row.pool.in=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">col.pool.in=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Using nlminb to find conditional MLE</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  25668.84 </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  31226.96 </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  27658.72 </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  8924.818 </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  6133.671 </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  743.5753 </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  27.31259 </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.4124965 </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.08327987 </span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.03053576 </span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Finding conditional estimate of N</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">SPAS.print.model</span>(mod..<span class="dv">1</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model Name: No restrictions </span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Date of Fit: 2023-04-19 13:16 </span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2023-03-31 </span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data </span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        V1   V2   V3   V4   V5</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  160  127   72   82 3592</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]   24   66   13   10  532</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Row pooling setup : 1 2 </span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Col pooling setup : 1 2 3 4 </span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Physical pooling  : TRUE </span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Theta pooling     : FALSE </span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CJS pooling       : FALSE </span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       pool1 pool2 pool3 pool4   V5</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool1   160   127    72    82 3592</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool2    24    66    13    10  532</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        7960  9720  6264  7934    0</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  45.64022 </span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   45.64022 </span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Conditional   Log-Likelihood: 285428.4    ;  np: 12 ;  AICc: -570832.8 </span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimates</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               pool1  pool2  pool3  pool4  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool1         110.8  134.4   86.5  109.4 3592    0.014       72.3  295561</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool2          24.0   66.0   13.0   10.0  532    1.000        0.0     645</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked 8009.0 9713.0 6250.0 7907.0    0       NA         NA  296206</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SE of above estimates</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              pool1 pool2 pool3 pool4  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool1          5.4   6.5   4.2   5.3 59.9    0.001        3.5   13978</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool2          4.9   8.1   3.6   3.2 23.1    0.000        0.0       0</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked    NA    NA    NA    NA  0.0       NA         NA   13192</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof value   : 31.95852 </span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof df      : 2 </span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof p       : 1.148937e-07</span></span></code></pre></div>
 </div>
-<div id="reducing-to-a-2x3-matrix-by-pooling-columns-3-and-4." class="section level2">
-<h2><span class="header-section-number">3.2</span> Reducing to a 2x3 matrix by pooling columns 3 and 4.</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">mod..<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb3-2" title="2">                           <span class="dt">model.id=</span><span class="st">&quot;Pool last two columns&quot;</span>,</a>
-<a class="sourceLine" id="cb3-3" title="3">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">col.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">34</span>,<span class="dv">34</span>))</a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; outer mgc:  25647.14 </span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; outer mgc:  30979.46 </span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt; outer mgc:  26430.02 </span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt; outer mgc:  12526.52 </span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="co">#&gt; outer mgc:  4361.936 </span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co">#&gt; outer mgc:  373.9823 </span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co">#&gt; outer mgc:  76.32601 </span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="co">#&gt; outer mgc:  13.19575 </span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; outer mgc:  0.437045 </span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co">#&gt; outer mgc:  0.04367686 </span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="co">#&gt; outer mgc:  0.01676388 </span></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb3-18" title="18"></a>
-<a class="sourceLine" id="cb3-19" title="19"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb3-20" title="20"><span class="co">#&gt; Model Name: Pool last two columns </span></a>
-<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
-<a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb3-24" title="24"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb3-25" title="25"><span class="co">#&gt;        V1   V2   V3   V4   V5</span></a>
-<a class="sourceLine" id="cb3-26" title="26"><span class="co">#&gt; [1,]  160  127   72   82 3592</span></a>
-<a class="sourceLine" id="cb3-27" title="27"><span class="co">#&gt; [2,]   24   66   13   10  532</span></a>
-<a class="sourceLine" id="cb3-28" title="28"><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></a>
-<a class="sourceLine" id="cb3-29" title="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-30" title="30"><span class="co">#&gt; Row pooling setup : 1 2 </span></a>
-<a class="sourceLine" id="cb3-31" title="31"><span class="co">#&gt; Col pooling setup : 1 2 34 34 </span></a>
-<a class="sourceLine" id="cb3-32" title="32"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
-<a class="sourceLine" id="cb3-33" title="33"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb3-34" title="34"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb3-35" title="35"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-36" title="36"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-37" title="37"><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></a>
-<a class="sourceLine" id="cb3-38" title="38"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb3-39" title="39"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-40" title="40"><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></a>
-<a class="sourceLine" id="cb3-41" title="41"><span class="co">#&gt;       pool1 pool2 pool34   V5</span></a>
-<a class="sourceLine" id="cb3-42" title="42"><span class="co">#&gt; pool1   160   127    154 3592</span></a>
-<a class="sourceLine" id="cb3-43" title="43"><span class="co">#&gt; pool2    24    66     23  532</span></a>
-<a class="sourceLine" id="cb3-44" title="44"><span class="co">#&gt;        7960  9720  14198    0</span></a>
-<a class="sourceLine" id="cb3-45" title="45"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-46" title="46"><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  50.91806 </span></a>
-<a class="sourceLine" id="cb3-47" title="47"><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   50.91806 </span></a>
-<a class="sourceLine" id="cb3-48" title="48"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-49" title="49"><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></a>
-<a class="sourceLine" id="cb3-50" title="50"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-51" title="51"><span class="co">#&gt;   Conditional   Log-Likelihood: 295293.6    ;  np: 10 ;  AICc: -590567.3 </span></a>
-<a class="sourceLine" id="cb3-52" title="52"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-53" title="53"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb3-54" title="54"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-55" title="55"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb3-56" title="56"><span class="co">#&gt;               pool1  pool2  pool34  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb3-57" title="57"><span class="co">#&gt; pool1         110.8  134.4   195.8 3592    0.014       72.3  295561</span></a>
-<a class="sourceLine" id="cb3-58" title="58"><span class="co">#&gt; pool2          24.0   66.0    23.0  532    1.000        0.0     645</span></a>
-<a class="sourceLine" id="cb3-59" title="59"><span class="co">#&gt; est unmarked 8009.0 9713.0 14156.0    0       NA         NA  296206</span></a>
-<a class="sourceLine" id="cb3-60" title="60"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-61" title="61"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb3-62" title="62"><span class="co">#&gt;              pool1 pool2 pool34  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb3-63" title="63"><span class="co">#&gt; pool1          5.4   6.5    9.4 59.9    0.001        3.5   13978</span></a>
-<a class="sourceLine" id="cb3-64" title="64"><span class="co">#&gt; pool2          4.9   8.1    4.8 23.1    0.000        0.0       0</span></a>
-<a class="sourceLine" id="cb3-65" title="65"><span class="co">#&gt; est unmarked    NA    NA     NA  0.0       NA         NA   13192</span></a>
-<a class="sourceLine" id="cb3-66" title="66"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-67" title="67"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-68" title="68"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb3-69" title="69"><span class="co">#&gt; Chisquare gof value   : 31.62033 </span></a>
-<a class="sourceLine" id="cb3-70" title="70"><span class="co">#&gt; Chisquare gof df      : 1 </span></a>
-<a class="sourceLine" id="cb3-71" title="71"><span class="co">#&gt; Chisquare gof p       : 1.874568e-08</span></a></code></pre></div>
+<div id="reducing-to-a-2x3-matrix-by-pooling-columns-3-and-4." class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Reducing to a 2x3
+matrix by pooling columns 3 and 4.</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mod..<span class="dv">2</span> <span class="ot">&lt;-</span> <span class="fu">SPAS.fit.model</span>(test.data,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">model.id=</span><span class="st">&quot;Pool last two columns&quot;</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">row.pool.in=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">col.pool.in=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">34</span>,<span class="dv">34</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Using nlminb to find conditional MLE</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  25647.14 </span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  30979.46 </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  26430.02 </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  12526.52 </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  4361.936 </span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  373.9823 </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  76.32601 </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  13.19575 </span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.437045 </span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.04367686 </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.01676388 </span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Finding conditional estimate of N</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">SPAS.print.model</span>(mod..<span class="dv">2</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model Name: Pool last two columns </span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Date of Fit: 2023-04-19 13:16 </span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2023-03-31 </span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data </span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        V1   V2   V3   V4   V5</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  160  127   72   82 3592</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]   24   66   13   10  532</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Row pooling setup : 1 2 </span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Col pooling setup : 1 2 34 34 </span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Physical pooling  : TRUE </span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Theta pooling     : FALSE </span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CJS pooling       : FALSE </span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       pool1 pool2 pool34   V5</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool1   160   127    154 3592</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool2    24    66     23  532</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        7960  9720  14198    0</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  50.91806 </span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   50.91806 </span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Conditional   Log-Likelihood: 295293.6    ;  np: 10 ;  AICc: -590567.3 </span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimates</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               pool1  pool2  pool34  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool1         110.8  134.4   195.8 3592    0.014       72.3  295561</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool2          24.0   66.0    23.0  532    1.000        0.0     645</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked 8009.0 9713.0 14156.0    0       NA         NA  296206</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SE of above estimates</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              pool1 pool2 pool34  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool1          5.4   6.5    9.4 59.9    0.001        3.5   13978</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool2          4.9   8.1    4.8 23.1    0.000        0.0       0</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked    NA    NA     NA  0.0       NA         NA   13192</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof value   : 31.62033 </span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof df      : 1 </span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof p       : 1.874568e-08</span></span></code></pre></div>
 </div>
-<div id="reducing-to-a-2x2-matrix-by-pooling-columns-1-and-2-and-then-3-and-4." class="section level2">
-<h2><span class="header-section-number">3.3</span> Reducing to a 2x2 matrix by pooling columns 1 and 2, and then 3 and 4.</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">mod..<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb4-2" title="2">                           <span class="dt">model.id=</span><span class="st">&quot;Pool last two columns&quot;</span>,</a>
-<a class="sourceLine" id="cb4-3" title="3">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">col.pool.in=</span><span class="kw">c</span>(<span class="dv">12</span>,<span class="dv">22</span>,<span class="dv">34</span>,<span class="dv">34</span>))</a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; outer mgc:  25647.14 </span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; outer mgc:  30979.46 </span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; outer mgc:  26430.02 </span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; outer mgc:  12526.52 </span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; outer mgc:  4361.936 </span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; outer mgc:  373.9823 </span></a>
-<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; outer mgc:  76.32601 </span></a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; outer mgc:  13.19575 </span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; outer mgc:  0.437045 </span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; outer mgc:  0.04367686 </span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; outer mgc:  0.01676388 </span></a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb4-18" title="18"></a>
-<a class="sourceLine" id="cb4-19" title="19"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; Model Name: Pool last two columns </span></a>
-<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
-<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb4-24" title="24"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb4-25" title="25"><span class="co">#&gt;        V1   V2   V3   V4   V5</span></a>
-<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt; [1,]  160  127   72   82 3592</span></a>
-<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt; [2,]   24   66   13   10  532</span></a>
-<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></a>
-<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-30" title="30"><span class="co">#&gt; Row pooling setup : 1 2 </span></a>
-<a class="sourceLine" id="cb4-31" title="31"><span class="co">#&gt; Col pooling setup : 12 22 34 34 </span></a>
-<a class="sourceLine" id="cb4-32" title="32"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
-<a class="sourceLine" id="cb4-33" title="33"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb4-34" title="34"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb4-35" title="35"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-36" title="36"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-37" title="37"><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></a>
-<a class="sourceLine" id="cb4-38" title="38"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb4-39" title="39"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-40" title="40"><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></a>
-<a class="sourceLine" id="cb4-41" title="41"><span class="co">#&gt;       pool12 pool22 pool34   V5</span></a>
-<a class="sourceLine" id="cb4-42" title="42"><span class="co">#&gt; pool1    160    127    154 3592</span></a>
-<a class="sourceLine" id="cb4-43" title="43"><span class="co">#&gt; pool2     24     66     23  532</span></a>
-<a class="sourceLine" id="cb4-44" title="44"><span class="co">#&gt;         7960   9720  14198    0</span></a>
-<a class="sourceLine" id="cb4-45" title="45"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-46" title="46"><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  50.91806 </span></a>
-<a class="sourceLine" id="cb4-47" title="47"><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   50.91806 </span></a>
-<a class="sourceLine" id="cb4-48" title="48"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-49" title="49"><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></a>
-<a class="sourceLine" id="cb4-50" title="50"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-51" title="51"><span class="co">#&gt;   Conditional   Log-Likelihood: 295293.6    ;  np: 10 ;  AICc: -590567.3 </span></a>
-<a class="sourceLine" id="cb4-52" title="52"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-53" title="53"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb4-54" title="54"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-55" title="55"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb4-56" title="56"><span class="co">#&gt;              pool12 pool22  pool34  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb4-57" title="57"><span class="co">#&gt; pool1         110.8  134.4   195.8 3592    0.014       72.3  295561</span></a>
-<a class="sourceLine" id="cb4-58" title="58"><span class="co">#&gt; pool2          24.0   66.0    23.0  532    1.000        0.0     645</span></a>
-<a class="sourceLine" id="cb4-59" title="59"><span class="co">#&gt; est unmarked 8009.0 9713.0 14156.0    0       NA         NA  296206</span></a>
-<a class="sourceLine" id="cb4-60" title="60"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-61" title="61"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb4-62" title="62"><span class="co">#&gt;              pool12 pool22 pool34  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb4-63" title="63"><span class="co">#&gt; pool1           5.4    6.5    9.4 59.9    0.001        3.5   13978</span></a>
-<a class="sourceLine" id="cb4-64" title="64"><span class="co">#&gt; pool2           4.9    8.1    4.8 23.1    0.000        0.0       0</span></a>
-<a class="sourceLine" id="cb4-65" title="65"><span class="co">#&gt; est unmarked     NA     NA     NA  0.0       NA         NA   13192</span></a>
-<a class="sourceLine" id="cb4-66" title="66"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-67" title="67"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-68" title="68"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb4-69" title="69"><span class="co">#&gt; Chisquare gof value   : 31.62033 </span></a>
-<a class="sourceLine" id="cb4-70" title="70"><span class="co">#&gt; Chisquare gof df      : 1 </span></a>
-<a class="sourceLine" id="cb4-71" title="71"><span class="co">#&gt; Chisquare gof p       : 1.874568e-08</span></a></code></pre></div>
+<div id="reducing-to-a-2x2-matrix-by-pooling-columns-1-and-2-and-then-3-and-4." class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Reducing to a 2x2
+matrix by pooling columns 1 and 2, and then 3 and 4.</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod..<span class="dv">3</span> <span class="ot">&lt;-</span> <span class="fu">SPAS.fit.model</span>(test.data,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">model.id=</span><span class="st">&quot;Pool last two columns&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">row.pool.in=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">col.pool.in=</span><span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">22</span>,<span class="dv">34</span>,<span class="dv">34</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Using nlminb to find conditional MLE</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  25647.14 </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  30979.46 </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  26430.02 </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  12526.52 </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  4361.936 </span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  373.9823 </span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  76.32601 </span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  13.19575 </span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.437045 </span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.04367686 </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.01676388 </span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Finding conditional estimate of N</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">SPAS.print.model</span>(mod..<span class="dv">3</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model Name: Pool last two columns </span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Date of Fit: 2023-04-19 13:16 </span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2023-03-31 </span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data </span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        V1   V2   V3   V4   V5</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  160  127   72   82 3592</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]   24   66   13   10  532</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Row pooling setup : 1 2 </span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Col pooling setup : 12 22 34 34 </span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Physical pooling  : TRUE </span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Theta pooling     : FALSE </span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CJS pooling       : FALSE </span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       pool12 pool22 pool34   V5</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool1    160    127    154 3592</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool2     24     66     23  532</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         7960   9720  14198    0</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  50.91806 </span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   50.91806 </span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Conditional   Log-Likelihood: 295293.6    ;  np: 10 ;  AICc: -590567.3 </span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimates</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              pool12 pool22  pool34  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool1         110.8  134.4   195.8 3592    0.014       72.3  295561</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool2          24.0   66.0    23.0  532    1.000        0.0     645</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked 8009.0 9713.0 14156.0    0       NA         NA  296206</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SE of above estimates</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              pool12 pool22 pool34  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool1           5.4    6.5    9.4 59.9    0.001        3.5   13978</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool2           4.9    8.1    4.8 23.1    0.000        0.0       0</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked     NA     NA     NA  0.0       NA         NA   13192</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof value   : 31.62033 </span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof df      : 1 </span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof p       : 1.874568e-08</span></span></code></pre></div>
 </div>
-<div id="comparing-the-estimates" class="section level2">
-<h2><span class="header-section-number">3.4</span> Comparing the estimates</h2>
-<p>Notice that the population estimate and its standard error is identical to the unpooled case. You cannot compare the AICc values because the data set has changed between the two fits.</p>
+<div id="comparing-the-estimates" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Comparing the
+estimates</h2>
+<p>Notice that the population estimate and its standard error is
+identical to the unpooled case. You cannot compare the AICc values
+because the data set has changed between the two fits.</p>
 <pre><code>#&gt;      .id       date                      model.id s.a.pool t.p.pool logL.cond
-#&gt; 1 mod..1 2019-12-02               No restrictions        2        4 285428.40
-#&gt; 2 mod..2 2019-12-02         Pool last two columns        2        3 295293.64
-#&gt; 3 mod..3 2019-12-02         Pool last two columns        2        3 295293.64
-#&gt; 4 mod..4 2019-12-02                Pooled Peteren        1        1  60410.94
-#&gt; 5 mod..5 2019-12-02     Logical Pooling some rows        6        5  47585.39
-#&gt; 6 mod..6 2019-12-02   A single row - Logical Pool        6        5  47580.39
-#&gt; 7 mod..7 2019-12-02 Pooled Peteren - Logical Pool        6        1  56584.83
-#&gt; 8 mod..8 2019-12-02    Logical Pooling pairs rows        6        5  47584.73
+#&gt; 1 mod..1 2023-04-19               No restrictions        2        4 285428.40
+#&gt; 2 mod..2 2023-04-19         Pool last two columns        2        3 295293.64
+#&gt; 3 mod..3 2023-04-19         Pool last two columns        2        3 295293.64
+#&gt; 4 mod..4 2023-04-19                Pooled Peteren        1        1  60410.94
+#&gt; 5 mod..5 2023-04-19     Logical Pooling some rows        6        5  47585.39
+#&gt; 6 mod..6 2023-04-19   A single row - Logical Pool        6        5  47580.39
+#&gt; 7 mod..7 2023-04-19 Pooled Peteren - Logical Pool        6        1  56584.83
+#&gt; 8 mod..8 2023-04-19    Logical Pooling pairs rows        6        5  47584.73
 #&gt;   np       AICc gof.chisq gof.df gof.p   Nhat Nhat.se
 #&gt; 1 12 -570832.81      32.0      2 0.000 296206   13192
 #&gt; 2 10 -590567.29      31.6      1 0.000 296206   13192
@@ -668,312 +755,326 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 #&gt; 8 39  -95091.46       3.8      2 0.147  83198   13337</code></pre>
 </div>
 </div>
-<div id="comparing-results-with-1-row-and-different-number-of-columns" class="section level1">
-<h1><span class="header-section-number">4</span> Comparing results with 1 row and different number of columns</h1>
-<div id="pooling-over-all-rows-using-physical-pooling" class="section level2">
-<h2><span class="header-section-number">4.1</span> Pooling over all rows using physical pooling</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">mod..<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb6-2" title="2">                           <span class="dt">model.id=</span><span class="st">&quot;Physical pooling to single row&quot;</span>,</a>
-<a class="sourceLine" id="cb6-3" title="3">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt; outer mgc:  31867.55 </span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt; outer mgc:  31249.72 </span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; outer mgc:  28928.32 </span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; outer mgc:  14737.62 </span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt; outer mgc:  2903.05 </span></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt; outer mgc:  230.5378 </span></a>
-<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; outer mgc:  8.523751 </span></a>
-<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt; outer mgc:  0.1178486 </span></a>
-<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt; outer mgc:  4.01421e-05 </span></a>
-<a class="sourceLine" id="cb6-14" title="14"><span class="co">#&gt; Convergence codes from nlminb  0 both X-convergence and relative convergence (5) </span></a>
-<a class="sourceLine" id="cb6-15" title="15"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb6-16" title="16"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb6-17" title="17"><span class="co">#&gt; Model Name: Physical pooling to single row </span></a>
-<a class="sourceLine" id="cb6-18" title="18"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
-<a class="sourceLine" id="cb6-19" title="19"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb6-20" title="20"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb6-21" title="21"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb6-22" title="22"><span class="co">#&gt;        V1   V2   V3   V4   V5</span></a>
-<a class="sourceLine" id="cb6-23" title="23"><span class="co">#&gt; [1,]  160  127   72   82 3592</span></a>
-<a class="sourceLine" id="cb6-24" title="24"><span class="co">#&gt; [2,]   24   66   13   10  532</span></a>
-<a class="sourceLine" id="cb6-25" title="25"><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></a>
-<a class="sourceLine" id="cb6-26" title="26"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-27" title="27"><span class="co">#&gt; Row pooling setup : 1 1 </span></a>
-<a class="sourceLine" id="cb6-28" title="28"><span class="co">#&gt; Col pooling setup : 1 2 3 4 </span></a>
-<a class="sourceLine" id="cb6-29" title="29"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
-<a class="sourceLine" id="cb6-30" title="30"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb6-31" title="31"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb6-32" title="32"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-33" title="33"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-34" title="34"><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></a>
-<a class="sourceLine" id="cb6-35" title="35"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb6-36" title="36"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-37" title="37"><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></a>
-<a class="sourceLine" id="cb6-38" title="38"><span class="co">#&gt;   pool1 pool2 pool3 pool4   V5</span></a>
-<a class="sourceLine" id="cb6-39" title="39"><span class="co">#&gt; 1   184   193    85    92 4124</span></a>
-<a class="sourceLine" id="cb6-40" title="40"><span class="co">#&gt;    7960  9720  6264  7934    0</span></a>
-<a class="sourceLine" id="cb6-41" title="41"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-42" title="42"><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  1 </span></a>
-<a class="sourceLine" id="cb6-43" title="43"><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   1 </span></a>
-<a class="sourceLine" id="cb6-44" title="44"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-45" title="45"><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></a>
-<a class="sourceLine" id="cb6-46" title="46"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-47" title="47"><span class="co">#&gt;   Conditional   Log-Likelihood: 287272.7    ;  np: 6 ;  AICc: -574533.3 </span></a>
-<a class="sourceLine" id="cb6-48" title="48"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-49" title="49"><span class="co">#&gt;   Code/Message from optimization is:  0 both X-convergence and relative convergence (5) </span></a>
-<a class="sourceLine" id="cb6-50" title="50"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-51" title="51"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb6-52" title="52"><span class="co">#&gt;               pool1  pool2  pool3  pool4  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb6-53" title="53"><span class="co">#&gt; 1             139.1  169.3  108.5  137.1 4124    0.017       57.5  273857</span></a>
-<a class="sourceLine" id="cb6-54" title="54"><span class="co">#&gt; est unmarked 8005.0 9744.0 6241.0 7889.0    0       NA         NA  273857</span></a>
-<a class="sourceLine" id="cb6-55" title="55"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-56" title="56"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb6-57" title="57"><span class="co">#&gt;              pool1 pool2 pool3 pool4  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb6-58" title="58"><span class="co">#&gt; 1              6.1   7.3   4.8     6 64.2    0.001        2.5   10831</span></a>
-<a class="sourceLine" id="cb6-59" title="59"><span class="co">#&gt; est unmarked    NA    NA    NA    NA  0.0       NA         NA   10831</span></a>
-<a class="sourceLine" id="cb6-60" title="60"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-61" title="61"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-62" title="62"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb6-63" title="63"><span class="co">#&gt; Chisquare gof value   : 38.35232 </span></a>
-<a class="sourceLine" id="cb6-64" title="64"><span class="co">#&gt; Chisquare gof df      : 3 </span></a>
-<a class="sourceLine" id="cb6-65" title="65"><span class="co">#&gt; Chisquare gof p       : 2.380379e-08</span></a></code></pre></div>
+<div id="comparing-results-with-1-row-and-different-number-of-columns" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Comparing results with
+1 row and different number of columns</h1>
+<div id="pooling-over-all-rows-using-physical-pooling" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Pooling over all rows
+using physical pooling</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod..<span class="dv">3</span> <span class="ot">&lt;-</span> <span class="fu">SPAS.fit.model</span>(test.data,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">model.id=</span><span class="st">&quot;Physical pooling to single row&quot;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">row.pool.in=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">col.pool.in=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Using nlminb to find conditional MLE</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  31867.55 </span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  31249.72 </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  28928.32 </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  14737.62 </span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  2903.05 </span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  230.5378 </span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  8.523751 </span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.1178486 </span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  4.01421e-05 </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Convergence codes from nlminb  0 both X-convergence and relative convergence (5) </span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Finding conditional estimate of N</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">SPAS.print.model</span>(mod..<span class="dv">3</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model Name: Physical pooling to single row </span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Date of Fit: 2023-04-19 13:16 </span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2023-03-31 </span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data </span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        V1   V2   V3   V4   V5</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  160  127   72   82 3592</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]   24   66   13   10  532</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Row pooling setup : 1 1 </span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Col pooling setup : 1 2 3 4 </span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Physical pooling  : TRUE </span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Theta pooling     : FALSE </span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CJS pooling       : FALSE </span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pool1 pool2 pool3 pool4   V5</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   184   193    85    92 4124</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    7960  9720  6264  7934    0</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  1 </span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   1 </span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Conditional   Log-Likelihood: 287272.7    ;  np: 6 ;  AICc: -574533.3 </span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Code/Message from optimization is:  0 both X-convergence and relative convergence (5) </span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimates</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               pool1  pool2  pool3  pool4  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1             139.1  169.3  108.5  137.1 4124    0.017       57.5  273857</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked 8005.0 9744.0 6241.0 7889.0    0       NA         NA  273857</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SE of above estimates</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              pool1 pool2 pool3 pool4  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1              6.1   7.3   4.8     6 64.2    0.001        2.5   10831</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked    NA    NA    NA    NA  0.0       NA         NA   10831</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof value   : 38.35232 </span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof df      : 3 </span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof p       : 2.380379e-08</span></span></code></pre></div>
 </div>
-<div id="pooling-over-all-rows-using-logical-pooling" class="section level2">
-<h2><span class="header-section-number">4.2</span> Pooling over all rows using logical pooling</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">mod..3a &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb7-2" title="2">                           <span class="dt">model.id=</span><span class="st">&quot;Logical pooling to single row&quot;</span>,</a>
-<a class="sourceLine" id="cb7-3" title="3">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">row.physical.pool=</span><span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt; outer mgc:  31865.52 </span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; outer mgc:  31209.17 </span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; outer mgc:  29588.57 </span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; outer mgc:  5095.582 </span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; outer mgc:  3430.827 </span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; outer mgc:  423.876 </span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt; outer mgc:  603.7936 </span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt; outer mgc:  25.22585 </span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt; outer mgc:  91.84818 </span></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt; outer mgc:  0.6298842 </span></a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; outer mgc:  0.00497048 </span></a>
-<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; outer mgc:  3.80732e-07 </span></a>
-<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb7-18" title="18"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb7-19" title="19"><span class="kw">SPAS.print.model</span>(mod..3a)</a>
-<a class="sourceLine" id="cb7-20" title="20"><span class="co">#&gt; Model Name: Logical pooling to single row </span></a>
-<a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
-<a class="sourceLine" id="cb7-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb7-23" title="23"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb7-24" title="24"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb7-25" title="25"><span class="co">#&gt;        V1   V2   V3   V4   V5</span></a>
-<a class="sourceLine" id="cb7-26" title="26"><span class="co">#&gt; [1,]  160  127   72   82 3592</span></a>
-<a class="sourceLine" id="cb7-27" title="27"><span class="co">#&gt; [2,]   24   66   13   10  532</span></a>
-<a class="sourceLine" id="cb7-28" title="28"><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></a>
-<a class="sourceLine" id="cb7-29" title="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-30" title="30"><span class="co">#&gt; Row pooling setup : 1 1 </span></a>
-<a class="sourceLine" id="cb7-31" title="31"><span class="co">#&gt; Col pooling setup : 1 2 3 4 </span></a>
-<a class="sourceLine" id="cb7-32" title="32"><span class="co">#&gt; Physical pooling  : FALSE </span></a>
-<a class="sourceLine" id="cb7-33" title="33"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb7-34" title="34"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb7-35" title="35"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-36" title="36"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-37" title="37"><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></a>
-<a class="sourceLine" id="cb7-38" title="38"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb7-39" title="39"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-40" title="40"><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></a>
-<a class="sourceLine" id="cb7-41" title="41"><span class="co">#&gt;        pool1 pool2 pool3 pool4   V5</span></a>
-<a class="sourceLine" id="cb7-42" title="42"><span class="co">#&gt; pool.1   160   127    72    82 3592</span></a>
-<a class="sourceLine" id="cb7-43" title="43"><span class="co">#&gt; pool.1    24    66    13    10  532</span></a>
-<a class="sourceLine" id="cb7-44" title="44"><span class="co">#&gt;         7960  9720  6264  7934    0</span></a>
-<a class="sourceLine" id="cb7-45" title="45"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-46" title="46"><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  45.64022 </span></a>
-<a class="sourceLine" id="cb7-47" title="47"><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   1 </span></a>
-<a class="sourceLine" id="cb7-48" title="48"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-49" title="49"><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></a>
-<a class="sourceLine" id="cb7-50" title="50"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-51" title="51"><span class="co">#&gt;   Conditional   Log-Likelihood: 285423.8    ;  np: 11 ;  AICc: -570825.7 </span></a>
-<a class="sourceLine" id="cb7-52" title="52"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-53" title="53"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb7-54" title="54"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-55" title="55"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb7-56" title="56"><span class="co">#&gt;               pool1  pool2  pool3  pool4  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb7-57" title="57"><span class="co">#&gt; pool.1        121.0  111.4   91.9  122.2 3592    0.017       57.5  236098</span></a>
-<a class="sourceLine" id="cb7-58" title="58"><span class="co">#&gt; pool.1         18.1   57.9   16.6   14.9  532    0.017       57.5   37759</span></a>
-<a class="sourceLine" id="cb7-59" title="59"><span class="co">#&gt; est unmarked 8005.0 9744.0 6241.0 7889.0    0       NA         NA  273857</span></a>
-<a class="sourceLine" id="cb7-60" title="60"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-61" title="61"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb7-62" title="62"><span class="co">#&gt;              pool1 pool2 pool3 pool4  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb7-63" title="63"><span class="co">#&gt; pool.1         6.3   7.5   5.9   6.9 59.9    0.001        2.5    9945</span></a>
-<a class="sourceLine" id="cb7-64" title="64"><span class="co">#&gt; pool.1         3.5   6.3   4.3   4.5 23.1    0.001        2.5    1590</span></a>
-<a class="sourceLine" id="cb7-65" title="65"><span class="co">#&gt; est unmarked    NA    NA    NA    NA  0.0       NA         NA   10831</span></a>
-<a class="sourceLine" id="cb7-66" title="66"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-67" title="67"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-68" title="68"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb7-69" title="69"><span class="co">#&gt; Chisquare gof value   : 38.35233 </span></a>
-<a class="sourceLine" id="cb7-70" title="70"><span class="co">#&gt; Chisquare gof df      : 3 </span></a>
-<a class="sourceLine" id="cb7-71" title="71"><span class="co">#&gt; Chisquare gof p       : 2.380369e-08</span></a></code></pre></div>
+<div id="pooling-over-all-rows-using-logical-pooling" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Pooling over all rows
+using logical pooling</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod..3a <span class="ot">&lt;-</span> <span class="fu">SPAS.fit.model</span>(test.data,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">model.id=</span><span class="st">&quot;Logical pooling to single row&quot;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">row.pool.in=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">col.pool.in=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">row.physical.pool=</span><span class="cn">FALSE</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Using nlminb to find conditional MLE</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  31865.52 </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  31209.17 </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  29588.57 </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  5095.582 </span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  3430.827 </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  423.876 </span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  603.7936 </span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  25.22585 </span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  91.84818 </span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.6298842 </span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.00497048 </span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  3.80732e-07 </span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Finding conditional estimate of N</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="fu">SPAS.print.model</span>(mod..3a)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model Name: Logical pooling to single row </span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Date of Fit: 2023-04-19 13:16 </span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2023-03-31 </span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data </span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        V1   V2   V3   V4   V5</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  160  127   72   82 3592</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]   24   66   13   10  532</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Row pooling setup : 1 1 </span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Col pooling setup : 1 2 3 4 </span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Physical pooling  : FALSE </span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Theta pooling     : FALSE </span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CJS pooling       : FALSE </span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        pool1 pool2 pool3 pool4   V5</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool.1   160   127    72    82 3592</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool.1    24    66    13    10  532</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         7960  9720  6264  7934    0</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  45.64022 </span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   1 </span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Conditional   Log-Likelihood: 285423.8    ;  np: 11 ;  AICc: -570825.7 </span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimates</span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               pool1  pool2  pool3  pool4  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool.1        121.0  111.4   91.9  122.2 3592    0.017       57.5  236098</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool.1         18.1   57.9   16.6   14.9  532    0.017       57.5   37759</span></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked 8005.0 9744.0 6241.0 7889.0    0       NA         NA  273857</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SE of above estimates</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              pool1 pool2 pool3 pool4  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool.1         6.3   7.5   5.9   6.9 59.9    0.001        2.5    9945</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; pool.1         3.5   6.3   4.3   4.5 23.1    0.001        2.5    1590</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked    NA    NA    NA    NA  0.0       NA         NA   10831</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof value   : 38.35233 </span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof df      : 3 </span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof p       : 2.380369e-08</span></span></code></pre></div>
 </div>
-<div id="pooling-over-all-rows-and-last-two-columns-using-physical-pooling" class="section level2">
-<h2><span class="header-section-number">4.3</span> Pooling over all rows and last two columns using physical pooling</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># do physcial complete pooling </span></a>
-<a class="sourceLine" id="cb8-2" title="2">mod..<span class="dv">4</span> &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb8-3" title="3">                           <span class="dt">model.id=</span><span class="st">&quot;Physical pooling all rows and last two columns&quot;</span>,</a>
-<a class="sourceLine" id="cb8-4" title="4">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="kw">c</span>(<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">34</span>,<span class="dv">34</span>))</a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; outer mgc:  31867.53 </span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; outer mgc:  30927.52 </span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; outer mgc:  25741.32 </span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; outer mgc:  14099.8 </span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; outer mgc:  11055.59 </span></a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; outer mgc:  1852.554 </span></a>
-<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; outer mgc:  165.8634 </span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; outer mgc:  11.48313 </span></a>
-<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; outer mgc:  0.2138227 </span></a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; outer mgc:  7.423679e-05 </span></a>
-<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; outer mgc:  2.239631e-11 </span></a>
-<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; Convergence codes from nlminb  0 both X-convergence and relative convergence (5) </span></a>
-<a class="sourceLine" id="cb8-18" title="18"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb8-19" title="19"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb8-20" title="20"><span class="co">#&gt; Model Name: Physical pooling all rows and last two columns </span></a>
-<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
-<a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb8-25" title="25"><span class="co">#&gt;        V1   V2   V3   V4   V5</span></a>
-<a class="sourceLine" id="cb8-26" title="26"><span class="co">#&gt; [1,]  160  127   72   82 3592</span></a>
-<a class="sourceLine" id="cb8-27" title="27"><span class="co">#&gt; [2,]   24   66   13   10  532</span></a>
-<a class="sourceLine" id="cb8-28" title="28"><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></a>
-<a class="sourceLine" id="cb8-29" title="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-30" title="30"><span class="co">#&gt; Row pooling setup : 1 1 </span></a>
-<a class="sourceLine" id="cb8-31" title="31"><span class="co">#&gt; Col pooling setup : 12 12 34 34 </span></a>
-<a class="sourceLine" id="cb8-32" title="32"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
-<a class="sourceLine" id="cb8-33" title="33"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb8-34" title="34"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb8-35" title="35"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-36" title="36"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-37" title="37"><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></a>
-<a class="sourceLine" id="cb8-38" title="38"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb8-39" title="39"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-40" title="40"><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></a>
-<a class="sourceLine" id="cb8-41" title="41"><span class="co">#&gt;   pool12 pool34   V5</span></a>
-<a class="sourceLine" id="cb8-42" title="42"><span class="co">#&gt; 1    377    177 4124</span></a>
-<a class="sourceLine" id="cb8-43" title="43"><span class="co">#&gt;    17680  14198    0</span></a>
-<a class="sourceLine" id="cb8-44" title="44"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-45" title="45"><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  1 </span></a>
-<a class="sourceLine" id="cb8-46" title="46"><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   1 </span></a>
-<a class="sourceLine" id="cb8-47" title="47"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-48" title="48"><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></a>
-<a class="sourceLine" id="cb8-49" title="49"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-50" title="50"><span class="co">#&gt;   Conditional   Log-Likelihood: 309568    ;  np: 4 ;  AICc: -619127.9 </span></a>
-<a class="sourceLine" id="cb8-51" title="51"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-52" title="52"><span class="co">#&gt;   Code/Message from optimization is:  0 both X-convergence and relative convergence (5) </span></a>
-<a class="sourceLine" id="cb8-53" title="53"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-54" title="54"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb8-55" title="55"><span class="co">#&gt;               pool12  pool34  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb8-56" title="56"><span class="co">#&gt; 1              308.4   245.6 4124    0.017       57.5  273857</span></a>
-<a class="sourceLine" id="cb8-57" title="57"><span class="co">#&gt; est unmarked 17749.0 14129.0    0       NA         NA  273857</span></a>
-<a class="sourceLine" id="cb8-58" title="58"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-59" title="59"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb8-60" title="60"><span class="co">#&gt;              pool12 pool34  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb8-61" title="61"><span class="co">#&gt; 1              13.2   10.5 64.2    0.001        2.5   10831</span></a>
-<a class="sourceLine" id="cb8-62" title="62"><span class="co">#&gt; est unmarked     NA     NA  0.0       NA         NA   10831</span></a>
-<a class="sourceLine" id="cb8-63" title="63"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-64" title="64"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-65" title="65"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb8-66" title="66"><span class="co">#&gt; Chisquare gof value   : 34.97117 </span></a>
-<a class="sourceLine" id="cb8-67" title="67"><span class="co">#&gt; Chisquare gof df      : 1 </span></a>
-<a class="sourceLine" id="cb8-68" title="68"><span class="co">#&gt; Chisquare gof p       : 3.34624e-09</span></a></code></pre></div>
+<div id="pooling-over-all-rows-and-last-two-columns-using-physical-pooling" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Pooling over all rows
+and last two columns using physical pooling</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># do physcial complete pooling </span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>mod..<span class="dv">4</span> <span class="ot">&lt;-</span> <span class="fu">SPAS.fit.model</span>(test.data,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">model.id=</span><span class="st">&quot;Physical pooling all rows and last two columns&quot;</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">row.pool.in=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">col.pool.in=</span><span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">34</span>,<span class="dv">34</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Using nlminb to find conditional MLE</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  31867.53 </span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  30927.52 </span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  25741.32 </span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  14099.8 </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  11055.59 </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  1852.554 </span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  165.8634 </span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  11.48313 </span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.2138227 </span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  7.423679e-05 </span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  2.239631e-11 </span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Convergence codes from nlminb  0 both X-convergence and relative convergence (5) </span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Finding conditional estimate of N</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu">SPAS.print.model</span>(mod..<span class="dv">4</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model Name: Physical pooling all rows and last two columns </span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Date of Fit: 2023-04-19 13:16 </span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2023-03-31 </span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data </span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        V1   V2   V3   V4   V5</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  160  127   72   82 3592</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]   24   66   13   10  532</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Row pooling setup : 1 1 </span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Col pooling setup : 12 12 34 34 </span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Physical pooling  : TRUE </span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Theta pooling     : FALSE </span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CJS pooling       : FALSE </span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pool12 pool34   V5</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    377    177 4124</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    17680  14198    0</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  1 </span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   1 </span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Conditional   Log-Likelihood: 309568    ;  np: 4 ;  AICc: -619127.9 </span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Code/Message from optimization is:  0 both X-convergence and relative convergence (5) </span></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimates</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               pool12  pool34  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1              308.4   245.6 4124    0.017       57.5  273857</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked 17749.0 14129.0    0       NA         NA  273857</span></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SE of above estimates</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              pool12 pool34  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1              13.2   10.5 64.2    0.001        2.5   10831</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked     NA     NA  0.0       NA         NA   10831</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof value   : 34.97117 </span></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof df      : 1 </span></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof p       : 3.34624e-09</span></span></code></pre></div>
 </div>
-<div id="complete-physical-pooling-pooled-petersen-estimator" class="section level2">
-<h2><span class="header-section-number">4.4</span> Complete physical pooling (Pooled Petersen Estimator)</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># do physcial complete pooling </span></a>
-<a class="sourceLine" id="cb9-2" title="2">mod..<span class="dv">5</span> &lt;-<span class="st"> </span><span class="kw">SPAS.fit.model</span>(test.data,</a>
-<a class="sourceLine" id="cb9-3" title="3">                           <span class="dt">model.id=</span><span class="st">&quot;Physical complete pooling&quot;</span>,</a>
-<a class="sourceLine" id="cb9-4" title="4">                           <span class="dt">row.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">col.pool.in=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt; Using nlminb to find conditional MLE</span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co">#&gt; outer mgc:  31868.37 </span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="co">#&gt; outer mgc:  29339.97 </span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="co">#&gt; outer mgc:  18211.34 </span></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="co">#&gt; outer mgc:  9394.572 </span></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="co">#&gt; outer mgc:  3418.652 </span></a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt; outer mgc:  1125.712 </span></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="co">#&gt; outer mgc:  305.367 </span></a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="co">#&gt; outer mgc:  48.36082 </span></a>
-<a class="sourceLine" id="cb9-14" title="14"><span class="co">#&gt; outer mgc:  1.890408 </span></a>
-<a class="sourceLine" id="cb9-15" title="15"><span class="co">#&gt; outer mgc:  0.003210701 </span></a>
-<a class="sourceLine" id="cb9-16" title="16"><span class="co">#&gt; outer mgc:  9.310952e-09 </span></a>
-<a class="sourceLine" id="cb9-17" title="17"><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb9-18" title="18"><span class="co">#&gt; Finding conditional estimate of N</span></a>
-<a class="sourceLine" id="cb9-19" title="19"><span class="kw">SPAS.print.model</span>(mod..<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb9-20" title="20"><span class="co">#&gt; Model Name: Physical complete pooling </span></a>
-<a class="sourceLine" id="cb9-21" title="21"><span class="co">#&gt;    Date of Fit: 2019-12-01 21:15 </span></a>
-<a class="sourceLine" id="cb9-22" title="22"><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2020-01-01 </span></a>
-<a class="sourceLine" id="cb9-23" title="23"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb9-24" title="24"><span class="co">#&gt; Raw data </span></a>
-<a class="sourceLine" id="cb9-25" title="25"><span class="co">#&gt;        V1   V2   V3   V4   V5</span></a>
-<a class="sourceLine" id="cb9-26" title="26"><span class="co">#&gt; [1,]  160  127   72   82 3592</span></a>
-<a class="sourceLine" id="cb9-27" title="27"><span class="co">#&gt; [2,]   24   66   13   10  532</span></a>
-<a class="sourceLine" id="cb9-28" title="28"><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></a>
-<a class="sourceLine" id="cb9-29" title="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-30" title="30"><span class="co">#&gt; Row pooling setup : 1 1 </span></a>
-<a class="sourceLine" id="cb9-31" title="31"><span class="co">#&gt; Col pooling setup : 1 1 1 1 </span></a>
-<a class="sourceLine" id="cb9-32" title="32"><span class="co">#&gt; Physical pooling  : TRUE </span></a>
-<a class="sourceLine" id="cb9-33" title="33"><span class="co">#&gt; Theta pooling     : FALSE </span></a>
-<a class="sourceLine" id="cb9-34" title="34"><span class="co">#&gt; CJS pooling       : FALSE </span></a>
-<a class="sourceLine" id="cb9-35" title="35"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-36" title="36"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-37" title="37"><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></a>
-<a class="sourceLine" id="cb9-38" title="38"><span class="co">#&gt;  </span></a>
-<a class="sourceLine" id="cb9-39" title="39"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-40" title="40"><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></a>
-<a class="sourceLine" id="cb9-41" title="41"><span class="co">#&gt;       1   V5</span></a>
-<a class="sourceLine" id="cb9-42" title="42"><span class="co">#&gt; 1   554 4124</span></a>
-<a class="sourceLine" id="cb9-43" title="43"><span class="co">#&gt;   31878    0</span></a>
-<a class="sourceLine" id="cb9-44" title="44"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-45" title="45"><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  1 </span></a>
-<a class="sourceLine" id="cb9-46" title="46"><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   1 </span></a>
-<a class="sourceLine" id="cb9-47" title="47"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-48" title="48"><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></a>
-<a class="sourceLine" id="cb9-49" title="49"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-50" title="50"><span class="co">#&gt;   Conditional   Log-Likelihood: 331838.7    ;  np: 3 ;  AICc: -663671.3 </span></a>
-<a class="sourceLine" id="cb9-51" title="51"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-52" title="52"><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></a>
-<a class="sourceLine" id="cb9-53" title="53"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-54" title="54"><span class="co">#&gt; Estimates</span></a>
-<a class="sourceLine" id="cb9-55" title="55"><span class="co">#&gt;                  1  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb9-56" title="56"><span class="co">#&gt; 1              554 4124    0.017       57.5  273857</span></a>
-<a class="sourceLine" id="cb9-57" title="57"><span class="co">#&gt; est unmarked 31878    0       NA         NA  273857</span></a>
-<a class="sourceLine" id="cb9-58" title="58"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-59" title="59"><span class="co">#&gt; SE of above estimates</span></a>
-<a class="sourceLine" id="cb9-60" title="60"><span class="co">#&gt;                 1  psi cap.prob exp factor Pop Est</span></a>
-<a class="sourceLine" id="cb9-61" title="61"><span class="co">#&gt; 1            23.5 64.2    0.001        2.5   10831</span></a>
-<a class="sourceLine" id="cb9-62" title="62"><span class="co">#&gt; est unmarked   NA  0.0       NA         NA   10831</span></a>
-<a class="sourceLine" id="cb9-63" title="63"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-64" title="64"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-65" title="65"><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></a>
-<a class="sourceLine" id="cb9-66" title="66"><span class="co">#&gt; Chisquare gof value   : 1.562464e-19 </span></a>
-<a class="sourceLine" id="cb9-67" title="67"><span class="co">#&gt; Chisquare gof df      : 0 </span></a>
-<a class="sourceLine" id="cb9-68" title="68"><span class="co">#&gt; Chisquare gof p       : NA</span></a></code></pre></div>
+<div id="complete-physical-pooling-pooled-petersen-estimator" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Complete physical
+pooling (Pooled Petersen Estimator)</h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># do physcial complete pooling </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mod..<span class="dv">5</span> <span class="ot">&lt;-</span> <span class="fu">SPAS.fit.model</span>(test.data,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">model.id=</span><span class="st">&quot;Physical complete pooling&quot;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">row.pool.in=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">col.pool.in=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Using nlminb to find conditional MLE</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  31868.37 </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  29339.97 </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  18211.34 </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  9394.572 </span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  3418.652 </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  1125.712 </span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  305.367 </span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  48.36082 </span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  1.890408 </span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  0.003210701 </span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; outer mgc:  9.310952e-09 </span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Convergence codes from nlminb  0 relative convergence (4) </span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Finding conditional estimate of N</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">SPAS.print.model</span>(mod..<span class="dv">5</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Model Name: Physical complete pooling </span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Date of Fit: 2023-04-19 13:16 </span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Version of OPEN SPAS used : SPAS-R 2023-03-31 </span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data </span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        V1   V2   V3   V4   V5</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  160  127   72   82 3592</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]   24   66   13   10  532</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] 7960 9720 6264 7934    0</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Row pooling setup : 1 1 </span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Col pooling setup : 1 1 1 1 </span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Physical pooling  : TRUE </span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Theta pooling     : FALSE </span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; CJS pooling       : FALSE </span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chapman estimator of population size  273430  (SE  10793  )</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  </span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Raw data AFTER PHYSICAL (but not logical) POOLING </span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       1   V5</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   554 4124</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   31878    0</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; where X= (physically) pooled matrix is  1 </span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Condition number of XX&#39; after logical pooling                   1 </span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Large value of kappa (&gt;1000) indicate that rows are approximately proportional which is not good</span></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Conditional   Log-Likelihood: 331838.7    ;  np: 3 ;  AICc: -663671.3 </span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Code/Message from optimization is:  0 relative convergence (4) </span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimates</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  1  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1              554 4124    0.017       57.5  273857</span></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked 31878    0       NA         NA  273857</span></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SE of above estimates</span></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 1  psi cap.prob exp factor Pop Est</span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1            23.5 64.2    0.001        2.5   10831</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; est unmarked   NA  0.0       NA         NA   10831</span></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof cutoff  : 0.1 </span></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof value   : 1.562464e-19 </span></span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof df      : 0 </span></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare gof p       : NA</span></span></code></pre></div>
 </div>
-<div id="comparing-the-estimates-of-abundance" class="section level2">
-<h2><span class="header-section-number">4.5</span> Comparing the estimates of abundance</h2>
+<div id="comparing-the-estimates-of-abundance" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Comparing the
+estimates of abundance</h2>
 <pre><code>#&gt;       .id       date                                       model.id s.a.pool
-#&gt; 1  mod..3 2019-12-02                 Physical pooling to single row        1
-#&gt; 2 mod..3a 2019-12-02                  Logical pooling to single row        2
-#&gt; 3  mod..4 2019-12-02 Physical pooling all rows and last two columns        1
-#&gt; 4  mod..5 2019-12-02                      Physical complete pooling        1
+#&gt; 1  mod..3 2023-04-19                 Physical pooling to single row        1
+#&gt; 2 mod..3a 2023-04-19                  Logical pooling to single row        2
+#&gt; 3  mod..4 2023-04-19 Physical pooling all rows and last two columns        1
+#&gt; 4  mod..5 2023-04-19                      Physical complete pooling        1
 #&gt;   t.p.pool logL.cond np      AICc gof.chisq gof.df gof.p   Nhat Nhat.se
 #&gt; 1        4  287272.7  6 -574533.3      38.4      3     0 273857   10831
 #&gt; 2        4  285423.8 11 -570825.7      38.4      3     0 273857   10831
 #&gt; 3        2  309568.0  4 -619127.9      35.0      1     0 273857   10831
 #&gt; 4        1  331838.7  3 -663671.3       0.0      0    NA 273857   10831</code></pre>
-<p>Notice that the estimates of the population size are identical under logical or physical row pooling.</p>
+<p>Notice that the estimates of the population size are identical under
+logical or physical row pooling.</p>
 </div>
 </div>
-<div id="references" class="section level1">
+<div id="references" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> References</h1>
-<p>Darroch, J. N. (1961). The two-sample capture-recapture census when tagging and sampling are stratified. Biometrika, 48, 241–260. <a href="https://www.jstor.org/stable/2332748" class="uri">https://www.jstor.org/stable/2332748</a></p>
-<p>Plante, N., L.-P Rivest, and G. Tremblay. (1988). Stratified Capture-Recapture Estimation of the Size of a Closed Population. Biometrics 54, 47-60. <a href="https://www.jstor.org/stable/2533994" class="uri">https://www.jstor.org/stable/2533994</a></p>
-<p>Schwarz, C. J., &amp; Taylor, C. G. (1998). The use of the stratified-Petersen estimator in fisheries management with an illustration of estimating the number of pink salmon (Oncorhynchus gorbuscha) that return to spawn in the Fraser River. Canadian Journal of Fisheries and Aquatic Sciences, 55, 281–296. <a href="https://doi.org/10.1139/f97-238" class="uri">https://doi.org/10.1139/f97-238</a></p>
+<p>Darroch, J. N. (1961). The two-sample capture-recapture census when
+tagging and sampling are stratified. Biometrika, 48, 241–260. <a href="https://www.jstor.org/stable/2332748" class="uri">https://www.jstor.org/stable/2332748</a></p>
+<p>Plante, N., L.-P Rivest, and G. Tremblay. (1988). Stratified
+Capture-Recapture Estimation of the Size of a Closed Population.
+Biometrics 54, 47-60. <a href="https://www.jstor.org/stable/2533994" class="uri">https://www.jstor.org/stable/2533994</a></p>
+<p>Schwarz, C. J., &amp; Taylor, C. G. (1998). The use of the
+stratified-Petersen estimator in fisheries management with an
+illustration of estimating the number of pink salmon (Oncorhynchus
+gorbuscha) that return to spawn in the Fraser River. Canadian Journal of
+Fisheries and Aquatic Sciences, 55, 281–296. <a href="https://doi.org/10.1139/f97-238" class="uri">https://doi.org/10.1139/f97-238</a></p>
 </div>
 
 
