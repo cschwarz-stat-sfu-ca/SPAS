@@ -10,7 +10,7 @@
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
-There were up to 2 Notes depending on R version/OS used: 
+There were up to 1 Notes depending on R version/OS used: 
 
 * checking installed package size ... NOTE
   installed size is 12.8Mb
@@ -20,18 +20,7 @@ There were up to 2 Notes depending on R version/OS used:
   Compiled Template Model Builder (TMB) code that is automatically generated
   by the TMB R package.
   
-* Found the following (possibly) invalid URLs:
-  URL: https://www.jstor.org/stable/2332748
-    From: DESCRIPTION
-    Status: 403
-    Message: Forbidden
-  URL: https://www.jstor.org/stable/2533994
-    From: DESCRIPTION
-    Status: 403
-    Message: Forbidden
-    
-  These are valid URLs
-  
+
 ## Reverse dependencies
 
 None.
