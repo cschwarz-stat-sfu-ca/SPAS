@@ -1,8 +1,0 @@
-SPAS.autopool           Autopooling a Stratified-Petersen (SP) data
-                        set. This function applies pooling rules to
-                        pool a SPAS dataset to meeting minimum sparsity
-                        requirements .
-SPAS.fit.model          Fit a Stratified-Petersen (SP) model using TMB.
-SPAS.print.model        Print the results from a fit of a
-                        Stratified-Petersen (SP) model when using the
-                        TMB optimizer
