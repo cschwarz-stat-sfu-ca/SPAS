@@ -1,8 +1,8 @@
 Package: SPAS
 Type: Package
 Title: Stratified-Petersen Analysis System
-Version: 2023.3.31
-Date: 2023-03-31
+Version: 2024.1.31
+Date: 2024-01-31
 Author: Carl James Schwarz
 Maintainer: Carl James Schwarz <cschwarz.stat.sfu.ca@gmail.com>
 LinkingTo:
@@ -36,7 +36,7 @@ Description: The Stratified-Petersen Analysis System (SPAS) is designed
     This is the R-version of the (now obsolete) standalone Windows 
     program available at <https://home.cs.umanitoba.ca/~popan/spas/spas_home.html>.
 License: GPL (>=2)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

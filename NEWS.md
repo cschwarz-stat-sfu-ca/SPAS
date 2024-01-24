@@ -1,3 +1,9 @@
+SPAS 2024.01.31
+----------------
+
+* Minor changes to fix CRAN check messages. No functional/user changes.
+
+
 SPAS 2023.03.31
 ---------------
 

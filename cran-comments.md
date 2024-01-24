@@ -1,5 +1,5 @@
-## 2023 Update
-* Additional functionality added.
+## 2024.1.31 Update
+* No additonal functionality added - just responding to CRAN checks
 
 ## Test environments
 * local OS X install, R 4.3.2

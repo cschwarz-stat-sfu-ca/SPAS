@@ -6,11 +6,6 @@
 \usage{
 logit(p)
 }
-\arguments{
-\item{p}{A proportion.}
-
-\item{theta}{A logit}
-}
 \description{
 These functions are helper functions for the SPAS package and not normally accessed by the user
 }

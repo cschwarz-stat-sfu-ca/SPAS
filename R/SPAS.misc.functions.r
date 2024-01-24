@@ -4,9 +4,6 @@
 #' 
 #' \code{logit} - compute the logit of a proportion
 #' \code{expit} - compute a proportion from a logit
-#'  
-#' @param p A proportion.
-#' @param theta A logit
 #' 
 #' @keywords internal
 
@@ -14,12 +11,14 @@
 
 # LOGIT amd EXPIT FUNCTIONs
 logit <- function(p){
+  # p is a proportion
   res <- log(p/(1-p))
   res <- pmax(-20, pmin(20, res)) # restrict the logit between -20 + 20
   return(res)
 }
 
-expit <- function(theta){ #antilogit,i.e. from logit to p scale
+expit <- function(theta){ #antilogit,i.e. from logit to p scale\
+  # theta is a logit
   res <- 1/(1+exp(-theta))
   return(res)
 }
