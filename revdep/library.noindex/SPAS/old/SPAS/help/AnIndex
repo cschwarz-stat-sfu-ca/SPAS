@@ -1,0 +1,8 @@
+.onAttach	dot-onAttach
+dummy	dummy
+logit	logit
+SPAS.autopool	SPAS.autopool
+SPAS.extract.par.est	SPAS.extract.par.est
+SPAS.fit.model	SPAS.fit.model
+SPAS.likelihood.star.DM	SPAS.likelihood.star.DM
+SPAS.print.model	SPAS.print.model
