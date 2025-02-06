@@ -120,7 +120,7 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
    if(length(unique(row.pool.in)) > length(unique(col.pool.in)))stop("S must be <= T after pooling")
   
    RESULT <- NULL
-   RESULT$version <- "SPAS-R 2023-03-31"
+   RESULT$version <- paste0("SPAS-R ", packageVersion("SPAS"))
    RESULT$date    <- Sys.time()   # date run and start date
    
    RESULT$input <- list(model.id    =model.id,
