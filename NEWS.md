@@ -1,3 +1,10 @@
+SPAS 2025.1.2
+-------------
+
+* Added argument to SPAS.print.model to extract model information to a list object rather than to the console.
+This will be useful when fitting many SPAS models and you want to process outputs programatically.
+
+
 SPAS 2024.01.31
 ----------------
 

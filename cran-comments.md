@@ -1,8 +1,10 @@
-## 2024.1.31 Update
-* No additonal functionality added - just responding to CRAN checks
+## 2025.1.2 Update
+* Added argument to SPAS.print.model to extract model information to a list object rather than to the console.
+This will be useful when fitting many SPAS models and you want to process outputs programatically.
+
 
 ## Test environments
-* local OS X install, R 4.3.2
+* local OS X install, R 4.4.2
 * local R CMD build SPAS
 * local R CMD check --as-cran SPAS*tar.gz
 * devtools::check_win_release()

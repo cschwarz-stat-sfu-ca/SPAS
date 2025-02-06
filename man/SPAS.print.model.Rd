@@ -2,18 +2,20 @@
 % Please edit documentation in R/SPAS.print.model.R
 \name{SPAS.print.model}
 \alias{SPAS.print.model}
-\title{Print the results from a fit of a Stratified-Petersen (SP) model when using the TMB optimizer}
+\title{Print or Extract the results from a fit of a Stratified-Petersen (SP) model when using the TMB optimizer}
 \usage{
-SPAS.print.model(x)
+SPAS.print.model(x, extract = FALSE)
 }
 \arguments{
-\item{x}{A result from the model fitting. See \code{SPAS.fit.model}.}
+\item{x}{A result from the model fitting. See \code{SPAS.fit.model}}
+
+\item{extract}{Should the function simply return the "printed" components in a list?.}
 }
 \value{
-A report to the console. Refer to the vignettes.
+A report to the console or extracted components. Refer to the vignettes.
 }
 \description{
-This function makes a report of the results of the model fitting
+This function makes a report/extracts the components of the results of the model fitting
 .
 }
 \examples{
@@ -33,4 +35,8 @@ mod1 <- SPAS.fit.model(conne.data, model.id="Pooling rows 1/2, 5/6; pooling colu
                       col.pool.in=c(1,2,3,4,56,56))
 
 SPAS.print.model(mod1)
+
+out <- SPAS.print.model(mod1, extract=TRUE)
+names(out)
+out$spas
 }
