@@ -18,7 +18,8 @@ Imports:
     numDeriv,
     plyr,
     reshape2,
-    TMB (>= 1.7.15)
+    TMB (>= 1.7.15),
+    utils
 Description: The Stratified-Petersen Analysis System (SPAS) is designed
     to estimate abundance in two-sample capture-recapture experiments 
     where the capture and recaptures are stratified. This is a generalization

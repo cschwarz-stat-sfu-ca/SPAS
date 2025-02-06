@@ -21,6 +21,7 @@
 #' @export
 #' @import msm MASS stats plyr TMB 
 #' @importFrom Matrix bdiag 
+#' @importFrom utils packageVersion
 #' @examples 
 #' conne.data.csv <- textConnection("
 #' 9  ,    21  ,     0  ,    0  ,    0  ,    0  ,   171
@@ -120,7 +121,7 @@ SPAS.fit.model<- function(model.id='Stratified Petersen Estimator',
    if(length(unique(row.pool.in)) > length(unique(col.pool.in)))stop("S must be <= T after pooling")
   
    RESULT <- NULL
-   RESULT$version <- paste0("SPAS-R ", packageVersion("SPAS"))
+   RESULT$version <- paste0("SPAS-R ", utils::packageVersion("SPAS"))
    RESULT$date    <- Sys.time()   # date run and start date
    
    RESULT$input <- list(model.id    =model.id,

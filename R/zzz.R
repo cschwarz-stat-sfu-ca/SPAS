@@ -2,12 +2,13 @@
 #
 #' Message to display when package is loaded
 #' 
+#' @importFrom utils packageVersion
 #' @keywords internal
 #'
 
 .onAttach <- function(libname,pkgname){
 
-  packageStartupMessage("***** SPAS: Stratified Petersen Analysis System - Version ", packageVersion("SPAS"), " ***** \n\n",
+  packageStartupMessage("***** SPAS: Stratified Petersen Analysis System - Version ", utils::packageVersion("SPAS"), " ***** \n\n",
         "      Help available with  help(package='SPAS') \n",
         '      Several vignettes are available. See browseVignettes(package="SPAS") \n\n')
 }
