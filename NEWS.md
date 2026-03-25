@@ -1,3 +1,11 @@
+
+SPAS 2026.4.1
+-------------
+
+* Fixed issue with non-API calls to R in TMP code identified by CRAN.
+* No change in functionality.
+
+
 SPAS 2025.1.2
 -------------
 

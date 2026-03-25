@@ -1,8 +1,8 @@
 Package: SPAS
 Type: Package
 Title: Stratified-Petersen Analysis System
-Version: 2025.2.1
-Date: 2025-02-01
+Version: 2026.4.1
+Date: 2026-04-01
 Authors@R: person(given = c("Carl", "James"),
                     family = "Schwarz",
                     role = c("aut", "cre"),
@@ -40,7 +40,7 @@ Description: The Stratified-Petersen Analysis System (SPAS) is designed
     This is the R-version of the (now obsolete) standalone Windows 
     program of the same name.
 License: GPL (>=2)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
