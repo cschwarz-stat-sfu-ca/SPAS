@@ -25,6 +25,8 @@ We checked 1 reverse dependencies, comparing R CMD check results across CRAN and
 
 ## R CMD check results
 There were no ERRORs 
+<<<<<<< HEAD
+=======
 
 There was one warning:
 
@@ -33,8 +35,24 @@ There was one warning:
 WARNINGs. 
 
 This appears to be an issue with the C compiler options and not fixable by myself.
+>>>>>>> b071291cdd819c60ed6f942d0e246d1335fda735
+
+There was one warning:
+
+<<<<<<< HEAD
+* Found the following significant warnings:
+     /Library/Frameworks/R.framework/Resources/include/R_ext/Boolean.h:62:36: warning: unknown warning group '-Wfixed-enum-extension', ignored [-Wunknown-warning-option]
+WARNINGs. 
+
+This appears to be an issue with the C compiler options and not fixable by myself.
 
 There were up to 1 Notes depending on R version/OS used: 
+=======
+* checking installed package size ... INFO
+     installed size is 13.1Mb
+     sub-directories of 1Mb or more:
+       libs  12.3Mb
+>>>>>>> b071291cdd819c60ed6f942d0e246d1335fda735
 
 * checking for future file timestamps ... NOTE unable to verify current time
   
