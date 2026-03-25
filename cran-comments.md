@@ -8,11 +8,13 @@ This will be useful when fitting many SPAS models and you want to process output
 
 
 ## Test environments
-* local OS X install, R 4.4.2
+* local OS X install, R 4.5.2
 * local R CMD build SPAS
 * local R CMD check --as-cran SPAS*tar.gz
 * devtools::check_win_release()
 * devtools::check_win_devel()
+* devtools::check_mac_release()
+* devtools::check_mac_devel()
 
 
 ## revdepcheck results
