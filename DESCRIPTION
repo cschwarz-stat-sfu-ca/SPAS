@@ -20,30 +20,30 @@ Imports:
     reshape2,
     TMB (>= 1.7.15),
     utils
-Description: The Stratified-Petersen Analysis System (SPAS) is designed
+Description: The Stratified-Petersen Analysis System ('SPAS') is designed
     to estimate abundance in two-sample capture-recapture experiments 
     where the capture and recaptures are stratified. This is a generalization
-    of the simple Lincoln-Petersen estimator.
+    of the simple 'Lincoln-Petersen' estimator.
     Strata may be defined in time or in space or both, 
     and the s strata in which marking takes place 
     may differ from the t strata in which recoveries take place.
-    When s=t, SPAS reduces to the method described by 
-    Darroch (1961) <doi:10.2307/2332748>.
-    When s<t, SPAS implements the methods described in
-    Plante, Rivest, and Tremblay (1988) <doi:10.2307/2533994>.
-    Schwarz and Taylor (1998) <doi:10.1139/f97-238> describe
+    When s=t, 'SPAS' reduces to the method described by 
+    'Darroch' (1961) <doi:10.2307/2332748>.
+    When s<t, 'SPAS' implements the methods described in
+    'Plante', 'Rivest', and 'Tremblay' (1998) <doi:10.2307/2533994>.
+    'Schwarz' and 'Taylor' (1998) <doi:10.1139/f97-238> describe
     the use of SPAS in estimating return of salmon stratified by
     time and geography. 
-    A related package, BTSPAS, deals with temporal stratification where 
+    A related package, 'BTSPAS', deals with temporal stratification where 
     a spline is used to model the distribution of the population 
     over time as it passes the second capture location.
     This is the R-version of the (now obsolete) standalone Windows 
     program of the same name.
 License: GPL (>=2)
-RoxygenNote: 7.3.3
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
 Encoding: UTF-8
 URL: https://github.com/cschwarz-stat-sfu-ca/SPAS
 BugReports: https://github.com/cschwarz-stat-sfu-ca/SPAS/issues
+Config/roxygen2/version: 8.1.1

@@ -38,7 +38,7 @@ fixed the convergence issues that plagued earlier versions of SPAS-R.
 Darroch, J. N. (1961). The two-sample capture-recapture census when tagging and sampling are stratified. Biometrika, 48, 241-260.
 https://www.jstor.org/stable/2332748
 
-Plante, N., L.-P Rivest, and G. Tremblay. (1988). Stratified Capture-Recapture Estimation of the Size of a Closed Population. Biometrics 54, 47-60.
+Plante, N., L.-P Rivest, and G. Tremblay. (1998). Stratified Capture-Recapture Estimation of the Size of a Closed Population. Biometrics 54, 47-60.
 https://www.jstor.org/stable/2533994
 
 Schwarz, C. J., & Taylor, C. G. (1998). The use of the stratified-Petersen estimator in fisheries management with an illustration of estimating the number of pink salmon (Oncorhynchus gorbuscha) that return to spawn in the Fraser River. Canadian Journal of Fisheries and Aquatic Sciences, 55, 281-296.

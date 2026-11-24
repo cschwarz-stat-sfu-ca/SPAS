@@ -1,6 +1,6 @@
 
-## 2026.4.1 Update
-* Fixed CRAN issue of non-API calls back to R in TMB code
+## 2026.12.1 Update
+* Update to unarchive this package and resolved remaining check notes.
 
 ## Test environments
 * local OS X install, R 4.5.2
@@ -21,22 +21,16 @@ We checked 1 reverse dependencies, comparing R CMD check results across CRAN and
 
 
 ## R CMD check results
-There were no ERRORs 
+0 errors | 0 warnings | 1 note
 
-There was one WARNING:
+*  checking installed package size ... NOTE
+     installed size is 13.1Mb
+     sub-directories of 1Mb or more:
+       libs  12.3Mb
+   This is expected due to the compiled TMB C++ shared library.
 
-* Found the following significant warnings:
-     /Library/Frameworks/R.framework/Resources/include/R_ext/Boolean.h:62:36: warning: unknown warning group '-Wfixed-enum-extension', ignored [-Wunknown-warning-option]
-WARNINGs. 
 
-This appears to be an issue with the C compiler options and not fixable by myself.
-
-There were up to 1 Notes depending on R version/OS used: 
-
-* checking for future file timestamps ... NOTE unable to verify current time
-  
-  Appears to be an issue with the package builder and nothing that I can fix.
 
 ## Reverse dependencies
 
-THe Petersen package loads the SPAS package.
+The Petersen package loads the SPAS package.
