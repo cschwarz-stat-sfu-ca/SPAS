@@ -5,7 +5,7 @@ Version: 2026.12.1
 Date: 2026-12-01
 Authors@R: person(given = c("Carl", "James"),
                     family = "Schwarz",
-                    role = c("aut", "cre"),
+                    role = c("aut", "cre", "cph"),
                     email = "cschwarz.stat.sfu.ca@gmail.com")
 LinkingTo:
     TMB,

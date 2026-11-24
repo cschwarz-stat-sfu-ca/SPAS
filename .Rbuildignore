@@ -7,3 +7,4 @@ cran-comments.md
 ^man-roxygen
 ^CRAN-SUBMISSION$
 ^revdep/*
+^\.github$
