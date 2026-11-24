@@ -1,4 +1,10 @@
 
+SPAS 2026.12.1
+-------------
+
+* Updated version number to "unarchive" this package
+* No change in functionality
+
 SPAS 2026.4.1
 -------------
 
