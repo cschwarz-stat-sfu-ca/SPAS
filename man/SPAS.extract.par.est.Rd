@@ -32,4 +32,7 @@ Returns a list with entries
 \description{
 This function is normally used internally and not by users of the package.
 }
+\examples{
+# Internal function; no examples required
+}
 \keyword{internal}

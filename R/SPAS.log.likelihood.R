@@ -3,7 +3,10 @@
 #' These functions are used internally to fit the Stratified Petersen models and are not normally used.
 #' Most of these functions are for the legacy version that does not use TMB and so likely can be eventually deleted.
 #' @keywords internal
-
+#' @returns A numeric value for the likelihood function.
+#' @examples
+#' # Internal function; no examples required
+#' 
 # Likelihood (and related) functions for the Open SPAS models.
 
 # SPAS.likelihood.star.DM.O(init.est, rowDM, colDM, thetaDM, rawdata, returnnegll=TRUE)

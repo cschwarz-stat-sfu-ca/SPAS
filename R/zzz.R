@@ -1,10 +1,11 @@
 # 2020-01-01 CJS Now using TMB for optimization
 #
-#' Message to display when package is loaded
-#' 
-#' @importFrom utils packageVersion
-#' @keywords internal
-#'
+# Message to display when package is loaded
+# 
+# @importFrom utils packageVersion
+# @keywords internal
+# @returns Nothing. Just a message when package is loaded.
+#
 
 .onAttach <- function(libname,pkgname){
 

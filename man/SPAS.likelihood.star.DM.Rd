@@ -16,8 +16,15 @@ SPAS.likelihood.star.DM(
   mytrace = FALSE
 )
 }
+\value{
+A numeric value for the likelihood function.
+}
 \description{
 These functions are used internally to fit the Stratified Petersen models and are not normally used.
 Most of these functions are for the legacy version that does not use TMB and so likely can be eventually deleted.
+}
+\examples{
+# Internal function; no examples required
+
 }
 \keyword{internal}

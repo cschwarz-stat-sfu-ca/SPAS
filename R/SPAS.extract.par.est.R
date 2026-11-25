@@ -20,7 +20,8 @@
 #'   \item N.   The estimated population size.
 #' }
 #' @keywords internal
-
+#' @examples
+#' # Internal function; no examples required
 
 
 
