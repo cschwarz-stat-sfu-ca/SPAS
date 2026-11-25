@@ -16,9 +16,4 @@ These functions are helper functions for the SPAS package and not normally acces
 \code{logit} - compute the logit of a proportion
 \code{expit} - compute a proportion from a logit
 }
-\examples{
-logitp <- logit(.9)
-p <- expit(logitp)
- 
-}
 \keyword{internal}

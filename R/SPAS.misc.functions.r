@@ -7,10 +7,7 @@
 #' 
 #' @keywords internal
 #' @returns A numeric vector of the same length as the input.
-#' @examples 
-#' logitp <- logit(.9)
-#' p <- expit(logitp)
-#'  
+ 
 # Miscellaneous functions for use in the modelling
 
 # LOGIT amd EXPIT FUNCTIONs
