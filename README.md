@@ -44,3 +44,7 @@ https://www.jstor.org/stable/2533994
 Schwarz, C. J., & Taylor, C. G. (1998). The use of the stratified-Petersen estimator in fisheries management with an illustration of estimating the number of pink salmon (Oncorhynchus gorbuscha) that return to spawn in the Fraser River. Canadian Journal of Fisheries and Aquatic Sciences, 55, 281-296.
 https://doi.org/10.1139/f97-238
 
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/cschwarz-stat-sfu-ca/SPAS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cschwarz-stat-sfu-ca/SPAS/actions/workflows/R-CMD-check.yaml)
+  <!-- badges: end -->
+
