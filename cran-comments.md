@@ -8,9 +8,8 @@
 * local R CMD check --as-cran SPAS*tar.gz
 * devtools::check_win_release()
 * devtools::check_win_devel()
-* devtools::check_mac_release()
-* devtools::check_mac_devel()
 
+* usethis::use_github_action() which also checks ubuntu and latest Mac OS releases
 
 ## revdepcheck results
 
