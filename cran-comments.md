@@ -1,6 +1,7 @@
 
-## 2026.12.1 Update
+## 2026.12.2 Update
 * Update to unarchive this package and resolved remaining check notes.
+* Fixed example that was added to a function
 
 ## Test environments
 * local OS X install, R 4.5.2
