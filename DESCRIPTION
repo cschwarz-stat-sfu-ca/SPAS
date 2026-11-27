@@ -1,7 +1,7 @@
 Package: SPAS
 Type: Package
 Title: Stratified-Petersen Analysis System
-Version: 2026.12.2
+Version: 2026.12.3
 Date: 2026-12-02
 Authors@R: person(given = c("Carl", "James"),
                     family = "Schwarz",

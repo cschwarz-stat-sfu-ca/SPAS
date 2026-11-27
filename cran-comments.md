@@ -2,6 +2,7 @@
 ## 2026.12.2 Update
 * Update to unarchive this package and resolved remaining check notes.
 * Fixed example that was added to a function
+* Fixed problems in vignettes spotted on a denebian build
 
 ## Test environments
 * local OS X install, R 4.5.2
